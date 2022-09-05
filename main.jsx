@@ -44,19 +44,6 @@ function App(props) {
   );
 }
 
-function App() {
-  return (
-    <html>
-      <head>
-        <title>Hello from JSX</title>
-      </head>
-      <body>
-        <h1>Hello world</h1>
-      </body>
-    </html>
-  );
-}
-
 async function handleRequest(request) {
   const { pathname } = new URL(request.url);
 
