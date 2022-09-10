@@ -5,7 +5,6 @@
 /// <reference lib="deno.ns" />
 
 import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.20/mod.ts";
-import { buildUrl } from "https://deno.land/x/url_builder/mod.ts";
 import { Router, Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { baseUrl, port, metaDefaults } from "./config.ts";
 // import { App } from "./App.jsx";
