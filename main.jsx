@@ -107,7 +107,7 @@ router.get("/rifff/:rifffId", async (ctx) => {
   const time = rifffData.action_timestamp_iso;
   const user = rifffData.user;
   const feats = rifffData.creators.filter(x=>x!=user).join(", ")
-  const title= `${rifffData.title}`;
+  const title = `${user} :: ${rifffData.title}`;
   // const shareImage = buildUrl("https://api.endlesss.fm", {
   //   path: ["api", "v3", "image", "shared_rifff", rifffId],
   //   queryParams: {
@@ -116,7 +116,7 @@ router.get("/rifff/:rifffId", async (ctx) => {
   // });
   const shareUrl = `${baseUrl}/rifff/${rifffId}`;
   const forwardUrl = `https://endlesss.fm/rifff-link?type=shared&rifffId=${rifffId}`;
-  const desc = feats.length ? `by ${user} feat ${feats} - Created @ ${time}`: `by ${user} - Created @ ${time}`
+  const desc = feats.length ? `feat ${feats} - Created @ ${time}`: `Created @ ${time}`
   const r = renderSSR(
     <App
       description={desc}
