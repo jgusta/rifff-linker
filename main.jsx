@@ -144,11 +144,11 @@ router.get("/", ({response}) => {
   response.body = r;
 })
 
-const app = new Application();
+const serve = new Application();
 
-app.use(router.routes());
-app.use(router.allowedMethods());
-app.use(async (context, next) => {
+serve.use(router.routes());
+serve.use(router.allowedMethods());
+serve.use(async (context, next) => {
   try {
     await context.send({
       root: `${Deno.cwd()}/assets`,
@@ -159,4 +159,4 @@ app.use(async (context, next) => {
   }
 });
 console.log(`listening at ${baseUrl}`)
-await app.listen({ port })
+await serve.listen({ port });
