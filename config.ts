@@ -23,6 +23,7 @@ const metaDefaults = {
   share_url: `${baseUrl}`,
   title: "Endlesss Rifff Viewer",
   img_alt: "Endlesss Rifff Viewer",
+  user: ""
 };
 
 export {baseUrl, metaDefaults, port}

@@ -56,7 +56,7 @@ function App(props) {
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <meta name="description" content="Create an easy-to-share link for your Endlesss rifffs" />
 
-        <meta property="og:site_name" content="Endlesss Rifff Share"></meta>
+        <meta property="og:site_name" content={`Endlesss Rifff Share by ${meta.user}`}></meta>
         <meta property="og:type" content="article"></meta>
 
         <meta property="og:description" content={meta.description}></meta>
@@ -107,7 +107,7 @@ router.get("/rifff/:rifffId", async (ctx) => {
   const time = rifffData.action_timestamp_iso;
   const user = rifffData.user;
   const feats = rifffData.creators.filter(x=>x!=user).join(", ")
-  const title = `${user} :: ${rifffData.title}`;
+  const title = `${rifffData.title}`;
   // const shareImage = buildUrl("https://api.endlesss.fm", {
   //   path: ["api", "v3", "image", "shared_rifff", rifffId],
   //   queryParams: {
@@ -124,6 +124,7 @@ router.get("/rifff/:rifffId", async (ctx) => {
       title={title}
       share_url={shareUrl}
       img_alt="img alt"
+      user={user}
     >
       <Main forwardUrl={forwardUrl} />
     </App>
