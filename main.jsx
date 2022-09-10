@@ -79,16 +79,7 @@ function App(props) {
 function notFound() {
   return renderSSR(<App>Sorry Not Found</App>);
 }
-app.use(async (context, next) => {
-  try {
-    await context.send({
-      root: `${Deno.cwd()}/assets`,
-      index: "index.html",
-    });
-  } catch {
-    await next();
-  }
-});
+
 // router.get("/assets/style.css", async ({response}) => {
 //   console.log("css run");
 //   const file = await Deno.readFile("./assets/style.css");
@@ -154,7 +145,18 @@ router.get("/", ({response}) => {
 })
 
 const app = new Application();
+
 app.use(router.routes());
 app.use(router.allowedMethods());
+app.use(async (context, next) => {
+  try {
+    await context.send({
+      root: `${Deno.cwd()}/assets`,
+      index: "index.html",
+    });
+  } catch {
+    await next();
+  }
+});
 console.log(`listening at ${baseUrl}`)
 await app.listen({ port })
