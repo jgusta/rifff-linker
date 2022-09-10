@@ -4,11 +4,45 @@
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 
-import { serve } from "https://deno.land/std@0.140.0/http/server.ts";
 import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.20/mod.ts";
 import { buildUrl } from "https://deno.land/x/url_builder/mod.ts";
+import { Router, Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+import { baseUrl, port, metaDefaults } from "./config.ts";
+// import { App } from "./App.jsx";
+import { checkId, headers } from "./util.ts";
 
+
+
+const router = new Router()
+
+const getSharedRifff = async (id) => {
+      try {
+        const resp = await fetch('https://endlesss.fm/api/v3/feed/shared_rifff/' + id);
+        const json = await resp.json();
+        const arr = json;
+        return arr.data[0];
+      } catch (error) {
+        throw new Error(error);
+      }
+}
+
+function Main(props) {
+  return (
+    <div>
+      <a href="{props.forwardUrl}"></a>
+    </div>
+  );
+}
 function App(props) {
+  const meta = {};
+  for (const [key, value] of Object.entries(metaDefaults)) {
+    if (props[key] == null) {
+      meta[key] = value;
+    } else {
+      meta[key] = props[key];
+    }
+  }
+
   return (
     <html>
       <head>
@@ -18,113 +52,101 @@ function App(props) {
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         ></meta>
-        <meta property="og:type" content="article"></meta>
-        <meta
-          property="og:description"
-          content={props.description}
-        ></meta>
-        <meta property="og:image" content={props.display_image}></meta>
-        <meta property="og:url" content={props.share_url}></meta>
-        <meta name="twitter:card" content="summary_large_image"></meta>
+        <link rel="stylesheet" href="/assets/style.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <meta name="description" content="Create an easy-to-share link for your Endlesss rifffs" />
+
         <meta property="og:site_name" content="Endlesss Rifff Share"></meta>
-        <meta
-          name="twitter:image:alt"
-          content={props.img_alt}
-        ></meta>
-        <meta property="og:title" content="Digits - Endlesss Jam Player"></meta>
-        <link rel="stylesheet" href="assets/style.css" />
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <title>Hello from JSX</title>
+        <meta property="og:type" content="article"></meta>
+
+        <meta property="og:description" content={meta.description}></meta>
+        <meta property="og:image" content={meta.display_image}></meta>
+        <meta property="og:url" content={meta.share_url}></meta>
+        <meta property="og:title" content={meta.title}></meta>
+
+        <meta name="twitter:image:alt" content={meta.img_alt}></meta>
+        <meta name="twitter:card" content="summary_large_image"></meta>
+
+        <title>{meta.title}</title>
       </head>
       <body>
-        <h1>Hello world</h1>
+        <h1>{meta.title}</h1>
+        {props.children}
       </body>
     </html>
   );
 }
-
-async function handleRequest(request) {
-  const { pathname } = new URL(request.url);
-
-  if (pathname.startsWith("/assets/style.css")) {
-    const file = await Deno.readFile("./assets/style.css");
-    return new Response(file, {
-      headers: {
-        "content-type": "text/css",
-      },
-    });
-  }
-  else if (pathname.startsWith("/favicon")) {
-      const file = await Deno.readFile("./assets/favicon.ico");
-      return new Response(file, {
-        headers: {
-          "content-type": "image/x-icon",
-        },
-      });
-  }
-
-  
-
-  // endlesss://sharedrifff/fa6808b02b0b11ed88b0b48870128733
-  const pattern = new URLPattern({ pathname: "/rifff/:id" });
-  //const match = pattern.exec(pathname);
-  const rifff_id = pattern.exec(pathname).pathname.groups.id;
-  const regex = /^[a-f0-9A-F]{32}$/;
-  const check = rifff_id.match(regex);
-  if (check === null) {
-    return new Response(
-      `<html>
-      <head>
-        <link rel="stylesheet" href="style.css" />
-      </head>
-      <body>
-        <h1>Rifff not found</h1>
-      </body>
-    </html>`,
-      {
-        headers: {
-          "content-type": "text/html; charset=utf-8",
-        },
-      }
-    );
-  }
-//"Listen to this live jam on Endlesss. Endlesss.fm - Multiplayer Music";
-  const share_image = buildUrl("https://api.endlesss.fm", {
-    path: ["api", "v3", "image", "shared_rifff", check],
-    queryParams: {
-      nodefault: null
-    }
-  });
-
-  // https://api.endlesss.fm/api/v3/image/shared_rifff/1640731026fc11edb3100ca7db7b68e2?nodefault
-
-  const html = renderSSR(
-    <App
-      rifff_id={check}
-      description="something"
-      share_image={share_image}
-      img_alt=""
-    />
-  );
-
-
-  return new Response(
-    `<html>
-      <head>
-        <link rel="stylesheet" href="assets/style.css" />
-      </head>
-      <body>
-        <h1>Example</h1>
-        <img src="${jump}">
-      </body>
-    </html>`,
-    {
-      headers: {
-        "content-type": "text/html; charset=utf-8",
-      },
-    }
-  );
+function notFound() {
+  return renderSSR(<App>Sorry Not Found</App>);
 }
 
-serve(handleRequest);
+router.get("/assets/style.css", async ({response}) => {
+  console.log("css run");
+  const file = await Deno.readFile("./assets/style.css");
+  response.headers.set(...headers.css);
+  response.body=file;
+})
+
+router.get("/favicon.ico", async ({response}) => {
+  const file = await Deno.readFile("./assets/favicon.ico");
+  response.headers.set(...headers.ico);
+  response.body = file;
+})
+
+router.get("/rifff/:rifffId", async (ctx) => {
+  console.log("riff run", ctx);
+  const rifffId = ctx.params.rifffId;
+  const rifffData = await getSharedRifff(rifffId);
+  if (!(await checkId(rifffId))) {
+    ctx.response.body = notFound();
+    ctx.response.headers.set(...headers.html)
+    return
+  }
+
+  const shareImage = rifffData.image_url;
+  const time = rifffData.action_timestamp_iso;
+  const user = rifffData.user;
+  const feats = rifffData.creators.filter(x=>x!=user).join(", ")
+  const title= `${rifffData.title} - ${user} feat ${feats}`;
+  // const shareImage = buildUrl("https://api.endlesss.fm", {
+  //   path: ["api", "v3", "image", "shared_rifff", rifffId],
+  //   queryParams: {
+  //     nodefault: null,
+  //   },
+  // });
+  const shareUrl = `${baseUrl}/rifff/${rifffId}`;
+  const forwardUrl = `https://endlesss.fm/rifff-link?type=shared&rifffId=${rifffId}`;
+
+  const r = renderSSR(
+    <App
+      description={`Created @ ${time}`}
+      display_image={shareImage}
+      title={title}
+      share_url={shareUrl}
+      img_alt="img alt"
+    >
+      <Main forwardUrl={forwardUrl} />
+    </App>
+  );
+
+  ctx.response.headers.set(...headers.html)
+  ctx.response.body = r
+});
+
+
+//endlesss://sharedrifff/ca5298b030e811ed98b0365bb593d1c3
+//http://localhost:8000/rifff/ca5298b030e811ed98b0365bb593d1c3
+router.get("/",({response}) => {
+  console.log("default run");
+  console.log(response);
+  const r = renderSSR(<App>Welcome to page</App>);
+  response.headers.set(...headers.html)
+  response.body = r;
+})
+
+const app = new Application();
+app.use(router.routes());
+app.use(router.allowedMethods());
+console.log(`listening at ${baseUrl}`)
+await app.listen({ port })
