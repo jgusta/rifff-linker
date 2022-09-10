@@ -79,19 +79,28 @@ function App(props) {
 function notFound() {
   return renderSSR(<App>Sorry Not Found</App>);
 }
+app.use(async (context, next) => {
+  try {
+    await context.send({
+      root: `${Deno.cwd()}/assets`,
+      index: "index.html",
+    });
+  } catch {
+    await next();
+  }
+});
+// router.get("/assets/style.css", async ({response}) => {
+//   console.log("css run");
+//   const file = await Deno.readFile("./assets/style.css");
+//   response.headers.set(...headers.css);
+//   response.body=file;
+// })
 
-router.get("/assets/style.css", async ({response}) => {
-  console.log("css run");
-  const file = await Deno.readFile("./assets/style.css");
-  response.headers.set(...headers.css);
-  response.body=file;
-})
-
-router.get("/favicon.ico", async ({response}) => {
-  const file = await Deno.readFile("./assets/favicon.ico");
-  response.headers.set(...headers.ico);
-  response.body = file;
-})
+// router.get("/favicon.ico", async ({response}) => {
+//   const file = await Deno.readFile("./assets/favicon.ico");
+//   response.headers.set(...headers.ico);
+//   response.body = file;
+// })
 
 router.get("/rifff/:rifffId", async (ctx) => {
   console.log("riff run", ctx);
@@ -136,7 +145,7 @@ router.get("/rifff/:rifffId", async (ctx) => {
 
 //endlesss://sharedrifff/ca5298b030e811ed98b0365bb593d1c3
 //http://localhost:8000/rifff/ca5298b030e811ed98b0365bb593d1c3
-router.get("/",({response}) => {
+router.get("/", ({response}) => {
   console.log("default run");
   console.log(response);
   const r = renderSSR(<App>Welcome to page</App>);
