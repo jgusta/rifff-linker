@@ -4,7 +4,7 @@ let port;
 console.log(`Environment: ${environment}`);
 switch (environment) {
   case "local":
-    url = "http://localhost:8000";
+    url = "http://127.0.0.1:8000";
     port = 8000
     break;
   case "production":
@@ -26,5 +26,15 @@ const metaDefaults = {
   user: ""
 };
 
-export {baseUrl, metaDefaults, port}
+const gtag = `
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8S6C1W2WQP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+
+gtag('config', 'G-8S6C1W2WQP');
+</script>
+`
+export {baseUrl, metaDefaults, port, gtag}
 

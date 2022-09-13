@@ -1,0 +1,5 @@
+  {
+    "tasks": {
+      "serve": "DEPLOYMENT=local deno run --inspect --unstable --allow-net=:8000 --allow-all main.jsx"
+    }
+  }

@@ -6,10 +6,9 @@
 
 import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.20/mod.ts";
 import { Router, Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { baseUrl, port, metaDefaults } from "./config.ts";
+import { baseUrl, port, metaDefaults,gtag } from "./config.ts";
 // import { App } from "./App.jsx";
 import { checkId, headers } from "./util.ts";
-
 
 
 const router = new Router()
@@ -66,7 +65,8 @@ function App(props) {
 
         <meta name="twitter:image:alt" content={meta.img_alt}></meta>
         <meta name="twitter:card" content="summary_large_image"></meta>
-
+        
+        {gtag}
         <title>{meta.title}</title>
       </head>
       <body>
@@ -149,6 +149,8 @@ const serve = new Application();
 
 serve.use(router.routes());
 serve.use(router.allowedMethods());
+// add doctype to response
+serve.use(docTypeMiddleware);
 serve.use(async (context, next) => {
   try {
     await context.send({

@@ -1,3 +1,5 @@
+import { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+
 const checkId = function checkId(input:string):Promise<boolean> {
   console.log(`checkid run: ${input}`);
   return new Promise((res) => {
@@ -17,4 +19,12 @@ const headers:Headers = {
   "css": ["content-type", "text/css"],
   "ico": ["content-type", "image/x-icon"]
 };
-export { headers, checkId }
+
+const docTypeMiddleware = async ({response}, next) => {
+  if (response.headers.get('content-type') === 'text/html') {
+    response.body = `<!DOCTYPE html>${response.body}`;
+  }
+  await next();
+};
+
+export { headers, checkId, docTypeMiddleware}
