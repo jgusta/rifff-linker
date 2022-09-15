@@ -1,14 +1,11 @@
-/** @jsx h */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="dom.asynciterable" />
-/// <reference lib="deno.ns" />
+
 
 import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.20/mod.ts";
 import { Router, Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { baseUrl, port, metaDefaults,gtag } from "./config.ts";
+import { App } from "./App.jsx";
+import { baseUrl, port } from "./config.ts";
 // import { App } from "./App.jsx";
-import { checkId, headers } from "./util.ts";
+import { checkId, headers, docTypeMiddleware } from "./util.ts";
 
 
 const router = new Router()
@@ -29,51 +26,6 @@ function Main(props) {
     <div>
       <a href="{props.forwardUrl}"></a>
     </div>
-  );
-}
-function App(props) {
-  const meta = {};
-  for (const [key, value] of Object.entries(metaDefaults)) {
-    if (props[key] == null) {
-      meta[key] = value;
-    } else {
-      meta[key] = props[key];
-    }
-  }
-
-  return (
-    <html>
-      <head>
-        <meta charset="UTF-8"></meta>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        ></meta>
-        <link rel="stylesheet" href="/assets/style.css" />
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <meta name="description" content="Create an easy-to-share link for your Endlesss rifffs" />
-
-        <meta property="og:site_name" content={`Endlesss Rifff Share by ${meta.user}`}></meta>
-        <meta property="og:type" content="article"></meta>
-
-        <meta property="og:description" content={meta.description}></meta>
-        <meta property="og:image" content={meta.display_image}></meta>
-        <meta property="og:url" content={meta.share_url}></meta>
-        <meta property="og:title" content={meta.title}></meta>
-
-        <meta name="twitter:image:alt" content={meta.img_alt}></meta>
-        <meta name="twitter:card" content="summary_large_image"></meta>
-        
-        {gtag}
-        <title>{meta.title}</title>
-      </head>
-      <body>
-        <h1>{meta.title}</h1>
-        {props.children}
-      </body>
-    </html>
   );
 }
 function notFound() {
@@ -147,10 +99,18 @@ router.get("/", ({response}) => {
 
 const serve = new Application();
 
-serve.use(router.routes());
-serve.use(router.allowedMethods());
+
 // add doctype to response
-serve.use(docTypeMiddleware);
+serve.use(async (ctx, next) => {
+  await next();
+  const ctype = ctx.response.headers.get("content-type");
+  const thebody = String(ctx.response.body);
+  console.log(ctype);
+  if (ctype === 'text/html') {
+    ctx.response.body = `<!DOCTYPE html>${thebody}`;
+  }
+  console.log(thebody);
+});
 serve.use(async (context, next) => {
   try {
     await context.send({
@@ -162,4 +122,6 @@ serve.use(async (context, next) => {
   }
 });
 console.log(`listening at ${baseUrl}`)
+serve.use(router.routes());
+serve.use(router.allowedMethods());
 await serve.listen({ port });

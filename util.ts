@@ -20,11 +20,6 @@ const headers:Headers = {
   "ico": ["content-type", "image/x-icon"]
 };
 
-const docTypeMiddleware = async ({response}, next) => {
-  if (response.headers.get('content-type') === 'text/html') {
-    response.body = `<!DOCTYPE html>${response.body}`;
-  }
-  await next();
-};
 
-export { headers, checkId, docTypeMiddleware}
+
+export { headers, checkId}

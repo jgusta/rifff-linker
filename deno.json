@@ -1,4 +1,12 @@
   {
+    "compilerOptions": {
+      "jsxImportSource": "https://esm.sh/react",
+      "jsx": "react",
+      "lib": [
+      "deno.unstable",
+      "deno.window"
+      ]
+    },
     "tasks": {
       "serve": "DEPLOYMENT=local deno run --inspect --unstable --allow-net=:8000 --allow-all main.jsx"
     }
