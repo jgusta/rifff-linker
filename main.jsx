@@ -1,25 +1,11 @@
-
-
-import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.20/mod.ts";
-import { Router, Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { App } from "./App.jsx";
 import { baseUrl, port } from "./config.ts";
+import { getSharedRifff } from "./routes/api/getSharedRifff.ts";
 // import { App } from "./App.jsx";
 import { checkId, headers, docTypeMiddleware } from "./util.ts";
 
 
 const router = new Router()
-
-const getSharedRifff = async (id) => {
-      try {
-        const resp = await fetch('https://endlesss.fm/api/v3/feed/shared_rifff/' + id);
-        const json = await resp.json();
-        const arr = json;
-        return arr.data[0];
-      } catch (error) {
-        throw new Error(error);
-      }
-}
 
 function Main(props) {
   return (

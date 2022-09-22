@@ -1,5 +1,5 @@
 import { metaDefaults, gtag } from "./config.ts";
-import { h, renderSSR } from "https://deno.land/x/nano_jsx@v0.0.20/mod.ts";
+
 export function App(props) {
   const meta = {};
   for(const [key, value] of Object.entries(metaDefaults)) {

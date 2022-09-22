@@ -1,5 +1,3 @@
-import { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-
 const checkId = function checkId(input:string):Promise<boolean> {
   console.log(`checkid run: ${input}`);
   return new Promise((res) => {
