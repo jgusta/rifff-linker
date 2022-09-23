@@ -2,6 +2,7 @@ import { apply } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
 import { BASE_URL, ENVIRONMENT, GA_ID, metaDefaults } from "config";
+import { makeMeta } from "../util/metaDefaults.ts";
 
 export const handler = {
   GET: (_req, ctx) => {
@@ -9,7 +10,7 @@ export const handler = {
   },
 };
 
-export const Nav = (props:PageProps) => (
+export const Nav = () => (
   <div class="bg-teal-500">
     <nav class="flex items-center justify-between flex-wrap max-w-screen-md mx-auto">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
@@ -30,19 +31,9 @@ export const Nav = (props:PageProps) => (
   </div>
 );
 
-export const Layout = (props) => {
-  const _meta = props.meta || {};
-  const temp: {
-    [key: string]: string;
-  } = {};
-  for (const [key, value] of Object.entries(_meta)) {
-    if (value == undefined) {
-      temp[key] = metaDefaults[key];
-    } else {
-      temp[key] = _meta[key];
-    }
-  }
-  const meta = temp;
+export const Layout = (props:any) => {
+  const meta:typeof metaDefaults = makeMeta (props.meta);
+
   console.log(meta);
   return (
     <>
@@ -93,11 +84,14 @@ export const Layout = (props) => {
 
         <title>{meta.title}</title>
       </Head>
-      <Nav />
+      <Nav  />
       {props.children}
     </>
   );
 };
+
+
+
 
 export default function Home(props:PageProps) {
   const meta = {
@@ -113,24 +107,18 @@ export default function Home(props:PageProps) {
   return (
     <>
       <Layout meta={meta}>
-        <div class="p-4 mx-auto max-w-screen-md">
-          <p class="my-6">
-            Welcome to `fresh`. Try updating this message in the
-            ./routes/index.tsx file, and refresh.
-          </p>
-        </div>
         <div class="bg-white mx-auto max-w-sm shadow-lg rounded-lg overflow-hidden">
           <div class="sm:flex sm:items-center px-6 py-4">
             <img
               class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0"
-              src="https://avatars2.githubusercontent.com/u/4323180?s=400&u=4962a4441fae9fba5f0f86456c6c506a21ffca4f&v=4"
+              src=""
               alt=""
             />{" "}
             <div class="text-center sm:text-left sm:flex-grow">
               <div class="mb-4">
                 <p class="text-xl leading-tight">Adam Wathan</p>
                 <p class="text-sm leading-tight text-gray-400">
-                  Developer at NothingWorks Inc.
+                  <a href="http://localhost:8000/rifff/d9fbb3c02ca911edb3c0994264ac4392">CLick here</a>
                 </p>
               </div>
               <div>

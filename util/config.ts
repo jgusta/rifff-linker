@@ -24,11 +24,7 @@ const env = cleanEnv(RAW_ENV, {
   BASE_URL: url({ default: base_url})
 });
 
-type Mope = {
-  [key:string]: string
-}
-
-const metaDefaults:Mope = {
+const metaDefaults = {
   description: "Create an easy-to-share link for your Endlesss rifffs",
   site_name: "Endlesss Riff Linker",
   display_image: `${env.BASE_URL}/splat.png`,
