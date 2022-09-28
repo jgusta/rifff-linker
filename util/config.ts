@@ -1,40 +1,36 @@
 import { config } from "dotenv";
-import { cleanEnv, host, port, str, url } from "envalid";
+import { cleanEnv, host, port, str, url, email } from "envalid";
 
-const RAW_ENV = Object.assign(Deno.env.toObject(), await config());
-const BASE_ENV = cleanEnv(RAW_ENV, {
-  BASE_HOST: host({default: "127.0.0.1"}),
+const raw_env = Object.assign(Deno.env.toObject(), await config());
+
+// these are checked first so we can make a default BASE_URL
+const base_env = cleanEnv(raw_env, {
+  BASE_HOST: host({ default: "127.0.0.1" }),
   PORT: port({ default: 8000 })
 });
 
-let base_url='';
-if (BASE_ENV.PORT == 443){
-  base_url = `https://${BASE_ENV.BASE_HOST}`;
+let base_url = '';
+if (base_env.PORT == 443) {
+  base_url = `https://${base_env.BASE_HOST}`;
 }
-else if (BASE_ENV.PORT == 80) {
-  base_url = `http://${BASE_ENV.BASE_HOST}`;
+else if (base_env.PORT == 80) {
+  base_url = `http://${base_env.BASE_HOST}`;
 }
 else {
-  base_url = `http://${BASE_ENV.BASE_HOST}:${BASE_ENV.PORT}`;
+  base_url = `http://${base_env.BASE_HOST}:${base_env.PORT}`;
 }
 
-const env = cleanEnv(RAW_ENV, {
-  GA_ID: str({default:''}),
+const env = cleanEnv(raw_env, {
+  PORT: port(),
+  GA_ID: str({ default: '' }),
   ENVIRONMENT: str({ choices: ["development", "test", "production"] }),
-  BASE_URL: url({ default: base_url})
+  BASE_URL: url({ default: base_url, desc: "The base url of the web site, no trailing slash. Autofilled using BASE_HOST and PORT, but can be overridden explicitly.", example: "https://www.example.com" }),
+  TWITTER: str({ default: '', desc: "Twitter handle of operator, no '@' symbol.", example: "mytwitter" }),
+  REFERER: url({ default: base_url, desc: "(sic) The url of the website that is requesting from the Endlesss API." }),
+  FROM: email({ desc: "Contact email to identify service to Endlesss API", example: "youremail@example.com" })
 });
+console.log(env)
+export const { TWITTER, BASE_URL, ENVIRONMENT, GA_ID, PORT, FROM, REFERER } = env;
 
-const metaDefaults = {
-  description: "Create an easy-to-share link for your Endlesss rifffs",
-  site_name: "Endlesss Riff Linker",
-  display_image: `${env.BASE_URL}/splat.png`,
-  share_url: `${env.BASE_URL}`,
-  title: "Endlesss Rifff Viewer",
-  img_alt: "Endlesss Rifff Viewer",
-  user: ""
-};
-
-export const {BASE_URL, ENVIRONMENT, GA_ID } = env;
-
-export { env, metaDefaults }
+export { env }
 
