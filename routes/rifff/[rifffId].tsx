@@ -50,10 +50,10 @@ export default function RifffPage ({data}: PageProps) {
   };
   console.log(meta);
   return (
-    <>
-      <Layout meta={meta}>
+    <Layout meta={meta}>
+      <>
         {title} by {user} - {desc} - {forwardUrl}
-      </Layout>
-    </>
+      </>
+    </Layout>
   );
 }

@@ -113,10 +113,10 @@ export default function Home(props:PageProps) {
               class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0"
               src=""
               alt=""
-            />{" "}
+            />
             <div class="text-center sm:text-left sm:flex-grow">
               <div class="mb-4">
-                <p class="text-xl leading-tight">Adam Wathan</p>
+                <p class="text-xl leading-tight">Riffffff</p>
                 <p class="text-sm leading-tight text-gray-400">
                   <a href="http://localhost:8000/rifff/d9fbb3c02ca911edb3c0994264ac4392">CLick here</a>
                 </p>
