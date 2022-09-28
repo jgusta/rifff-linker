@@ -3,7 +3,7 @@ import { JSX } from "preact/jsx-runtime";
 import { ENVIRONMENT, GA_ID, TWITTER } from "config";
 import { makeMeta, PageMeta } from "meta";
 import { Nav } from "@/components/Nav.tsx";
-import { apply, tw } from "https://esm.sh/v94/twind@0.16.17/twind";
+import { apply} from "twind";
 
 const bodyTheme = apply`bg-gray-500 font-sans text-white`;
 

@@ -2,6 +2,7 @@
   "imports": {
     "@/": "./",
     "@components/":"./components/",
+    "@islands/":"./islands/",
     "@api/": "./routes/api/",
     "config":"./util/config.ts",
     "meta":"./util/meta.tsx",

@@ -8,6 +8,7 @@ import * as $1 from "./routes/_middleware.tsx";
 import * as $2 from "./routes/api/rifffData.ts";
 import * as $3 from "./routes/index.tsx";
 import * as $4 from "./routes/rifff/[rifffId].tsx";
+import * as $$0 from "./islands/LinkConvertor.tsx";
 
 const manifest = {
   routes: {
@@ -17,7 +18,9 @@ const manifest = {
     "./routes/index.tsx": $3,
     "./routes/rifff/[rifffId].tsx": $4,
   },
-  islands: {},
+  islands: {
+    "./islands/LinkConvertor.tsx": $$0,
+  },
   baseUrl: import.meta.url,
   config,
 };
