@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import {tw} from "twind"
 // import { BASE_URL } from "../util/config.ts";
 export default function LinkConvertor(props) {
   const [inser, setValue] = useState("");
@@ -6,7 +7,7 @@ export default function LinkConvertor(props) {
   const regex = /endlesss:\/\/sharedrifff\/([a-f0-9]{32})\/?/
   
   const BASE_URL = props.baseUrl;
-  
+  const red = tw``;
   const onChange = function (e) {
     const target = e.target.value;
     setValue(target);
