@@ -1,6 +1,6 @@
 import { Layout } from "@components/Layout.tsx";
 import LinkConvertor from "@islands/LinkConvertor.tsx";
-import { BASE_URL } from "../util/config.ts";
+import { BASE_URL } from "config";
 
 
 export default function Home() {

@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 // import { BASE_URL } from "../util/config.ts";
 export default function LinkConvertor(props) {
   const [inser, setValue] = useState("");
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState(<></>);
   const regex = /endlesss:\/\/sharedrifff\/([a-f0-9]{32})\/?/
   
   const BASE_URL = props.baseUrl;
@@ -13,11 +13,11 @@ export default function LinkConvertor(props) {
     console.log('run')
     if(regex.test(target)) {
       const rifffId = target.match(regex)[1]
-      setOutput(`${BASE_URL}/rifff/${rifffId}`);
+      setOutput(<span>`${BASE_URL}/rifff/${rifffId}`</span>);
     }
     else {
       console.log('setoutput')
-      setOutput('???');
+      setOutput(<span>Enter an <b>endlesss://</b> style link</span>)
     }
   };
 
@@ -37,9 +37,10 @@ export default function LinkConvertor(props) {
         <input
           id="url_out"
           type="text"
-          value={output}
+          // value={output}
           class="text-black"
         />
+        {output}
       </div>
     </div>
   );

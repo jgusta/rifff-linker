@@ -4,7 +4,10 @@ export default {
   selfURL: import.meta.url,
   theme:{ 
     fontFamily: {
-      default: ['sans-serif']
+      default: ['Rubik','sans-serif']
     }
   }
 } as Options;
+
+//font-family: 'Questrial', sans-serif;
+//font-family: 'Rubik', sans-serif;
