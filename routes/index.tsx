@@ -2,19 +2,13 @@ import { Layout } from "@components/Layout.tsx";
 import LinkConvertor from "@islands/LinkConvertor.tsx";
 import { BASE_URL } from "config";
 
-
 export default function Home() {
-  const metaProps = {}
+  const metaProps = {};
   return (
     <>
       <Layout meta={metaProps}>
-        <div class="bg-white mx-auto max-w-lg shadow-lg rounded-lg overflow-hidden">
-          <div class="sm:flex sm:items-center px-6 py-4">
-    <div>
-        <LinkConvertor baseUrl={BASE_URL}></LinkConvertor>
-    </div>
-
-          </div>
+        <div class="bg-gray-600 my-10 px-8 py-4 mx-auto max-w-lg shadow-lg overflow-hidden">
+          <LinkConvertor baseUrl={BASE_URL}></LinkConvertor>
         </div>
       </Layout>
     </>

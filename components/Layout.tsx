@@ -2,10 +2,9 @@ import { Head } from "https://deno.land/x/fresh@1.1.1/runtime.ts";
 import { JSX } from "preact/jsx-runtime";
 import { ENVIRONMENT, GA_ID, TWITTER } from "config";
 import { makeMeta, PageMeta } from "meta";
-import { Nav } from "@/components/Nav.tsx";
-import { apply} from "twind";
-
-const bodyTheme = apply`bg-gray-500 font-sans text-white`;
+import Nav from "@components/Nav.tsx";
+import Footer from "@components/Footer.tsx";
+import { apply,tw } from "twind";
 
 export const Layout = ({ meta, children }: {
   meta: Partial<PageMeta>;
@@ -24,7 +23,7 @@ export const Layout = ({ meta, children }: {
   } = makeMeta({ ...meta });
 
   return (
-    <body class={bodyTheme}>
+    <body class={tw`bg-gray-900 font-sans`}>
       <Head>
         <meta charSet="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -59,11 +58,25 @@ export const Layout = ({ meta, children }: {
           : ""}
 
         <title>{title}</title>
-        
-        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"></link>
-        <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Rubik:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet"></link>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        >
+        </link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Questrial&family=Rubik:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
+          rel="stylesheet"
+        >
+        </link>
+        <link
+          rel="stylesheet"
+          href="style.css"
+          type="text/css"
+          charSet="utf-8"
+        />
 
         {ENVIRONMENT === "production"
           ? (
@@ -91,6 +104,7 @@ export const Layout = ({ meta, children }: {
       </Head>
       <Nav />
       {children}
+      <Footer></Footer>
     </body>
   );
 };
