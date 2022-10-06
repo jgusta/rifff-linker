@@ -1,6 +1,6 @@
 import { PageProps } from "$fresh/server.ts";
 import { Handlers } from "$fresh/server.ts";
-import { BASE_URL, FROM, REFERER, SITE_NAME } from "config";
+import { BASE_URL, FROM, REFERER, SITE_NAME, ENVIRONMENT } from "config";
 import { Layout } from "@components/Layout.tsx";
 import { getRifffData, Rifff } from "@api/rifffData.ts";
 import RifffDisplay from "../../components/RifffDisplay.tsx";
@@ -16,7 +16,9 @@ export const handler: Handlers = {
     }
     const rifff: Rifff = await getRifffData(rifff_id);
     console.log(rifff);
-    await Deno.writeTextFile("./hello.txt", JSON.stringify(rifff));
+    if (ENVIRONMENT === "development") {
+      await Deno.writeTextFile("./hello.txt", JSON.stringify(rifff));
+    }
     return await ctx.render(rifff);
   },
 };
