@@ -1,4 +1,5 @@
 import { FROM, REFERER } from "../../util/config.ts";
+import { readJson } from 'https://deno.land/x/jsonfile/mod.ts';
 export interface RifffResponse {
   data: Rifff[];
   meta: { version: number };
@@ -118,17 +119,40 @@ type CdnAttachment = {
   }
 }
 
+
+
 export async function getRifffData(rifffId: string): Promise<Rifff> {
-  const resp = await fetch(
-    "https://endlesss.fm/api/v3/feed/shared_rifff/" + rifffId,
-    {
-      headers: new Headers({
-        "User-Agent": "Endlesss Rifff Linker/1.0 DenoDeploy",
-        "From": FROM,
-        "Referer": REFERER
-      })
-    });
-  const result = await resp.json();
-  const rifff = result.data[0];
-  return rifff;
+
+  if (true) {
+    const f = await readJson('./rifff-sample.json');
+    return f.data[0];
+  } else {
+    const resp = await fetch(
+      "https://endlesss.fm/api/v3/feed/shared_rifff/" + rifffId,
+      {
+        headers: new Headers({
+          "User-Agent": "Endlesss Rifff Linker/1.0 DenoDeploy",
+          "From": FROM,
+          "Referer": REFERER
+        })
+      });
+    const result = await resp.json();
+    const rifff = result.data[0];
+    return rifff;
+  }
+}
+
+export interface PageData {
+  title: string
+  user: string
+  rifff_title: string
+  rifff_id: string
+  display_image: string
+  description: string
+  contributors: string
+  likes: string
+  bpm: string
+  bars: number
+
+  seconds: number
 }

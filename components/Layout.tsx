@@ -6,6 +6,7 @@ import Nav from "@components/Nav.tsx";
 import Footer from "@components/Footer.tsx";
 import { apply,tw } from "twind";
 
+
 export const Layout = ({ meta, children }: {
   meta: Partial<PageMeta>;
   children: JSX.Element;
@@ -23,7 +24,7 @@ export const Layout = ({ meta, children }: {
   } = makeMeta({ ...meta });
 
   return (
-    <body class={tw`bg-gray-900 font-sans`}>
+    <body class={tw`font-sans`}>
       <Head>
         <meta charSet="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -104,7 +105,7 @@ export const Layout = ({ meta, children }: {
       </Head>
       <Nav />
       {children}
-      <Footer></Footer>
+      <Footer/>
     </body>
   );
 };

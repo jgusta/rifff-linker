@@ -3,23 +3,23 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/[name].tsx";
-import * as $1 from "./routes/_middleware.tsx";
-import * as $2 from "./routes/api/rifffData.ts";
-import * as $3 from "./routes/index.tsx";
-import * as $4 from "./routes/rifff/[rifffId].tsx";
-import * as $$0 from "./islands/LinkConvertor.tsx";
+import * as $0 from "./routes/_middleware.tsx";
+import * as $1 from "./routes/api/rifffData.ts";
+import * as $2 from "./routes/index.tsx";
+import * as $3 from "./routes/rifff/[rifffId].tsx";
+import * as $$0 from "./islands/CopyButton.tsx";
+import * as $$1 from "./islands/LinkConvertor.tsx";
 
 const manifest = {
   routes: {
-    "./routes/[name].tsx": $0,
-    "./routes/_middleware.tsx": $1,
-    "./routes/api/rifffData.ts": $2,
-    "./routes/index.tsx": $3,
-    "./routes/rifff/[rifffId].tsx": $4,
+    "./routes/_middleware.tsx": $0,
+    "./routes/api/rifffData.ts": $1,
+    "./routes/index.tsx": $2,
+    "./routes/rifff/[rifffId].tsx": $3,
   },
   islands: {
-    "./islands/LinkConvertor.tsx": $$0,
+    "./islands/CopyButton.tsx": $$0,
+    "./islands/LinkConvertor.tsx": $$1,
   },
   baseUrl: import.meta.url,
   config,
