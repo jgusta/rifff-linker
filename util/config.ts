@@ -24,10 +24,10 @@ const env = cleanEnv(raw_env, {
   PORT: port({default: 8000, desc:"Port number."}),
   GA_ID: str({ default: '' }),
   ENVIRONMENT: str({ choices: ["development", "test", "production"], desc:"'development', 'test' or 'production'" }),
-  BASE_URL: url({ default: base_url, desc: "The base url of the web site, no trailing slash. Autofilled using BASE_HOST and PORT, but can be overridden explicitly.", example: "https://www.example.com" }),
+  BASE_URL: str({ default: base_url, desc: "The base url of the web site, no trailing slash. Autofilled using BASE_HOST and PORT, but can be overridden explicitly.", example: "https://www.example.com" }),
   SITE_NAME: str({default: 'Rifff Linker', desc:'The title of the site used in the header.'}),
   TWITTER: str({ default: '', desc: "Twitter handle of operator, no '@' symbol.", example: "mytwitter" }),
-  REFERER: url({ default: base_url, desc: "The url of the website that is requesting from the Endlesss API." }),
+  REFERER: str({ default: base_url, desc: "The url of the website that is requesting from the Endlesss API." }),
   FROM: email({ desc: "Contact email to identify service to Endlesss API", example: "youremail@example.com" })
 });
 console.log(env)
