@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "dev": "DEPLOYMENT=local deno run -A --watch=static/,routes/,.env dev.ts",
-    "serve": "DEPLOYMENT=production deno run --unstable --allow-write --allow-read --allow-env main.ts",
+    "dev": "deno run -A --watch=static/,routes/,.env dev.ts",
+    "serve": "deno run --unstable --allow-write --allow-read --allow-env main.ts",
     "npm:add": "deno run -A https://esm.sh/v96 add",
     "npm:update": "deno run -A https://esm.sh/v96 update",
     "npm:remove": "deno run -A https://esm.sh/v96 remove"

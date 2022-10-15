@@ -1,9 +1,10 @@
 import { PageProps } from "$fresh/server.ts";
 import { Handlers } from "$fresh/server.ts";
-import { BASE_URL, FROM, REFERER, SITE_NAME, ENVIRONMENT } from "config";
+import { BASE_URL, SITE_NAME, ENVIRONMENT } from "config";
 import { Layout } from "@components/Layout.tsx";
-import { getRifffData, Rifff } from "@api/rifffData.ts";
+import { getRifffData } from "@api/rifffData.ts";
 import RifffDisplay from "../../components/RifffDisplay.tsx";
+import { Rifff } from "types";
 
 //endlesss.fm/jams/10709ed65be48dcc8381cf6022b25f3c34676689e013e9f7b6f55ecd9855d241?rifffId=cd5a89f03ebc11ed89f007f1ba9c2466
 
@@ -57,11 +58,12 @@ export default function RifffPage(data: { data: Rifff } & PageProps) {
   const rifffData = {
     user,
     title:rifff_title,
+    rifff_title,
     rifff_id,
     display_image,
     description,
     contributors,
-    likes:rifff.react_counts,
+    likes: rifff.react_counts,
     bpm,
     bars:rifff.rifff.state.barLength,
     seconds: rifff.rifff.state.bps * 4 
