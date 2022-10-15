@@ -1,43 +1,52 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { tw } from "twind";
-import CopyButton from "@islands/CopyButton.tsx"
+import LinkHolder from "@islands/LinkHolder.tsx"
 
+import { JSX } from "preact";
 
-const LinkHolder = (props) => {
-  const url = props.children;
-  return (
-    <>
-      <input
-        class={tw`block text-sm px-1 py-1 text-black w-full text-black border-solid block border-2 border-black`}
-        readonly
-        value={url}
-      >
-      </input>
-      <CopyButton content={url}></CopyButton>
-    </>
-  );
-};
-
-export default function LinkConvertor(props) {
-  const [inser, setValue] = useState("");
+export default function LinkConvertor(props: { baseUrl: string, startValue: string }) {
+  const [inputValue, setInputValue] = useState("");
   const [output, setOutput] = useState(<></>);
   const regex = /(?:endlesss:\/\/sharedrifff\/([a-f0-9]{32})\/?)|([a-f0-9]{32})/;
   const BASE_URL = props.baseUrl;
-  const onChange = function (e) {
-    const target = e.target.value;
-    setValue(target);
-    if (regex.test(target)) {
-      const rifffId = target.match(regex)[1];
-      setOutput(<LinkHolder>{`${BASE_URL}/rifff/${rifffId}`}</LinkHolder>);
-    } else {
+
+  const checkInput = (val: string) => {
+    setInputValue(val);
+    const regMatch = val.match(regex);
+    let rifffId = "";
+    if (regMatch === null) {
       setOutput(
         <span class={tw`text-white`}>
           Enter an <b>endlesss://</b>
-          style link! endlesss://sharedrifff/b0aff6b039b111edb6b0371b1bc0a57f
-        </span>
+          style link!
+        </span>,
       );
+    } else {
+      rifffId = regMatch[1];
+      setOutput(<LinkHolder link={`${BASE_URL}/rifff/${rifffId}`} />);
     }
-  };
+  }
+
+  const keyHandler: JSX.KeyboardEventHandler<HTMLInputElement> = (e: JSX.TargetedKeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const val = (e.target as HTMLInputElement).value
+      checkInput(val);
+    }
+  }
+
+  const inputHandler: JSX.GenericEventHandler<HTMLInputElement> = function (e: JSX.TargetedEvent<HTMLInputElement, Event>) {
+    if (e.target != null) {
+      const val = (e.target as HTMLInputElement).value;
+      checkInput(val);
+    }
+  }
+
+  // for testing, change the value
+  useEffect(() => {
+    if (props.startValue.length) {
+      setInputValue(`endlesss://sharedrifff/${props.startValue}`);
+    }
+  }, []);
 
   //endlesss://sharedrifff/b0aff6b039b111edb6b0371b1bc0a57f
   return (
@@ -48,8 +57,9 @@ export default function LinkConvertor(props) {
       <input
         id="url_paste"
         type="text"
-        value={inser}
-        onInput={onChange}
+        value={inputValue}
+        onInput={inputHandler}
+        onKeyDown={keyHandler}
         placeholder="endlesss://sharedrifff/........."
         class={tw`block text-sm px-1 py-1 text-black w-full border-solid block border-2 border-black`}
       />
