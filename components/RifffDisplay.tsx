@@ -1,8 +1,9 @@
-import { useState } from "preact/hooks";
+
 import { tw } from "twind";
-import { PageData } from "@api/rifffData.ts";
+import { PageData } from "types"
 export default function RifffDisplay(props: { rifffData: PageData }) {
   const { rifffData } = props;
+
   const {
     user,
     title,
@@ -17,11 +18,17 @@ export default function RifffDisplay(props: { rifffData: PageData }) {
   } = rifffData;
 
   return (
-    <div class="max-w-screen-lg">
-      <div class="flex flex-col">
-        <h1 class="text-white">{title}</h1>
-        <div class="container"></div>
-        {title} by {user} - {description} - {contributors}
+    <div class={tw`max-w-screen-lg`}>
+      <div class={tw`flex flex-col`}>
+        <div className="container">
+          <h1 class={tw`text-white`}>{title}</h1>
+        </div>
+        <div class="container">
+          <div class=""><img src={display_image}/></div>
+          {title} by {user} - {description} - {contributors}
+          <RifffCard rifff={rifff_id}/>
+        </div>
+        
       </div>
     </div>
   );

@@ -1,16 +1,20 @@
-import { apply, css, style, tw } from "twind/style";
+import { apply, css, style, tw, StyleConfig } from "twind/style";
 import {SITE_NAME} from "config";
-const logo = style({
-  base: css`
-    max-width: 40px;
-    margin-right: 1em;
-    height: auto;
-  `,
-});
 
-export default function Nav() {
+
+export default function Nav({tClass}:{tClass:string}) {
+  const logo = style({
+    base: css({
+      maxWidth: '40px',
+      marginRight: '1em',
+      height: 'auto'
+    }),
+  });
+
+  const navClasses = tw`bg-gray-800 flex justify-between items-center flex-row py-10 px-4 h-16`
+
   return (
-    <nav class={tw`bg-gray-800 flex justify-between items-center flex-row py-10 px-4 h-16`}>
+    <nav class={`${navClasses} ${tClass}`}>
       <div
         class={tw`container w-64 py-4 px-4 flex items-center flex-wrap max-w-screen-sm`}
       >

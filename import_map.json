@@ -4,7 +4,9 @@
     "@components/": "./components/",
     "@islands/": "./islands/",
     "@api/": "./routes/api/",
+    "@util/":"./util/",
     "config": "./util/config.ts",
+    "types": "./util/types.ts",
     "meta": "./util/meta.ts",
     "$std/": "https://deno.land/std@0.157.0/",
     "dotenv": "https://deno.land/std@0.157.0/dotenv/mod.ts",
@@ -16,7 +18,8 @@
     "preact": "https://esm.sh/preact@10.11.0",
     "preact/": "https://esm.sh/preact@10.11.0/",
     "twind": "https://esm.sh/twind@0.16.17",
-    "twind/": "https://esm.sh/twind@0.16.17/"
+    "twind/": "https://esm.sh/twind@0.16.17/",
+    "jsonfile": "https://deno.land/x/jsonfile@1.0.0/mod.ts"
   },
   "scopes": {}
 }
