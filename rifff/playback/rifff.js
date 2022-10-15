@@ -1,7 +1,5 @@
-/* eslint-disable */
-
 export class RifffBase {
-  constructor (data) {
+  constructor(data) {
     this.data = data;
     if (new.target === RifffBase) {
       throw new TypeError("Cannot construct RifffBase instances directly");
@@ -14,15 +12,15 @@ export class RifffBase {
 
   getSlots() {
     const state = this.data.state;
-    return state.playback.map(a => a.slot.current);
+    return state.playback.map((a) => a.slot.current);
   }
 
   getLoops() {
     return this.data.loops;
   }
 
-  async loadBuffers() {
-    let buffers = new Array();
+  loadBuffers() {
+    const buffers = [];
 
     for (let i = 0; i < this.getSlots().length; i++) {
       buffers.push(new ArrayBuffer());
@@ -33,13 +31,13 @@ export class RifffBase {
 }
 
 export class CdnRifff extends RifffBase {
-  constructor (rifffData) {
+  constructor(rifffData) {
     super(rifffData);
   }
 
-  loadBuffer (loop) {
+  loadBuffer(loop) {
     if (!loop) {
-      console.log('Empty loop. Returning empty buffer');
+      console.log("Empty loop. Returning empty buffer");
       return Promise.resolve(new ArrayBuffer());
     }
 
@@ -47,8 +45,8 @@ export class CdnRifff extends RifffBase {
       const path = loop.cdn_attachments.oggAudio.url;
 
       const request = new XMLHttpRequest();
-      request.open('GET', path, true);
-      request.responseType = 'arraybuffer';
+      request.open("GET", path, true);
+      request.responseType = "arraybuffer";
       request.onload = () => {
         const audioData = request.response;
         resolve(audioData);
@@ -58,4 +56,4 @@ export class CdnRifff extends RifffBase {
       request.send();
     });
   }
-};
+}

@@ -1,6 +1,3 @@
-/* eslint-disable */
-const { RifffPlayer } = require('./rifff-player.js');
-
 export class PlaybackController {
   constructor (rifffPlayer) {
     this.rifffPlayer = rifffPlayer;
@@ -74,4 +71,4 @@ export class PlaybackController {
     const currentBeat = this.rifffPlayer.getCurrentBeat();
     return currentBeat % this.numBeats;
   }
-};
+}

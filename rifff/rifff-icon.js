@@ -110,7 +110,7 @@ export function render (rifff, canvas, player, animate, alpha = false, backgroun
     }
 
     if (player && animate) {
-      window.requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         render(rifff, canvas, player, animate);
       });
     }

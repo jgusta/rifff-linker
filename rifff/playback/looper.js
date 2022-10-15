@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 export class Looper {
   constructor(audioCtx, loop, buffer) {
     this.audioCtx = audioCtx;
@@ -21,12 +19,12 @@ export class Looper {
   }
 
   createSource() {
-    this.source = this.audioCtx.createBufferSource()    
+    this.source = this.audioCtx.createBufferSource();
     this.source.buffer = this.buffer;
     this.source.loop = true;
     this.source.loopEnd = this.loop.length / this.loop.sampleRate;
     this.source.playbackRate.value = this.playbackRate;
-    
+
     this.source.connect(this.gainNode);
   }
 
@@ -36,7 +34,7 @@ export class Looper {
 
   setGain(gain) {
     this.gain = gain;
-        
+
     if (this.getIsPlaying()) {
       this.gainNode.gain.cancelScheduledValues(this.audioCtx.currentTime);
       this.gainNode.gain.setValueAtTime(gain, this.audioCtx.currentTime);
@@ -60,7 +58,7 @@ export class Looper {
   }
 
   getIsPlaying() {
-    return (this.isPlaying && this.source);
+    return this.isPlaying && this.source;
   }
 
   play(startTime = -1, offset = 0) {
@@ -69,9 +67,9 @@ export class Looper {
     }
 
     this.createSource();
-    
+
     this.startTime = startTime;
-    
+
     this.source.start(this.startTime, offset * this.playbackRate);
     this.gainNode.gain.setTargetAtTime(this.gain, this.startTime, 0.015);
 
@@ -90,7 +88,7 @@ export class Looper {
     this.source.onended = () => {
       // console.log('Source Ended: ' + this.getId());
       this.stopImmediately();
-    }
+    };
     this.isPlaying = false;
   }
 
@@ -98,20 +96,20 @@ export class Looper {
     if (!this.source) {
       return;
     }
-    
+
     this.source.loop = false;
-    
+
     if (this.getIsPlaying()) {
       // Fade out and stop
       this.gainNode.gain.cancelScheduledValues(this.audioCtx.currentTime);
-      this.gainNode.gain.setTargetAtTime(0, this.audioCtx.currentTime, 0.100);
-      
+      this.gainNode.gain.setTargetAtTime(0, this.audioCtx.currentTime, 0.1);
+
       this.source.stop(this.audioCtx.currentTime + 0.2);
     } else if (this.source && this.outputNode) {
       this.gainNode.disconnect(this.outputNode);
       this.outputNode = null;
     }
-    
+
     this.isPlaying = false;
     this.ended = true;
   }
@@ -120,4 +118,4 @@ export class Looper {
     this.gainNode.connect(destination);
     this.outputNode = destination;
   }
-};
+}

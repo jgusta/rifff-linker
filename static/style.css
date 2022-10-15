@@ -1,26 +1,46 @@
 @font-face {
-    font-family: 'aino bold';
-    src: url('./fonts/aino-bold-webfont.woff2') format('woff2'),
-         url('./fonts/aino-bold-webfont.woff') format('woff');
-    font-weight: 500 900;
-    font-style: normal;
-    font-display: block;
+  font-family: "aino bold";
+  src: url("./fonts/aino-bold-webfont.woff2") format("woff2"),
+    url("./fonts/aino-bold-webfont.woff") format("woff");
+  font-weight: 500 900;
+  font-style: normal;
+  font-display: block;
 }
 
 @font-face {
-    font-family: 'aino headline';
-    src: url('./fonts/aino-headline-webfont.woff2') format('woff2'),
-         url('./fonts/aino-headline-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
+  font-family: "aino headline";
+  src: url("./fonts/aino-headline-webfont.woff2") format("woff2"),
+    url("./fonts/aino-headline-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
 @font-face {
-    font-family: 'aino';
-    src: url('./fonts/aino-regular-webfont.woff2') format('woff2'),
-         url('./fonts/aino-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
+  font-family: "aino";
+  src: url("./fonts/aino-regular-webfont.woff2") format("woff2"),
+    url("./fonts/aino-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.content {
+  grid-area: content;
+}
+.main-nav {
+  grid-area: nav;
+}
+.main-footer {
+  grid-area: footer;
+}
+.wrapper {
+  min-height: 100vh;
+  display: grid;
+  gap: 20px;
+  grid-template-rows: 80px 1fr minmax(48px,auto);
+  grid-template-areas:
+    "nav"
+    "content"
+    "footer";
 }

@@ -1,7 +1,6 @@
-/* eslint-disable */
-import Module from './oggmented-wasm.js';
-const { Looper } = require('./looper.js');
-const { RifffBase } = require('./rifff.js');
+import Module from "@/rifff/playback/oggmented-wasm.js";
+import { Looper } from "@/rifff/playback/looper.js";
+import { RifffBase } from "@/rifff/playback/rifff.js";
 
 export class RifffPlayer {
   constructor (audioCtx) {
@@ -107,8 +106,7 @@ export class RifffPlayer {
     }
   }
 
-  // TODO: Move into utils?
-  async decodeBuffer (buffer) {
+  decodeBuffer (buffer) {
       // NOTE: Native ogg decoding is not possible in Safari.
       // Therefore, we use this wasm module to handle ogg decoding
       // https://github.com/jfrancos/oggmented

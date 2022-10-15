@@ -1,4 +1,3 @@
-
 export class AutoLevelMixer { // eslint-disable-line no-unused-vars
   constructor () {
     this.decrementValueReady = false;
@@ -147,23 +146,3 @@ export class AutoLevelMixer { // eslint-disable-line no-unused-vars
     }
   }
 }
-
-/*
-const audioBuffer2 = new AudioBuffer({
-  length: data.length,
-  numberOfChannels: 2,
-  sampleRate: 44100
-});
-
-audioBuffer2.copyToChannel(floatArray, 0, 0);
-audioBuffer2.copyToChannel(floatArray, 1, 0);
-
-let a = new AutoLevelMixer();
-
-// console.log (c.calculateControlValueInDecibels (0.5));
-// console.log (c.calculateControlValueInDecibels (1.2));
-
-a.processBlock (audioBuffer2);
-
-// console.log (a.gainReductionInDecibels);
-*/
