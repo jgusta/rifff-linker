@@ -1,16 +1,5 @@
 import { env } from "config";
-
-export declare interface PageMeta {
-  canonical: string;
-  description: string;
-  display_image: string;
-  img_alt: string;
-  share_url: string;
-  site_name: string;
-  title: string;
-  twitter_creator: string;
-  user: string;
-}
+import { PageMeta } from "types";
 
 const metaDefaults: PageMeta = {
   description: "Create an easy-to-share link for your Endlesss rifffs",
