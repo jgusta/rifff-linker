@@ -1,8 +1,12 @@
 import CopyButton from "@islands/CopyButton.tsx";
 import { tw } from "twind";
+import OpenButton from "@islands/OpenButton.tsx";
 
-export default function LinkHolder(props: { link: string }) {
-  const link = props.link;
+interface Props {
+  link: string;
+}
+
+export default function LinkHolder({ link }: Props) {
   return (
     <>
       <input
@@ -12,6 +16,7 @@ export default function LinkHolder(props: { link: string }) {
       >
       </input>
       <CopyButton content={link}></CopyButton>
+      <OpenButton content={link}></OpenButton>
     </>
   );
 }

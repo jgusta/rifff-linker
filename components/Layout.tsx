@@ -1,12 +1,11 @@
 import { JSX } from "preact/jsx-runtime";
-import { PageMeta } from "@util/types.ts";
+import { tw, css } from "twind/css";
 import Nav from "@components/Nav.tsx";
 import Footer from "@components/Footer.tsx";
-import { tw } from "twind";
 import PageHeading from "@components/PageHeading.tsx";
-import { css } from "twind/css";
+import { PageMeta } from "types";
 
-export const Layout = ({ meta, children }: {
+const Layout = ({ meta, children }: {
   meta: Partial<PageMeta>;
   children: JSX.Element;
 }) => {
@@ -18,6 +17,7 @@ export const Layout = ({ meta, children }: {
     gridTemplateAreas: '"nav" "content" "footer"',
     backgroundColor: '#2e343c'
   });
+    
   return (
     <body class={tw`font-sans`}>
       <PageHeading meta={meta} />
@@ -31,3 +31,4 @@ export const Layout = ({ meta, children }: {
     </body>
   );
 };
+export default Layout

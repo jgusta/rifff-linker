@@ -11,7 +11,7 @@ export default function CopyButton(props) {
         setIsCopied(true);
       }}
     >
-      {isCopied ? "Copied!" : "Click to Copy"}
+      {isCopied ? "Copied!" : <>Click to Copy <span class="material-icons">content_copy</span></>}
     </button>
   );
 }
