@@ -1,3 +1,8 @@
+export interface RifffWad {
+  meta: InputMeta, 
+  rifffData: PageData
+}
+
 // the data passed to the page's <head>
 export interface PageMeta {
   canonical: string;
@@ -7,9 +12,9 @@ export interface PageMeta {
   share_url: string;
   site_name: string;
   title: string;
-  twitter_creator: string;
-  user: string;
 }
+
+export type InputMeta = Partial<PageMeta>;
 
 // the data passed to the page's <body>
 export interface PageData {
@@ -62,7 +67,7 @@ export interface Rifff {
 
 type Colour = string;
 
-interface RifffSnapshot {
+export interface RifffSnapshot {
   _id: string;
   _rev: string;
   state: State;
