@@ -6,9 +6,9 @@ export interface MiddlewareContext {
 export async function handler(req: Request, ctx: MiddlewareContext) {
   // For Logging
   const dontLog = [
-    "/_frsh/alive",
-    "/_frsh/refresh.js",
+    "/_frsh",
     "/favicon.ico",
+    '/fonts'
   ];
   const start = Date.now();
   const { pathname } = new URL(req.url);
@@ -27,7 +27,14 @@ export async function handler(req: Request, ctx: MiddlewareContext) {
     }
   };
   resp.headers.set("X-Response-Time", `${ms}ms`);
-  if (!dontLog.includes(pathname)) {
+  let skip = false;
+  for (const i of dontLog) {
+    if ((pathname.startsWith('/') && pathname.startsWith(i)) || pathname.endsWith(i)) {
+      skip = true
+      break;
+    }
+  }
+  if (!skip) {
     console.log(
       `[${magenta(new Date(now).toISOString())}] ${blue(req.method)} ${
         cyan(pathname)

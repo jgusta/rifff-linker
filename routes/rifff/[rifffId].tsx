@@ -1,77 +1,47 @@
+import { tw } from "https://esm.sh/v96/twind@0.16.17/twind";
+import { BASE_URL, SITE_NAME, ENVIRONMENT } from "config";
 import { PageProps } from "$fresh/server.ts";
 import { Handlers } from "$fresh/server.ts";
-import { BASE_URL, SITE_NAME, ENVIRONMENT } from "config";
-import { Layout } from "@components/Layout.tsx";
-import { getRifffData } from "@api/rifffData.ts";
-import RifffDisplay from "../../components/RifffDisplay.tsx";
-import { Rifff } from "types";
-
-//endlesss.fm/jams/10709ed65be48dcc8381cf6022b25f3c34676689e013e9f7b6f55ecd9855d241?rifffId=cd5a89f03ebc11ed89f007f1ba9c2466
+import { HandlerContext } from "$fresh/server.ts";
+import { InputMeta, PageData, Rifff, RifffWad } from "types";
+import Layout from "@components/Layout.tsx";
+import { fetchRifff } from "@util/fetchRifff.ts";
+import RifffCard from "@islands/RifffCard.tsx";
+import {RifffContextProvider} from "@util/rifffContext.tsx"
+import processRifffData from "@util/processRifffData.ts"
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
+  async GET(req: Request, ctx: HandlerContext) {
     const pattern = new URLPattern({ pathname: "/rifff/:id" });
     const rifff_id = pattern.exec(req.url)?.pathname.groups.id;
+
     if (rifff_id == undefined) {
       throw new Error('Bad rifff_id');
     }
-    const rifff: Rifff = await getRifffData(rifff_id);
-    console.log(rifff);
-    if (ENVIRONMENT === "development") {
-      await Deno.writeTextFile("./hello.txt", JSON.stringify(rifff));
-    }
-    return await ctx.render(rifff);
+    const rifff: Awaited<Promise<Rifff>> = await fetchRifff(rifff_id);
+    const rifffWad = processRifffData(rifff);
+    return  ctx.render(rifffWad);
   },
 };
 
-export default function RifffPage(data: { data: Rifff } & PageProps) {
-  const rifff: Rifff = data.data;
-  const display_image = rifff.image_url;
-  const time = rifff.action_timestamp_iso;
-  const user = rifff.user;
-  const rifff_id = rifff._id;
-  const otherContributors = rifff.creators.filter((x: string) => x != user);
-  const isSenderInIt = otherContributors.length < rifff.creators.length;
-  const feats = otherContributors.join(", ")
-  const rifff_title = rifff.title;
-  const contributors = rifff.creators;
-  const title = `${user} - ${rifff.title}`;
-  const share_url = `${BASE_URL}/rifff/${rifff_id}`;
-  const forward_url =
-    `https://endlesss.fm/rifff-link?type=shared&rifffId=${rifff_id}`;
-  const description = isSenderInIt && otherContributors
-    ? `feat ${feats} - Created @ ${time}`
-    : `Created @ ${time}`;
-  const meta = {
-    description,
-    contributors,
-    site_name: SITE_NAME,
-    display_image,
-    share_url,
-    title,
-    rifff_title,
-    img_alt: "Endlesss Rifff Viewer",
-    user
-  };
-  const baseBpm = (rifff.rifff.state.bps * 60);
-  const bpm:string = (baseBpm.toFixed(5).toString().replace(/0*$/g, '').replace(/.$/g,''))
-  const rifffData = {
-    user,
-    title:rifff_title,
-    rifff_title,
-    rifff_id,
-    display_image,
-    description,
-    contributors,
-    likes: rifff.react_counts,
-    bpm,
-    bars:rifff.rifff.state.barLength,
-    seconds: rifff.rifff.state.bps * 4 
-  }
-  console.log(meta);
+export default function RifffPage(props: PageProps) {
+  const { meta, rifffData } = props.data;
   return (
     <Layout meta={meta}>
-      <RifffDisplay rifffData={rifffData}> </RifffDisplay>
+      <div class={tw`max-w-screen-lg`}>
+        <div class={tw`flex flex-col`}>
+          <div className="container">
+            <div class={tw`text-lg px-2 py-2 text-white`}>{rifffData.title}</div>
+          </div>
+          <div class="container">
+            <div class=""><img src={rifffData.display_image} /></div>
+            {rifffData.title} by {rifffData.user} - {rifffData.description} - {rifffData.contributors}
+            <RifffContextProvider rifffId={rifffData.rifff_id}>
+              <RifffCard />
+            </RifffContextProvider>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 }

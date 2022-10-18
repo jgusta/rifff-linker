@@ -1,4 +1,4 @@
-import { Layout } from "@components/Layout.tsx";
+import  Layout  from "@components/Layout.tsx";
 import LinkConvertor from "@islands/LinkConvertor.tsx";
 import { BASE_URL, ENVIRONMENT, TEST_INPUT_LINK } from "config";
 
