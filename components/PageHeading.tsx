@@ -41,7 +41,8 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
         ? <meta name="twitter:site" content={`@` + twitter_creator} />
         : ""} */}
       <title>{title}</title>
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+        rel="stylesheet"/>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Rubik:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
