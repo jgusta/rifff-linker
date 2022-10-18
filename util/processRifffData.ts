@@ -21,6 +21,8 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
   const description = isSenderInIt && otherContributors
     ? `feat ${feats} - Created @ ${time}`
     : `Created @ ${time}`;
+
+
   const meta: Partial<PageMeta> = {
     description,
     canonical,
@@ -45,5 +47,5 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     seconds: rifff.rifff.state.bps * 4
   }
 
-  return { meta, rifffData }
+  return { meta, rifffData,  rifff }
 }

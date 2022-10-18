@@ -1,6 +1,7 @@
 export interface RifffWad {
   meta: InputMeta, 
-  rifffData: PageData
+  rifffData: PageData,
+  rifffSnap: RifffSnapshot
 }
 
 // the data passed to the page's <head>
@@ -82,7 +83,7 @@ export interface RifffSnapshot {
   created: number;
   root: number;
   brightness: number;
-  peakRifffDatum: number[];
+  peaksData: number[];
 }
 
 interface Loop {

@@ -1,11 +1,11 @@
-var Module = (function () {
+window.OggModule = (function () {
   var _scriptDir =
     typeof document !== "undefined" && document.currentScript
       ? document.currentScript.src
       : undefined;
 
-  return function (Module) {
-    Module = Module || {};
+  return function (OggModule) {
+    OggModule = OggModule || {};
 
     function aa(a) {
       var c = 0;
@@ -390,7 +390,7 @@ var Module = (function () {
         : self
     );
     var A;
-    A || (A = typeof Module !== "undefined" ? Module : {});
+    A || (A = typeof OggModule !== "undefined" ? OggModule : {});
     var da = new (window.AudioContext || window.webkitAudioContext)();
     A.decodeOggData = function (a, c) {
       function g() {
@@ -788,7 +788,7 @@ var Module = (function () {
             return A.instantiateWasm(h, a);
           } catch (m) {
             return (
-              J("Module.instantiateWasm callback failed with error: " + m), !1
+              J("OggModule.instantiateWasm callback failed with error: " + m), !1
             );
           }
         (function () {
@@ -929,8 +929,7 @@ var Module = (function () {
     noExitRuntime = !0;
     Z();
 
-    return Module;
+    return OggModule;
   };
 })();
 
-export default Module;

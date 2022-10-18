@@ -3,8 +3,7 @@ function degreesToRadians (degrees) {
   const pi = Math.PI;
   return degrees * (pi / 180);
 }
-
-export function render (rifff, canvas, player, animate, alpha = false, backgroundColor = 'blue') {
+function render (rifff, canvas, player, animate, alpha = false, backgroundColor = 'blue') {
   // Assign the waveform, removing every other element to simplify shape
   let peakData = rifff.peakData.filter(function (value, i) {
     return i % 3 === 0 && value > 0;
@@ -149,3 +148,5 @@ export function render (rifff, canvas, player, animate, alpha = false, backgroun
     return val > max ? max : val < min ? min : val;
   }
 }
+
+window.rifffIcon = { degreesToRadians, render }

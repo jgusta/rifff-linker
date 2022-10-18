@@ -1,4 +1,4 @@
-export class AutoLevelMixer { // eslint-disable-line no-unused-vars
+window.AutoLevelMixer = class AutoLevelMixer { // eslint-disable-line no-unused-vars
   constructor () {
     this.decrementValueReady = false;
     this.smallWindowCounter = 0;

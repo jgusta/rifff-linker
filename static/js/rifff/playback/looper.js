@@ -1,4 +1,4 @@
-export class Looper {
+window.looper = class Looper {
   constructor(audioCtx, loop, buffer) {
     this.audioCtx = audioCtx;
     this.loop = loop;

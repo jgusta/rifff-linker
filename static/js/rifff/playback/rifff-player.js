@@ -1,8 +1,4 @@
-import Module from "@/rifff/playback/oggmented-wasm.js";
-import { Looper } from "@/rifff/playback/looper.js";
-import { RifffBase } from "@/rifff/playback/rifff.js";
-
-export class RifffPlayer {
+window.RifffPlayer = class RifffPlayer {
   constructor (audioCtx) {
     this.rms = 0.0;
     this.startTime = 0;
@@ -37,7 +33,7 @@ export class RifffPlayer {
     this.loopers = [];
   }
 
-  get rifffId() {
+  get rifff_id() {
     if (!this.rifff) {
       return undefined;
     }
@@ -115,7 +111,7 @@ export class RifffPlayer {
       this.audioCtx.decodeAudioData(buffer, (decodedData) => { 
         resolve(decodedData); 
       }, (e) => { 
-        Module().then((decoder) => { 
+        OggModule().then((decoder) => { 
           resolve(decoder.decodeOggData(buffer));
         });
       });
@@ -127,7 +123,7 @@ export class RifffPlayer {
 
     for (const slot of this.rifff.getSlots()) {
       if (token.cancelled) {
-        throw new Error('Buffer loading cancelled for rifff ' + this.rifffId);
+        throw new Error('Buffer loading cancelled for rifff ' + this.rifff_id);
       }
     
       if (slot) {      
@@ -144,7 +140,7 @@ export class RifffPlayer {
     }
 
     if (token.cancelled) {
-      throw new Error('Buffer loading cancelled for rifff ' + this.rifffId);
+      throw new Error('Buffer loading cancelled for rifff ' + this.rifff_id);
     }
 
     return buffers;

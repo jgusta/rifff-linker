@@ -1,4 +1,4 @@
-import { Head } from "https://deno.land/x/fresh@1.1.1/runtime.ts";
+import { Head } from "$fresh/runtime.ts";
 import { ENVIRONMENT, GA_ID, TWITTER } from "config";
 import { makeMeta } from "meta";
 import { PageMeta } from "types";
@@ -42,7 +42,7 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
         : ""} */}
       <title>{title}</title>
       <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
-        rel="stylesheet"/>
+        rel="stylesheet" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Rubik:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
@@ -56,6 +56,16 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
                   gtag('js', new Date()); gtag('config', '${GA_ID}');`,
         }}></script></>) : <></>}
       {/* <script src="https://kit.fontawesome.com/e68ed51e65.js" crossOrigin="anonymous"></script> */}
+      <script src="/js/rifff/playback/oggmented-wasm.js"></script>
+      <script src="/js/rifff/playback/rifff-player.js"></script>
+      <script src="/js/rifff/playback/rifff.js"></script>
+      <script src="/js/rifff/rifff-icon.js"></script>
+      <script dangerouslySetInnerHTML={{
+        __html: `
+         window.player = new window.RifffPlayer();
+         
+         `
+      }}></script>
     </Head>
   );
 }

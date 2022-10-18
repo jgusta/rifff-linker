@@ -13,7 +13,7 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
   const checkInput = (val: string) => {
     setInputValue(val);
     const regMatch = val.match(regex);
-    let rifffId = "";
+    let rifff_id = "";
     if (regMatch === null) {
       setOutput(
         <span class={tw`text-white`}>
@@ -22,8 +22,8 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
         </span>,
       );
     } else {
-      rifffId = regMatch[1];
-      setOutput(<LinkHolder link={`${BASE_URL}/rifff/${rifffId}`} />);
+      rifff_id = regMatch[1];
+      setOutput(<LinkHolder link={`${BASE_URL}/rifff/${rifff_id}`} />);
     }
   }
 

@@ -1,4 +1,4 @@
-export class PlaybackController {
+window.PlaybackController = class PlaybackController {
   constructor (rifffPlayer) {
     this.rifffPlayer = rifffPlayer;
     this.rifffs = [];

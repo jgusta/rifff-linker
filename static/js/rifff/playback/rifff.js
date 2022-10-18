@@ -1,4 +1,4 @@
-export class RifffBase {
+window.RifffBase = class RifffBase {
   constructor(data) {
     this.data = data;
     if (new.target === RifffBase) {
@@ -30,7 +30,7 @@ export class RifffBase {
   }
 }
 
-export class CdnRifff extends RifffBase {
+window.CdnRifff = class CdnRifff extends window.RifffBase {
   constructor(rifffData) {
     super(rifffData);
   }
