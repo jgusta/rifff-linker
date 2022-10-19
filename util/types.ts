@@ -1,7 +1,7 @@
 export interface RifffWad {
   meta: InputMeta, 
   rifffData: PageData,
-  rifffSnap: RifffSnapshot
+  rifff: Rifff
 }
 
 // the data passed to the page's <head>
@@ -25,7 +25,8 @@ export interface PageData {
   rifff_id: string
   display_image: string
   description: string
-  contributors: string[]
+  byLine: string
+  time: Date
   likes: number
   bpm: string
   bars: number

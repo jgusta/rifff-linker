@@ -149,4 +149,17 @@ function render (rifff, canvas, player, animate, alpha = false, backgroundColor 
   }
 }
 
-window.rifffIcon = { degreesToRadians, render }
+let canv;
+function setCanvas(canv2) {
+  canv = canv2;
+}
+function getCanvas() {
+  return canv;
+}
+
+window.rifffIcon = {
+  degreesToRadians,
+  render,
+  getCanvas,
+  setCanvas,
+}

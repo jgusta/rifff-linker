@@ -12,8 +12,8 @@ const Layout = ({ meta, children }: {
   const wrapper = css({
     minHeight: "100vh",
     display: "grid",
-    gap: "20px",
-    gridTemplateRows: "80px 1fr minmax(48px, auto)",
+    gap: "0px",
+    gridTemplateRows: "50px 1fr minmax(48px, auto)",
     gridTemplateAreas: '"nav" "content" "footer"',
     backgroundColor: '#2e343c'
   });
@@ -21,7 +21,7 @@ const Layout = ({ meta, children }: {
   return (
     <body class={tw`font-sans`}>
       <PageHeading meta={meta} />
-      <div class={tw`${wrapper}`}>
+      <div class={`${tw(wrapper)} wrapper`}>
         <Nav tClass="main-nav" />
         <div class="content">
           {children}

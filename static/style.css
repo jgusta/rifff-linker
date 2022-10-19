@@ -26,11 +26,7 @@
 }
 
 .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  padding-left:1em;
-  font-size: 0.75em;
+  /* font-family: 'Material Icons';
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -40,7 +36,7 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
-}
+} */
 
 .content {
   grid-area: content;
@@ -52,14 +48,15 @@
   grid-area: footer;
 }
 .wrapper {
-  min-height: 100vh;
+  /* min-height: 100vh;
   display: grid;
-  gap: 20px;
+  gap: 0px;
+  grid-gap: 0;
   grid-template-rows: 80px 1fr minmax(48px,auto);
   grid-template-areas:
     "nav"
     "content"
-    "footer";
+    "footer"; */
 }
 .rifff-canvas {
   width: 100%;

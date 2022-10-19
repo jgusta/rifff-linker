@@ -12,6 +12,7 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
       <meta charSet="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       <meta property="og:site_name" content={site_name} />
       <meta property="og:type" content="website" />
@@ -56,10 +57,16 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
                   gtag('js', new Date()); gtag('config', '${GA_ID}');`,
         }}></script></>) : <></>}
       {/* <script src="https://kit.fontawesome.com/e68ed51e65.js" crossOrigin="anonymous"></script> */}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       <script src="/js/rifff/playback/oggmented-wasm.js"></script>
       <script src="/js/rifff/playback/rifff-player.js"></script>
+      <script src="/js/rifff/playback/looper.js"></script>
+      <script src="/js/rifff/playback/playbackcontroller.js"></script>
       <script src="/js/rifff/playback/rifff.js"></script>
+      <script src="/js/rifff/auto-level-mixer.js"></script>
+      <script src="/js/rifff/compressor.js"></script>
       <script src="/js/rifff/rifff-icon.js"></script>
+      <script src="/js/rifff/unmute.js"></script>
       <script dangerouslySetInnerHTML={{
         __html: `
          window.player = new window.RifffPlayer();

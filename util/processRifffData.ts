@@ -12,7 +12,6 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
   const isSenderInIt = otherContributors.length < rifff.creators.length;
   const feats = otherContributors.join(", ")
   const rifff_title = rifff.title;
-  const contributors = rifff.creators;
   const title = `${user} - ${rifff.title}`;
   const share_url = `${BASE_URL}/rifff/${rifff_id}`;
   const baseBpm = (rifff.rifff.state.bps * 60);
@@ -22,6 +21,7 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     ? `feat ${feats} - Created @ ${time}`
     : `Created @ ${time}`;
 
+  const byLine:string =( isSenderInIt ? `${user}${(feats.length?', ' + feats : '')}` : `${feats}`)
 
   const meta: Partial<PageMeta> = {
     description,
@@ -38,14 +38,15 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     title: rifff_title,
     rifff_title,
     rifff_id,
+    time,
     display_image,
     description,
-    contributors,
+    byLine,
     likes: rifff.react_counts.like,
     bpm,
     bars: rifff.rifff.state.barLength,
-    seconds: rifff.rifff.state.bps * 4
+    seconds: (rifff.rifff.state.bps * 4).toFixed(5).toString().replace(/0*$/g, '').replace(/.$/g, '') as unknown as number
   }
 
-  return { meta, rifffData,  rifff }
+  return { meta, rifffData, rifff }
 }

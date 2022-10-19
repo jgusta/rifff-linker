@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="11.7" y1="5" x2="11.7" y2="17.6" id="gradient-0">
+      <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
+      <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+    </linearGradient>
+    <linearGradient id="gradient-1-0" gradientUnits="userSpaceOnUse" x1="11.5" y1="2" x2="11.5" y2="22" xlink:href="#gradient-1"/>
+    <linearGradient id="gradient-1">
+      <stop offset="0" style="stop-color: rgb(255, 255, 255);"/>
+      <stop offset="1" style="stop-color: rgb(202, 221, 255);"/>
+    </linearGradient>
+    <linearGradient id="gradient-1-1" gradientUnits="userSpaceOnUse" x1="11.7" y1="5" x2="11.7" y2="17.6" gradientTransform="matrix(0.778425, 0.627738, -0.301375, 0.373719, 4.099301, -4.213125)" xlink:href="#gradient-1"/>
+  </defs>
+  <path color="white" d="m16 8.4-8.875 8.9q-.3.3-.713.3-.412 0-.712-.3t-.3-.713q0-.412.3-.712L14.6 7H7q-.425 0-.713-.287Q6 6.425 6 6t.287-.713Q6.575 5 7 5h10q.425 0 .712.287Q18 5.575 18 6v10q0 .425-.288.712Q17.425 17 17 17t-.712-.288Q16 16.425 16 16Z" style="fill: url(#gradient-1-1);"/>
+</svg>

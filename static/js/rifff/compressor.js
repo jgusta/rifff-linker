@@ -1,4 +1,4 @@
-class Compressor {
+window.Compressor = class Compressor {
   // eslint-disable-line no-unused-vars
   constructor(shouldUseLookAhead = false, shouldClipOutput = false) {
     this.prev_yL = 0.0;

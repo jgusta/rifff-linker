@@ -339,6 +339,4 @@ function unmute(context, allowBackgroundPlayback, forceIOSBehavior) {
   };
 }
 
-export default {
-  unmute,
-};
+window.unmute = unmute;
