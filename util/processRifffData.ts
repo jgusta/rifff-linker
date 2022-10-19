@@ -33,8 +33,8 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     img_alt: "Endlesss Rifff Viewer",
   }
 
-  const beat = rifff.rifff.state.bps / 4
-  const bar = beat * 4;
+  const secondsperbeat = 1/rifff.rifff.state.bps
+  const bar = secondsperbeat * 4;
   const seconds = rifff.rifff.state.barLength * bar
 
   const rifffData: PageData = {
