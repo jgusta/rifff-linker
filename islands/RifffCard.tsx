@@ -61,7 +61,7 @@ const rifffPlayer = {
 
 export default function RifffCard(props) {
   const rifff = props.rifff;
-  console.log(rifff)
+  // console.log(rifff)
   const ref = useRef();
   const btnRef = useRef();
   useEffect(() => {

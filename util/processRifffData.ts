@@ -35,8 +35,13 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
 
   const secondsperbeat = 1/rifff.rifff.state.bps
   const bar = secondsperbeat * 4;
-  const seconds = rifff.rifff.state.barLength * bar
+  const lengths = rifff.loops.map((i) => { return [i.length, i.sampleRate]});
 
+  console.log(lengths)
+  const longest = lengths.reduce((prev,curr) => prev[0] > curr[0] ? prev : curr ,[0,0]);
+  console.log(longest)
+  const seconds = longest[0]/longest[1];
+  console.log(seconds)
   const rifffData: PageData = {
     user,
     title: rifff_title,
