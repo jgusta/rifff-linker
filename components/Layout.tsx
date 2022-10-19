@@ -15,7 +15,6 @@ const Layout = ({ meta, children }: {
     gap: "0px",
     gridTemplateRows: "50px 1fr minmax(48px, auto)",
     gridTemplateAreas: '"nav" "content" "footer"',
-    backgroundColor: '#2e343c'
   });
     
   return (
