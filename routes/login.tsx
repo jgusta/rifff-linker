@@ -14,10 +14,10 @@ export const handler: Handlers<Data> = {
     res = await fetch(LOGIN_ENDPOINT, {
       method: "POST",
       headers: {
-        "User-Agent": "Endlesss/3357 CFNetwork/1220.1 Darwin/20.3.0",
+        "User-Agent": USER_AGENT,
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
       },
-      body: "username=slowgaffle&password=%2A%2A%2A%2A%2A+Hidden+credentials+%2A%2A%2A%2A%2A",
+      body: "username=&password=",
     })
       .then((res) => res.text())
       .then(console.log.bind(console))
