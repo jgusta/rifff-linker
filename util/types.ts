@@ -30,6 +30,7 @@ export interface PageData {
   likes: number
   bpm: string
   bars: number
+  signature:string
   seconds: number
 }
 

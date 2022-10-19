@@ -42,6 +42,8 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
   console.log(longest)
   const seconds = longest[0]/longest[1];
   console.log(seconds)
+  const numBeats = rifff.rifff.state.barLength / 4;
+
   const rifffData: PageData = {
     user,
     title: rifff_title,
@@ -53,6 +55,7 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     byLine,
     likes: rifff.react_counts.like,
     bpm,
+    signature:`${numBeats} / 4`,
     bars: rifff.rifff.state.barLength,
     seconds: seconds.toFixed(2).toString().replace(/0*$/g, '').replace(/.$/g, '') as unknown as number
   }
