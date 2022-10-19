@@ -1,6 +1,5 @@
 import { useState } from "preact/hooks";
 import { tw } from "twind";
-
 export default function CopyButton(props) {
   const [isCopied, setIsCopied] = useState(false);
   return (
@@ -11,7 +10,7 @@ export default function CopyButton(props) {
         setIsCopied(true);
       }}
     >
-      {isCopied ? "Copied!" : <>Click to Copy <img class={tw`inline-block`} src="/images/copy.svg"/></>}
+      {isCopied ? "Copied!" : <>Click to Copy <img style="display:inline-block;" src="/images/copy.svg"/></>}
     </button>
   );
 }

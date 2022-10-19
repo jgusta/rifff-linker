@@ -10,7 +10,7 @@ export default function OpenButton(props) {
         );
       }}
     >
-      Preview Link <img class={tw`inline-block`} src="/images/arrow.svg" />
+      Preview Link <img style="display:inline-block;" src="/images/arrow.svg" />
     </button>
   );
 }
