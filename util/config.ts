@@ -29,12 +29,11 @@ const env = cleanEnv(raw_env, {
   TWITTER: str({ default: '', desc: "Twitter handle of operator, no '@' symbol.", example: "mytwitter" }),
   REFERER: str({ default: base_url, desc: "The url of the website that is requesting from the Endlesss API." }),
   FROM: email({ desc: "Contact email to identify service to Endlesss API", example: "youremail@example.com" }),
-  TEST_RIFFF: str({ default: '', desc: 'For testing, specify a json rifff here.' }),
-  TEST_INPUT_LINK: str({ default: '' }),
-  LOG_TOKEN: str({ default: '' })
+  TEST_RIFFF: str({ default: '', desc: 'For testing, specify a path to json rifff here. It should be relative to root dir.' }),
+  TEST_INPUT_LINK: str({ default: '' })
 });
 
-export const { TWITTER, BASE_URL, SITE_NAME, TEST_RIFFF, ENVIRONMENT, GA_ID, PORT, FROM, REFERER, TEST_INPUT_LINK, LOG_TOKEN } = env;
+export const { TWITTER, BASE_URL, SITE_NAME, TEST_RIFFF, ENVIRONMENT, GA_ID, PORT, FROM, REFERER, TEST_INPUT_LINK } = env;
 
 export { env }
 
