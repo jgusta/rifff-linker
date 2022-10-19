@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import { tw } from "twind";
-export default function CopyButton(props) {
+export default function CopyButton(props: {content:string}) {
   const [isCopied, setIsCopied] = useState(false);
   return (
     <button

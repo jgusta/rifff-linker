@@ -42,8 +42,6 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
         ? <meta name="twitter:site" content={`@` + twitter_creator} />
         : ""} */}
       <title>{title}</title>
-      <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
-        rel="stylesheet" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Rubik:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
@@ -56,8 +54,6 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
                   }
                   gtag('js', new Date()); gtag('config', '${GA_ID}');`,
         }}></script></>) : <></>}
-      {/* <script src="https://kit.fontawesome.com/e68ed51e65.js" crossOrigin="anonymous"></script> */}
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       <script src="/js/rifff/playback/oggmented-wasm.js"></script>
       <script src="/js/rifff/playback/rifff-player.js"></script>
       <script src="/js/rifff/playback/looper.js"></script>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="11.7" y1="5" x2="11.7" y2="17.6" id="gradient-0">
+      <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
+      <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+    </linearGradient>
+    <linearGradient id="gradient-1-0" gradientUnits="userSpaceOnUse" x1="11.5" y1="2" x2="11.5" y2="22" xlink:href="#gradient-1"/>
+    <linearGradient id="gradient-1">
+      <stop offset="0" style="stop-color: rgb(255, 255, 255);"/>
+      <stop offset="1" style="stop-color: rgb(202, 221, 255);"/>
+    </linearGradient>
+    <linearGradient id="gradient-1-1" gradientUnits="userSpaceOnUse" x1="11.7" y1="5" x2="11.7" y2="17.6" gradientTransform="matrix(0.778425, 0.627738, -0.301375, 0.373719, 4.099301, -4.213125)" xlink:href="#gradient-1"/>
+  </defs>
+  <path d="M 21.14552 13.32249 Q 21.55332 12.50263 21.96538 13.32249 L 26.29201 21.93098 Q 26.70407 22.75084 25.88421 22.75084 L 17.27572 22.75084 Q 16.45586 22.75084 16.86366 21.93098 Z" style="fill: rgb(255, 255, 255); stroke: rgb(255, 255, 255);" transform="matrix(0, 1, -1, 0, 30.593931, -10.396099)" bx:shape="triangle 16.45586 12.50263 10.24821 10.24821 0.4974 0.08 1@486aa93b"/>
+</svg>
