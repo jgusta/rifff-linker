@@ -1,6 +1,6 @@
 import { TEST_RIFFF } from "config";
 import { RifffResponse } from "types";
-import {join, isAbsolute, normalize} from "https://deno.land/std/path/mod.ts";
+import {join, isAbsolute, normalize} from "https://deno.land/std@0.160.0/path/mod.ts";
 
 export async function getFakeRifff() {
   let filepath;

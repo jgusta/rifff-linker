@@ -21,19 +21,38 @@ else {
 }
 
 const env = cleanEnv(raw_env, {
-  PORT: port({ default: 8000, desc: "Port number." }),
-  GA_ID: str({ default: '' }),
-  ENVIRONMENT: str({ choices: ["development", "test", "production"], desc: "'development', 'test' or 'production'" }),
+  API_BASE: str({ desc: 'ends with shared_rifff, no trailing' }),
   BASE_URL: str({ default: base_url, desc: "The base url of the web site, no trailing slash. Autofilled using BASE_HOST and PORT, but can be overridden explicitly.", example: "https://www.example.com" }),
-  SITE_NAME: str({ default: 'Rifff Linker', desc: 'The title of the site used in the header.' }),
-  TWITTER: str({ default: '', desc: "Twitter handle of operator, no '@' symbol.", example: "mytwitter" }),
-  REFERER: str({ default: base_url, desc: "The url of the website that is requesting from the Endlesss API." }),
+  ENVIRONMENT: str({ choices: ["development", "test", "production"], desc: "'development', 'test' or 'production'" }),
   FROM: email({ desc: "Contact email to identify service to Endlesss API", example: "youremail@example.com" }),
+  GA_ID: str({ default: '' }),
+  LOGIN_ENDPOINT: str({ desc: 'remote login endpoint' }),
+  PORT: port({ default: 8000, desc: "Port number." }),
+  REFERER: str({ default: base_url, desc: "The url of the website that is requesting from the Endlesss API." }),
+  SESSION_ENDPOINT: str({ desc: 'remote session endpoint' }),
+  SITE_NAME: str({ default: 'Rifff Linker', desc: 'The title of the site used in the header.' }),
+  TEST_INPUT_LINK: str({ default: '' }),
   TEST_RIFFF: str({ default: '', desc: 'For testing, specify a path to json rifff here. It should be relative to root dir.' }),
-  TEST_INPUT_LINK: str({ default: '' })
+  TWITTER: str({ default: '', desc: "Twitter handle of operator, no '@' symbol.", example: "mytwitter" }),
+  USER_AGENT: str({ default: 'Endlesss Rifff Linker/1.0', desc: 'Identify yourself to api' }),
 });
 
-export const { TWITTER, BASE_URL, SITE_NAME, TEST_RIFFF, ENVIRONMENT, GA_ID, PORT, FROM, REFERER, TEST_INPUT_LINK } = env;
+export const {
+  API_BASE,
+  BASE_URL,
+  ENVIRONMENT,
+  FROM,
+  GA_ID,
+  LOGIN_ENDPOINT,
+  PORT,
+  REFERER,
+  SESSION_ENDPOINT,
+  SITE_NAME,
+  TEST_INPUT_LINK,
+  TEST_RIFFF,
+  TWITTER,
+  USER_AGENT
+} = env;
 
 export { env }
 
