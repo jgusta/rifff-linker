@@ -1,4 +1,4 @@
-import { FROM, REFERER, TEST_RIFFF, USER_AGENT } from "config";
+import { API_BASE, FROM, REFERER, TEST_RIFFF, USER_AGENT } from "config";
 import { RifffResponse, Rifff } from "types";
 import { getFakeRifff } from "./getFakeRifff.ts";
 
@@ -9,7 +9,7 @@ export async function fetchRifff(rifff_id: string): Promise<Rifff> {
     return rifff
   } else {
     const resp = await fetch(
-      "https://endlesss.fm/api/v3/feed/shared_rifff/" + rifff_id,
+      `${API_BASE}/${rifff_id}`,
       {
         headers: new Headers({
           "User-Agent": USER_AGENT,
