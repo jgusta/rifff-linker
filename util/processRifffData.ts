@@ -33,6 +33,10 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     img_alt: "Endlesss Rifff Viewer",
   }
 
+  const beat = rifff.rifff.state.bps / 4
+  const bar = beat * 4;
+  const seconds = rifff.rifff.state.barLength * bar
+
   const rifffData: PageData = {
     user,
     title: rifff_title,
@@ -45,7 +49,7 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     likes: rifff.react_counts.like,
     bpm,
     bars: rifff.rifff.state.barLength,
-    seconds: (rifff.rifff.state.bps * 4).toFixed(5).toString().replace(/0*$/g, '').replace(/.$/g, '') as unknown as number
+    seconds: seconds.toFixed(2).toString().replace(/0*$/g, '').replace(/.$/g, '') as unknown as number
   }
 
   return { meta, rifffData, rifff }
