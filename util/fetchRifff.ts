@@ -1,4 +1,4 @@
-import { FROM, REFERER, TEST_RIFFF } from "config";
+import { FROM, REFERER, TEST_RIFFF, USER_AGENT } from "config";
 import { RifffResponse, Rifff } from "types";
 import { getFakeRifff } from "./getFakeRifff.ts";
 
@@ -12,7 +12,7 @@ export async function fetchRifff(rifff_id: string): Promise<Rifff> {
       "https://endlesss.fm/api/v3/feed/shared_rifff/" + rifff_id,
       {
         headers: new Headers({
-          "User-Agent": "Endlesss Rifff Linker/1.0 DenoDeploy",
+          "User-Agent": USER_AGENT,
           "From": FROM,
           "Referer": REFERER
         })
