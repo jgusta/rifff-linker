@@ -16,7 +16,7 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
   const share_url = `${BASE_URL}/rifff/${rifff_id}`;
   const baseBpm = (rifff.rifff.state.bps * 60);
   const canonical = share_url
-  const bpm: string = (baseBpm.toFixed(5).toString().replace(/0*$/g, '').replace(/.$/g, ''))
+  const bpm: string = (baseBpm.toFixed(5).toString().replace(/0*$/g, '').replace(/.$/g, '').replace(/\.$/g, ''))
   const description = isSenderInIt && otherContributors
     ? `feat ${feats} - Created @ ${time}`
     : `Created @ ${time}`;
@@ -32,17 +32,25 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     title,
     img_alt: "Endlesss Rifff Viewer",
   }
+  
+  /**
+   * Total time in seconds is (loops * beats per measure) / bps
+   * length16ts/barlength = loops
+   * time signature is (barLength / 4) / 4, beats per measure then is (barLength/4)
+   * ((length16ts/barlength ) * (barLength / 4)) / bps
+   * reduces to 0.25*(length16s/bps)
+   * 
+   * Thanks to feloniousmonk for the help!
+   * */
 
-  const secondsperbeat = 1/rifff.rifff.state.bps
-  const bar = secondsperbeat * 4;
-  const lengths = rifff.loops.map((i) => { return [i.length, i.sampleRate]});
+  // map loops to length16th and bps
+  const mapped = rifff.loops.map((i) => { return [i.length16ths, i.bps, i.barLength]});
 
-  console.log(lengths)
-  const longest = lengths.reduce((prev,curr) => prev[0] > curr[0] ? prev : curr ,[0,0]);
-  console.log(longest)
-  const seconds = longest[0]/longest[1];
-  console.log(seconds)
-  const numBeats = rifff.rifff.state.barLength / 4;
+  // find the longest loop, in length16ths
+  const reduced = mapped.reduce((prev,curr) => prev[0] > curr[0] ? prev : curr, [0,0]);
+  const [length16ths, bps, barLength] = reduced;
+  const seconds = 0.25*(length16ths/bps)
+  const numBeats = barLength / 4;
 
   const rifffData: PageData = {
     user,
@@ -56,8 +64,8 @@ export default function processRifffData(rifffWhole: Rifff): RifffWad {
     likes: rifff.react_counts.like,
     bpm,
     signature:`${numBeats} / 4`,
-    bars: rifff.rifff.state.barLength,
-    seconds: seconds.toFixed(2).toString().replace(/0*$/g, '').replace(/.$/g, '') as unknown as number
+    bars: barLength,
+    seconds: (seconds.toFixed(2).toString().replace(/0*$/g, '').replace(/.$/g, '').replace(/\.$/g,'')) as unknown as number
   }
 
   return { meta, rifffData, rifff }

@@ -16,7 +16,8 @@ export default function RifffPage(props: RifffWad) {
     ['BPM', rifffData.bpm],
     ['Time Signature', rifffData.signature],
     ['Bars', rifffData.bars],
-    ['Likes', rifffData.likes]
+    ['Likes', rifffData.likes],
+    ['Length (Seconds)', rifffData.seconds]
   ];
 
   return (
