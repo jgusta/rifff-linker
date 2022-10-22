@@ -26,7 +26,6 @@ export async function handler(req: Request, ctx: MiddlewareContext) {
       return red(str);
     }
   };
-  resp.headers.set("X-Response-Time", `${ms}ms`);
   let skip = false;
   for (const i of dontLog) {
     if ((pathname.startsWith('/') && pathname.startsWith(i)) || pathname.endsWith(i)) {
