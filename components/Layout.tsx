@@ -13,7 +13,7 @@ const Layout = ({ meta, children }: {
     minHeight: "100vh",
     display: "grid",
     gap: "0px",
-    gridTemplateRows: "50px 1fr minmax(48px, auto)",
+    gridTemplateRows: "50px 1fr minmax(60px, auto)",
     gridTemplateAreas: '"nav" "content" "footer"',
   });
     
