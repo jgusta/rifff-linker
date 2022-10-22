@@ -1,8 +1,11 @@
 import {
   setCookie,
-  getCookies
+  getCookies,
+  deleteCookie
 } from "$std/http/cookie.ts"
 import { AuthBucket, Maybe } from "@session";
+
+const keys: (keyof AuthBucket)[] = ['token', 'password', 'user_id', 'expires'];
 
 const setAuth = function setAuth(data: AuthBucket, headers: Headers) {
   setCookie(headers, { name: "t", value: data.token });
@@ -11,14 +14,15 @@ const setAuth = function setAuth(data: AuthBucket, headers: Headers) {
   setCookie(headers, { name: "e", value: String(data.expires) });
 }
 
-const killCookies = function killCookies() {
-  throwIfNotHydrated()
+const killCookies = function killCookies(headers: Headers) {
+    for (const el of keys) {
+      deleteCookie(headers,el)
+    }
 }
 
 // Return true if auth is a valid AuthBucket type.
 // Does NOT mean logged in.
 function isAuthValid(auth: Partial<AuthBucket>): auth is AuthBucket {
-  const keys: (keyof AuthBucket)[] = ['token', 'password', 'user_id', 'expires'];
   for (const el of keys) {
     if (el in auth && auth[el] === null) {
       return false;
@@ -73,8 +77,11 @@ class SessionState {
 
 }
 
-const startSession = function startSession(req: Request): void {
-  SessionState.hydrateAuth(req)
+const startSession = function startSession(req: Request): Promise<void> {
+  return new Promise<void>((done)=> {
+    SessionState.hydrateAuth(req);
+    done();
+  })
 }
 
 const isStarted = function isStarted() {
