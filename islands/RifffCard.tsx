@@ -1,13 +1,15 @@
+// deno-lint-ignore-file no-window-prefix
+
 import { Rifff, RifffResponse } from "types";
-import { JSX } from 'preact';
-import { useState, useEffect, useRef, StateUpdater } from 'preact/hooks'
+import { JSX, VNode } from 'preact';
+import { useState, useEffect, useRef, StateUpdater, MutableRef } from 'preact/hooks'
 import Canvas from "@components/Canvas.tsx"
 import { tw } from "twind";
 import { css } from "twind/css";
 // deno-lint-ignore-file
 
 interface Props {
-  children: JSX.Element
+children: JSX.Element
   rifff_id: string
 }
 
@@ -18,9 +20,26 @@ function isRifff(rifff: MaybeRifff): rifff is Rifff {
   return Object.keys(rifff).length > 0
 }
 
-const rifffPlayer = {
+interface RifffPlayer{
+  rifffIcon: string;
+  player: null;
+  btn: string;
+  rifff: string;
+  canv: string;
+  animate: boolean;
+  animated: boolean;
+  backgroundColor: string;
+  alpha: boolean;
+  state: boolean;
+  isPlaying: boolean;
+  toggle: () => void;
+  play: () => void;
+  renderIcon: () => void;
+}
+
+const rifffPlayer:RifffPlayer = {
   rifffIcon: '',
-  player: '',
+  player: null,
   btn: '',
   rifff: '',
   canv: "",
@@ -30,20 +49,26 @@ const rifffPlayer = {
   alpha: true,
   state: false,
   isPlaying: false,
-  toggle: function renderIcon() {
+  toggle: function toggle() {
     this.state = !this.state;
+    const img = document.getElementById('pbutton') as HTMLImageElement
     if (this.state) {
       this.animated = true;
       this.isPlaying = true;
-      document.getElementById('pbutton').src = "/images/pause.svg";
+      
+      if (img) {
+        img.src  = "/images/pause.svg";
+      }
       this.renderIcon();
       this.play()
     }
     else {
       this.animated = false;
       this.isPlaying = false;
-      document.getElementById('pbutton').src = "/images/play.svg";
-      this.player.stop();
+      if (img) {
+        img.src = "/images/play.svg";
+      }     
+      this.player ? this.player.stop() : Function.prototype;
     }
   },
   play: function play() {
@@ -54,6 +79,7 @@ const rifffPlayer = {
   renderIcon: function renderIcon() {
     this.rifffIcon.render(this.rifff.rifff, this.canv, this.player, this.animate, this.alpha, this.backgroundColor)
     if (this.animated) {
+      
       window.requestAnimationFrame(() => {
         this.renderIcon();
       });
@@ -64,14 +90,19 @@ const rifffPlayer = {
 export default function RifffCard(props) {
   const rifff = props.rifff;
   console.log(rifff)
-  const ref = useRef();
-  const btnRef = useRef();
+  const ref = useRef() as MutableRef<HTMLCanvasElement>;
+  const btnRef = useRef() as MutableRef<HTMLButtonElement>;
   useEffect(() => {
+
+    // this is weird but needs to be done
     const canv = ref.current.base;
     rifffPlayer.rifffIcon = window.rifffIcon;
     rifffPlayer.player = window.player;
     rifffPlayer.canv = canv;
+
+    
     rifffPlayer.btn = btnRef.current;
+
     // watch carefully
     rifff.rifff.loops = rifff.loops
     rifffPlayer.rifff = rifff;
