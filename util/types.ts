@@ -88,7 +88,7 @@ export interface RifffSnapshot {
   peaksData: number[];
 }
 
-interface Loop {
+export interface Loop {
   _id: string;
   _rev: string;
   cdn_attachments: CdnAttachment
@@ -111,7 +111,7 @@ interface Loop {
   created: number;
 }
 
-interface State {
+export interface State {
   bps: number;
   playback: {
     effects: {
@@ -136,7 +136,7 @@ interface State {
   barLength: number;
 }
 
-type CdnAttachment = {
+export type CdnAttachment = {
   oggAudio: {
     endpoint: string;
     hash: string;
