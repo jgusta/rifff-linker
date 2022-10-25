@@ -2,6 +2,7 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 /// <reference lib="dom.asynciterable" />
+/// <reference types="./endlesss.types" />
 /// <reference lib="deno.ns" />
 
 import twindPlugin from '$fresh/plugins/twind.ts';

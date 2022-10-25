@@ -1,4 +1,5 @@
 /* eslint-disable */
+// deno-lint-ignore-file
 "use strict";
 /**
  * @file unmute.ts
@@ -339,4 +340,6 @@ function unmute(context, allowBackgroundPlayback, forceIOSBehavior) {
   };
 }
 
-window.unmute = unmute;
+export {unmute}
+
+
