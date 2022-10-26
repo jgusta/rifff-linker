@@ -1,26 +1,30 @@
 import { Plugin } from "$fresh/server.ts";
-import getSession from "./Session.tsx";
+
 import {
   setAuth,
   startSession,
-  isLoggedIn,
-  killCookies
-} from "./SessionState.ts"
+  isLoggedIn
+} from "@/plugins/session/SessionState.ts"
 
+export * from "@/plugins/session/types.ts";
 
-export * from "./types.ts";
+import getSession 
 
 export {
   startSession,
   setAuth,
   isLoggedIn,
-  killCookies,
   getSession
-} 
+}
 
 export default function session(): Plugin {
   return {
-    name: "Session"
+    name: "session",
+    render: (ctx) => {
+      ctx.render();
+      return {};
+    }
+
   }
 }
 
