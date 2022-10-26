@@ -5,7 +5,7 @@
     "@islands/": "./islands/",
     "@api/": "./routes/api/",
     "@util/": "./util/",
-    "@session":"./plugins/session/mod.ts",
+    "@session":"./plugins/session.ts",
     "config": "./util/config.ts",
     "types": "./util/types.ts",
     "meta": "./util/meta.ts",

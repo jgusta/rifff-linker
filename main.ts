@@ -9,6 +9,7 @@ import manifest from "@/fresh.gen.ts";
 
 import twindPlugin from "$fresh/plugins/twind.ts";
 import twindConfig from "@/twind.config.ts";
+import session from "@/plugins/session.ts";
 import { PORT } from "config"
 
-await start(manifest as unknown as Manifest, { plugins: [twindPlugin(twindConfig)], port: PORT });
+await start(manifest as unknown as Manifest, { plugins: [twindPlugin(twindConfig), session()], port: PORT });
