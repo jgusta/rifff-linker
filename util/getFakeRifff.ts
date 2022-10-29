@@ -1,6 +1,6 @@
 import { TEST_RIFFF } from "config";
 import { RifffResponse } from "types";
-import {join, isAbsolute, normalize} from "https://deno.land/std@0.160.0/path/mod.ts";
+import { join, isAbsolute, normalize } from "https://deno.land/std@0.160.0/path/mod.ts";
 
 export async function getFakeRifff() {
   let filepath;
@@ -14,7 +14,7 @@ export async function getFakeRifff() {
     throw new Error('Cannot grab test rifff file from browser')
   }
   const text = await Deno.readTextFile(filepath);
-  const jobj:unknown = JSON.parse(text);
+  const jobj: unknown = JSON.parse(text);
   const rifff = (jobj as RifffResponse).data[0];
   return rifff;
 }

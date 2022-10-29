@@ -3,7 +3,7 @@ import {
   getCookies,
   deleteCookie
 } from "$std/http/cookie.ts"
-import { AuthBucket } from "../session.ts";
+import { AuthBucket } from "./types.ts";
 
 export function setAuthCookies(data: AuthBucket, headers: Headers) {
   setCookie(headers, { name: "t", value: data.token });

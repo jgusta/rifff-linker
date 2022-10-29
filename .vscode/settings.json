@@ -1,0 +1,33 @@
+{
+  "deno.enable": true,
+  "deno.lint": true,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "deno.config": "./deno.json",
+  "deno.unstable": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.classpath": true,
+    "**/.factorypath": true,
+    "**/.project": true,
+    "**/.settings": true
+  },
+  "hide-files.files": [],
+  "nuxt.isNuxtApp": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.surveys.enabled": false,
+  "deno.codeLens.implementations": false,
+  "deno.codeLens.references": false,
+  "deno.codeLens.referencesAllFunctions": false,
+  "deno.suggest.completeFunctionCalls": true,
+}

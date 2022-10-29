@@ -1,8 +1,15 @@
 
 import { AuthBucket, GlobalSession, Maybe } from "@/plugins/session/types.ts";
 import { readAuthCookies, isAuthValid } from "./auth.ts";
-import nowTime from "./time.ts";
-
+import {nowTime} from "./time.ts";
+const now = (new Date()).getTime()
+export default function nowTime() {
+  return now;
+};
+const now = (new Date()).getTime()
+function nowTime() {
+  return now;
+};
 class SessionState {
   static req?: Request;
   static auth: Maybe<AuthBucket>;
@@ -55,7 +62,7 @@ export function getSession() {
   return SessionState.getGlobalSession();
 }
 
-export function isLoggedIn() {
+export function isLoggedIn():boolean {
   const now = nowTime();
   const auth = SessionState.auth;
   return SessionState.hydrated && SessionState.valid && auth && auth.expires > now
