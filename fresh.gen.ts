@@ -5,9 +5,10 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_middleware.tsx";
 import * as $1 from "./routes/api/auth.ts";
-import * as $2 from "./routes/index.tsx";
-import * as $3 from "./routes/login/index.tsx";
-import * as $4 from "./routes/rifff/[rifffId].tsx";
+import * as $2 from "./routes/api/session.ts";
+import * as $3 from "./routes/index.tsx";
+import * as $4 from "./routes/login/index.tsx";
+import * as $5 from "./routes/rifff/[rifffId].tsx";
 import * as $$0 from "./islands/CopyButton.tsx";
 import * as $$1 from "./islands/LinkConvertor.tsx";
 import * as $$2 from "./islands/LinkHolder.tsx";
@@ -18,9 +19,10 @@ const manifest = {
   routes: {
     "./routes/_middleware.tsx": $0,
     "./routes/api/auth.ts": $1,
-    "./routes/index.tsx": $2,
-    "./routes/login/index.tsx": $3,
-    "./routes/rifff/[rifffId].tsx": $4,
+    "./routes/api/session.ts": $2,
+    "./routes/index.tsx": $3,
+    "./routes/login/index.tsx": $4,
+    "./routes/rifff/[rifffId].tsx": $5,
   },
   islands: {
     "./islands/CopyButton.tsx": $$0,
