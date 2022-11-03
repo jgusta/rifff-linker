@@ -10,7 +10,7 @@ export interface LoginResponse extends Response {
 }
 
 export interface GlobalSession {
-  auth: ReturnType<() => Maybe<AuthBucket>>
+  auth: Partial<AuthBucket>
   isLoggedIn: () => boolean
   getName: () => string
 }
@@ -21,8 +21,9 @@ export interface AuthBucket {
   user_id: string
   expires: number
 }
+
 export type Maybe<T> = T | null;
 
 export type AuthChild = VNode & { auth: AuthBucket }
 
-export type AuthChildren = AuthChild[] | AuthChild | VNode[] | VNode
+export type AuthChildren = AuthChild[] | AuthChild | VNode[] | VNode;

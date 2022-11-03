@@ -1,4 +1,4 @@
 const now = (new Date()).getTime()
-export default function nowTime(){
+export function nowTime() {
   return now;
-};
+}
