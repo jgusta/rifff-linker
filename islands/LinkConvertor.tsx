@@ -41,12 +41,12 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
     }
   }
 
-  // for testing, change the value
-  useEffect(() => {
-    if (props.startValue.length) {
-      setInputValue(`endlesss://sharedrifff/${props.startValue}`);
-    }
-  }, []);
+  // // for testing, change the value
+  // useEffect(() => {
+  //   if (props.startValue.length) {
+  //     setInputValue(`endlesss://sharedrifff/${props.startValue}`);
+  //   }
+  // }, []);
 
   //endlesss://sharedrifff/b0aff6b039b111edb6b0371b1bc0a57f
   return (

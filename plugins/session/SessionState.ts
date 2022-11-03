@@ -1,69 +1,72 @@
+import type { AuthBucket, GlobalSession } from "@/plugins/session/types.ts";
+import { nowTime } from "@/plugins/session/time.ts";
+import { defaultSession, authKeys } from "@/plugins/session/util.ts";
 
-import { AuthBucket, GlobalSession, Maybe } from "@/plugins/session/types.ts";
-import { readAuthCookies, isAuthValid } from "./auth.ts";
-import {nowTime} from "./time.ts";
-const now = (new Date()).getTime()
-export default function nowTime() {
-  return now;
-};
-const now = (new Date()).getTime()
-function nowTime() {
-  return now;
-};
-class SessionState {
-  static req?: Request;
-  static auth: Maybe<AuthBucket>;
-  static reqHeaders?: Headers;
+export class SessionState {
+  // static req?: Request;
+  static auth?: AuthBucket;
   static valid = false;
   static hydrated = false;
-  static globalSession?: GlobalSession
+  static res?: Response;
+
+  static isLoggedIn = function (): boolean {
+    SessionState.throwIfNotHydrated()
+    return SessionState.valid
+      && typeof SessionState.auth !== 'undefined'
+      && SessionState.auth.expires > nowTime()
+  }
+
+  static globalSession: GlobalSession = defaultSession;
+
+  static getGlobalSession = function (): GlobalSession {
+    SessionState.throwIfNotHydrated();
+    return SessionState.globalSession;
+  }
+
+  static getResponse = function () {
+    if (typeof SessionState.res === 'undefined') {
+      SessionState.res = new Response()
+    }
+    return SessionState.res;
+  }
+
+  static resetAuth = () => {
+    SessionState.auth = undefined;
+    SessionState.valid = false;
+    SessionState.hydrated = false;
+    SessionState.globalSession = defaultSession;
+  }
 
   // Hydrated means startSession has been called
-  static hydrateAuth = function (req: Request): void {
-    const reqHeaders: Headers = req.headers;
-    SessionState.req = req;
-    SessionState.reqHeaders = reqHeaders;
-    const auth = readAuthCookies(reqHeaders);
-    if (isAuthValid(auth)) {
-      SessionState.auth = auth;
-      SessionState.valid = true;
-    }
-    else {
-      SessionState.auth = null;
+  static hydrateAuth = function (auth: Partial<AuthBucket>): void {
+    if (!SessionState.isAuthValid(auth)) {
+      SessionState.auth = undefined;
       SessionState.valid = false;
     }
+    else {
+      SessionState.auth = auth as AuthBucket;
+      SessionState.valid = true;
+    }
+    SessionState.globalSession = {
+      auth,
+      isLoggedIn: SessionState.isLoggedIn,
+      getName: function () { return this.auth?.user_id || '' }
+    };
     SessionState.hydrated = true;
-  };
+  }
+
+  // AuthBucket typegaurd.
+  // Does NOT mean logged in.
+  static isAuthValid = function (auth: Partial<AuthBucket>): auth is AuthBucket {
+    for (const el of authKeys)
+      if (el in auth && auth[el] === null)
+        return false;
+    return true;
+  }
 
   static throwIfNotHydrated = function (): void {
     if (!SessionState.hydrated) {
       throw new Error('Session not yet started');
     }
   }
-
-  static getGlobalSession = function () {
-    SessionState.throwIfNotHydrated()
-    return SessionState.globalSession || (() => {
-      SessionState.globalSession = {
-        auth: SessionState.auth,
-        isLoggedIn,
-        getName: function () { return this.auth?.user_id || '' }
-      };
-      return SessionState.globalSession;
-    })();
-  }
-}
-
-export function startSession(req: Request): void {
-  SessionState.hydrateAuth(req);
-}
-
-export function getSession() {
-  return SessionState.getGlobalSession();
-}
-
-export function isLoggedIn():boolean {
-  const now = nowTime();
-  const auth = SessionState.auth;
-  return SessionState.hydrated && SessionState.valid && auth && auth.expires > now
 }

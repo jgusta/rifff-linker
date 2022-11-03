@@ -3,13 +3,15 @@ import {
   getCookies,
   deleteCookie
 } from "$std/http/cookie.ts"
-import { AuthBucket } from "./types.ts";
+import { AuthBucket } from "@/plugins/session/types.ts";
+import { BASE_HOST } from "config";
+// AKA the thing that deals with cookies.
 
 export function setAuthCookies(data: AuthBucket, headers: Headers) {
-  setCookie(headers, { name: "t", value: data.token });
-  setCookie(headers, { name: "p", value: data.password });
-  setCookie(headers, { name: "i", value: data.user_id });
-  setCookie(headers, { name: "e", value: String(data.expires) });
+  setCookie(headers, { name: "t", secure:true, path:"/", domain:BASE_HOST,value: data.token });
+  setCookie(headers, { name: "p", secure:true, path:"/", domain:BASE_HOST,value: data.password });
+  setCookie(headers, { name: "i", secure:true, path:"/", domain:BASE_HOST,value: data.user_id });
+  setCookie(headers, { name: "e", secure:true, path:"/", domain:BASE_HOST,value: String(data.expires) });
 }
 
 // Retrieve what is possibly a valid auth from cookies
@@ -25,22 +27,9 @@ export function readAuthCookies(headers: Headers): Partial<AuthBucket> {
 }
 
 export function killCookies(headers: Headers) {
-  for (const el of keys) {
+  for (const el of ['token', 'password', 'user_id', 'expires']) {
     deleteCookie(headers, el)
   }
-}
-
-const keys: (keyof AuthBucket)[] = ['token', 'password', 'user_id', 'expires'];
-
-// Return true if auth is a valid AuthBucket type.
-// Does NOT mean logged in.
-export function isAuthValid(auth: Partial<AuthBucket>): auth is AuthBucket {
-  for (const el of keys) {
-    if (el in auth && auth[el] === null) {
-      return false;
-    }
-  }
-  return true;
 }
 
 export function logout(res: Response) {

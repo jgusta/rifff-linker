@@ -1,20 +1,24 @@
+import { setAuthCookies,readAuthCookies } from '@/plugins/session/auth.ts';
+import { AuthBucket } from '@session';
 import { Plugin } from "$fresh/server.ts";
-
-import {
-  setAuth,
-  startSession,
-  isLoggedIn
-} from "@/plugins/session/SessionState.ts"
+import { SessionState } from "@/plugins/session/sessionState.ts";
 
 export * from "@/plugins/session/types.ts";
 
-import getSession 
+export function setAuth(headers:Headers, auth:AuthBucket) {
+  headers = SessionState.getResponse().headers
+  SessionState.resetAuth();
+  setAuthCookies(auth, headers);
+  SessionState.hydrateAuth(auth);
+}
 
-export {
-  startSession,
-  setAuth,
-  isLoggedIn,
-  getSession
+export function startSession(req: Request): void {
+  const auth = readAuthCookies(req.headers);
+  SessionState.hydrateAuth(auth);
+}
+
+export function getSession() {
+  
 }
 
 export default function session(): Plugin {
@@ -24,7 +28,6 @@ export default function session(): Plugin {
       ctx.render();
       return {};
     }
-
   }
 }
 
