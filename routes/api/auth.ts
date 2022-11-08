@@ -17,7 +17,7 @@ function isString(i: FormDataEntryValue | null): i is string {
 
 export const handler: Handlers<Data> = {
   async POST(incomingLocalReq) {
-    startSession(incomingLocalReq)
+    await startSession(incomingLocalReq)
     const incomingLocalFormdata = await incomingLocalReq.formData()
 
     const inUser = incomingLocalFormdata.get('username')
@@ -43,6 +43,7 @@ export const handler: Handlers<Data> = {
 
     const incomingRemoteJson = await incomingRemoteRes.json()
     const { user_id } = incomingRemoteJson
+
     setAuth(incomingRemoteJson);
 
     const outgoingLocalBody = {

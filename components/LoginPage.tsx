@@ -5,18 +5,19 @@ interface Props {
 }
 export default function LoginPage(props: Props) {
   const sess = getSession();
-  console.log('yes', props.auth);
+  console.log('yes', sess);
 
-  return (<div
-    class={tw`bg-gray-600 my-10 px-8 py-4 mx-auto max-w-lg shadow-lg overflow-hidden`}>
+  return (<div class={tw`bg-gray-600 mt-20 px-8 py-10 mb-40 mx-auto max-w-xl shadow-lg overflow-hidden`}>
+    <div class={tw`text-white mt-2 mb-4`}>
 
-    {sess.isLoggedIn() ? (<div>Welcome {sess.getName()}!</div>) : (<div>Please log in with your endlesss credentials in order to 'like' rifffs.</div>)}
+      {sess.isLoggedIn() ? `Welcome ${sess.getName()}!` : `Please log in with your endlesss credentials in order to 'like' Rifffs`}
+    </div>
     <form action="/api/auth" method="post">
-      <label for="user">User</label>
-      <input id="user" name="username" />
-      <label for="pass">Pass</label>
-      <input id="pass" name="password" />
-      <input type="submit"></input>
+      <div><label for="user">User</label>
+      <input id="user" name="username" /></div>
+     <div class={tw``}> <label for="pass">Pass</label>
+      <input id="pass" type="" name="password" /></div>
+      <div><input type="submit"></input></div>
     </form>
   </div>)
 }
