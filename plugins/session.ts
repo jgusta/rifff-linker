@@ -4,10 +4,23 @@ import { Plugin } from "$fresh/server.ts";
 import { SessionState } from "@/plugins/session/sessionState.ts";
 
 export * from "@/plugins/session/types.ts";
+import  {
+  setBody,
+  addHeader,
+  getHeaders,
+  getResponse,
+} from '@/plugins/session/responser.ts';
 
-export function setAuth(headers:Headers, auth:AuthBucket) {
-  headers = SessionState.getResponse().headers
+export {
+  getResponse,
+  setBody,
+  addHeader
+}
+
+export function setAuth(auth:AuthBucket) {
+  
   SessionState.resetAuth();
+  const headers = getHeaders();
   setAuthCookies(auth, headers);
   SessionState.hydrateAuth(auth);
 }
@@ -17,8 +30,12 @@ export function startSession(req: Request): void {
   SessionState.hydrateAuth(auth);
 }
 
+export function isLoggedIn() {
+  return SessionState.isLoggedIn();
+}
+
 export function getSession() {
-  
+  return SessionState.globalSession
 }
 
 export default function session(): Plugin {
