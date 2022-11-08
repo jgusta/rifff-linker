@@ -5,3 +5,7 @@ export const defaultSession:GlobalSession = {
   isLoggedIn: () => false,
   getName: () => ''
 }
+const now = (new Date()).getTime()
+export function nowTime() {
+  return now;
+}

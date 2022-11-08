@@ -2,6 +2,7 @@
   "tasks": {
     "dev": "deno run -A --watch=static/,routes/,components/,util/,plugins/,islands/,.env dev.ts",
     "serve": "deno run --unstable --allow-write --allow-read --allow-env main.ts",
+    "mock-server": "deno run -A ./docs/research/mockserver/serve.ts",
     "npm:add": "deno run -A https://esm.sh/v96 add",
     "npm:update": "deno run -A https://esm.sh/v96 update",
     "npm:remove": "deno run -A https://esm.sh/v96 remove"

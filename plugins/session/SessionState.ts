@@ -1,16 +1,14 @@
 import type { AuthBucket, GlobalSession } from "@/plugins/session/types.ts";
-import { nowTime } from "@/plugins/session/time.ts";
-import { defaultSession, authKeys } from "@/plugins/session/util.ts";
+import { nowTime, defaultSession, authKeys } from "@/plugins/session/util.ts";
 
 type ResponseType = 'page' | 'json';
 
 // Stores the global Session, containing user-specific data
 export class SessionState {
-  // static req?: Request;
   static auth?: AuthBucket;
   static valid = false;
   static hydrated = false;
-  static res?: Response;
+  static globalSession: GlobalSession = defaultSession;
 
   static isLoggedIn = function (): boolean {
     SessionState.throwIfNotHydrated();
@@ -18,8 +16,6 @@ export class SessionState {
       && typeof SessionState.auth !== 'undefined'
       && SessionState.auth.expires > nowTime()
   }
-
-  static globalSession: GlobalSession = defaultSession;
 
   static getGlobalSession = function (): GlobalSession {
     SessionState.throwIfNotHydrated();
