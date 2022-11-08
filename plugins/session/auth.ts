@@ -8,10 +8,10 @@ import { BASE_HOST } from "config";
 // AKA the thing that deals with cookies.
 
 export function setAuthCookies(data: AuthBucket, headers: Headers) {
-  setCookie(headers, { name: "t", secure:true, path:"/", domain:BASE_HOST,value: data.token });
-  setCookie(headers, { name: "p", secure:true, path:"/", domain:BASE_HOST,value: data.password });
-  setCookie(headers, { name: "i", secure:true, path:"/", domain:BASE_HOST,value: data.user_id });
-  setCookie(headers, { name: "e", secure:true, path:"/", domain:BASE_HOST,value: String(data.expires) });
+  setCookie(headers, { name: "t", secure: true, path: "/", domain: BASE_HOST, value: data.token });
+  setCookie(headers, { name: "p", secure: true, path: "/", domain: BASE_HOST, value: data.password });
+  setCookie(headers, { name: "i", secure: true, path: "/", domain: BASE_HOST, value: data.user_id });
+  setCookie(headers, { name: "e", secure: true, path: "/", domain: BASE_HOST, value: String(data.expires) });
 }
 
 // Retrieve what is possibly a valid auth from cookies
@@ -26,13 +26,9 @@ export function readAuthCookies(headers: Headers): Partial<AuthBucket> {
   return out;
 }
 
-export function killCookies(headers: Headers) {
+export function logout(headers: Headers) {
   for (const el of ['token', 'password', 'user_id', 'expires']) {
     deleteCookie(headers, el)
   }
-}
-
-export function logout(res: Response) {
-  killCookies(res.headers);
   return true;
 }
