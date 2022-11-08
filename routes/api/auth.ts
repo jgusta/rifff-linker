@@ -1,7 +1,7 @@
 import { USER_AGENT } from 'config';
 import { LOGIN_ENDPOINT } from 'config';
 import { Handlers } from "$fresh/server.ts";
-import { LoginResponse, setAuth, startSession } from "@session";
+import { getResponse, LoginResponse, setAuth, startSession } from "@session";
 
 interface Data {
   results: string[];
@@ -42,26 +42,17 @@ export const handler: Handlers<Data> = {
     })
 
     const incomingRemoteJson = await incomingRemoteRes.json()
-
-    console.log(incomingRemoteJson);
     const { user_id } = incomingRemoteJson
-
-    const outgoingLocalHeaders = new Headers({
-      "User-Agent": USER_AGENT,
-      "Content-Type": "application/json",
-    })
-
-    setAuth(incomingRemoteJson, outgoingLocalHeaders);
+    setAuth(incomingRemoteJson);
 
     const outgoingLocalBody = {
       status: 'success',
       user_id
     }
 
-    const out = JSON.stringify(outgoingLocalBody)
-    console.log(outgoingLocalHeaders)
-    const outgoingLocalRes = new Response(out, { headers: outgoingLocalHeaders })
+    const out = JSON.stringify(outgoingLocalBody);
+    const res = getResponse(out);
 
-    return outgoingLocalRes;
+    return res;
   }
 }
