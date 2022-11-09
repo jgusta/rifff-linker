@@ -1,9 +1,8 @@
 import { blue, cyan, green, magenta, red, yellow } from "$std/fmt/colors.ts";
+import { startSession } from "@session";
+import { MiddlewareHandlerContext } from "$fresh/server.ts";
 
-export interface MiddlewareContext {
-  next: () => Promise<Response>;
-}
-export async function handler(req: Request, ctx: MiddlewareContext) {
+export async function logHandler(req: Request, ctx: MiddlewareHandlerContext) {
   // For Logging
   const dontLog = [
     "/_frsh",
@@ -42,3 +41,10 @@ export async function handler(req: Request, ctx: MiddlewareContext) {
   }
   return resp;
 }
+
+export async function sessionHandler(req: Request, ctx: MiddlewareHandlerContext) {
+  startSession(req);
+  return await ctx.next();
+}
+
+export const handler = [logHandler,sessionHandler];

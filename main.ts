@@ -10,6 +10,6 @@ import manifest from "@/fresh.gen.ts";
 import twindPlugin from "$fresh/plugins/twind.ts";
 import twindConfig from "@/twind.config.ts";
 import session from "@session";
-import { PORT } from "config";
+import { PORT, BASE_URL, BASE_HOST } from "config";
 
-await start(manifest as unknown as Manifest, { plugins: [twindPlugin(twindConfig), session()], port: PORT });
+await start(manifest as unknown as Manifest, { plugins: [twindPlugin(twindConfig), session()], port: PORT, hostname: BASE_HOST});
