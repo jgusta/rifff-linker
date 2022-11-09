@@ -15,7 +15,7 @@ export default function Login() {
 
     <Layout meta={metaProps}>
 
-      <LoginPage></LoginPage>
+      <LoginPage />
 
     </Layout>
   )

@@ -24,14 +24,11 @@ async function handler(conn: Deno.Conn) {
             break;
           }
           default: {
-
             const res = new Response(null, {
               status: 404
             });
             await requestEvent.respondWith(res);
     }}}}}}
-
-
 
 const server = Deno.listen({ port });
 console.log(`Dummy server running on http://localhost:${port}`);

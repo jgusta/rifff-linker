@@ -1,12 +1,8 @@
 import { USER_AGENT } from 'config';
 import { LOGIN_ENDPOINT } from 'config';
 import { Handlers } from "$fresh/server.ts";
-import { getResponse, LoginResponse, setAuth, startSession } from "@session";
+import { getResponse, LoginResponse, setAuth } from "@session";
 
-interface Data {
-  results: string[];
-  query: string;
-}
 
 function isString(i: FormDataEntryValue | null): i is string {
   if (typeof i === 'string') {
@@ -15,14 +11,11 @@ function isString(i: FormDataEntryValue | null): i is string {
   return false;
 }
 
-export const handler: Handlers<Data> = {
+export const handler: Handlers = {
   async POST(incomingLocalReq) {
-    await startSession(incomingLocalReq)
     const incomingLocalFormdata = await incomingLocalReq.formData()
-
     const inUser = incomingLocalFormdata.get('username')
     const inPass = incomingLocalFormdata.get('password')
-
     const outgoingRemoteBody = new URLSearchParams()
 
     if (isString(inPass) && isString(inUser)) {
@@ -52,7 +45,7 @@ export const handler: Handlers<Data> = {
     }
 
     const out = JSON.stringify(outgoingLocalBody);
-    const res = getResponse(out);
+    const res = getResponse(out, 'json');
 
     return res;
   }

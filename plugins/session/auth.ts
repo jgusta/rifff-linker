@@ -4,14 +4,14 @@ import {
   deleteCookie
 } from "$std/http/cookie.ts"
 import { AuthBucket } from "@/plugins/session/types.ts";
-import { BASE_HOST } from "config";
 // AKA the thing that deals with cookies.
 
 export function setAuthCookies(data: AuthBucket, headers: Headers) {
-  setCookie(headers, { name: "t", secure: true, path: "/", domain: BASE_HOST, value: data.token });
-  setCookie(headers, { name: "p", secure: true, path: "/", domain: BASE_HOST, value: data.password });
-  setCookie(headers, { name: "i", secure: true, path: "/", domain: BASE_HOST, value: data.user_id });
-  setCookie(headers, { name: "e", secure: true, path: "/", domain: BASE_HOST, value: String(data.expires) });
+  const ex = new Date(data.expires);
+  setCookie(headers, { name: "t", path:"/", value: data.token, expires: ex });
+  setCookie(headers, { name: "p", path:"/", value: data.password, expires: ex });
+  setCookie(headers, { name: "i", path:"/", value: data.user_id, expires: ex });
+  setCookie(headers, { name: "e", path:"/", value: String(data.expires), expires: ex });
 }
 
 // Retrieve what is possibly a valid auth from cookies
