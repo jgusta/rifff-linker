@@ -1,4 +1,8 @@
-import type { AuthBucket, GlobalSession } from "@/plugins/session/types.ts";
+import type {
+  AuthBucket,
+  GlobalSession,
+} from './types.ts';
+
 export const authKeys:(keyof AuthBucket)[] = ['token', 'password', 'user_id', 'expires'];
 export const defaultSession:GlobalSession = {
   auth: {},
