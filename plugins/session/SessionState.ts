@@ -1,5 +1,12 @@
-import type { AuthBucket, GlobalSession } from "@/plugins/session/types.ts";
-import { nowTime, defaultSession, authKeys } from "@/plugins/session/util.ts";
+import type {
+  AuthBucket,
+  GlobalSession,
+} from './types.ts';
+import {
+  authKeys,
+  defaultSession,
+  nowTime,
+} from './util.ts';
 
 type ResponseType = 'page' | 'json';
 

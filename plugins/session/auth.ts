@@ -1,9 +1,11 @@
 import {
-  setCookie,
+  deleteCookie,
   getCookies,
-  deleteCookie
-} from "$std/http/cookie.ts"
-import { AuthBucket } from "@/plugins/session/types.ts";
+  setCookie,
+} from '$std/http/cookie.ts';
+
+import type { AuthBucket } from './types.ts';
+
 // AKA the thing that deals with cookies.
 
 export function setAuthCookies(data: AuthBucket, headers: Headers) {

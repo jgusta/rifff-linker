@@ -1,5 +1,3 @@
-import { SERVER_ID } from "config";
-
 type Maybe<T> = T | null;
 let body: Maybe<string>;
 
@@ -20,7 +18,6 @@ function getHeaders() {
 }
 
 function getResponse(bodyNow: string | null = null, type: ResponseType = 'page') {
-  addHeader("x-served-by", SERVER_ID)
   switch (type) {
     case 'page':
       addHeader("Content-Type", "text/html; charset=utf-8");
@@ -44,9 +41,4 @@ function getResponse(bodyNow: string | null = null, type: ResponseType = 'page')
   return new Response(null, options);
 }
 
-export {
-  setBody,
-  addHeader,
-  getHeaders,
-  getResponse
-}
+export { addHeader, getHeaders, getResponse, setBody };
