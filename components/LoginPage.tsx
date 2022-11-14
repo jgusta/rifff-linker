@@ -1,7 +1,12 @@
-import { tw } from "twind";
-import { AuthBucket, getSession } from "@session";
+import { tw } from 'twind';
+
+import {
+  AuthBucket,
+  getSession,
+} from '@session';
+
 interface Props {
-  auth: AuthBucket
+  auth?: AuthBucket
 }
 export default function LoginPage(props: Props) {
   const sess = getSession();

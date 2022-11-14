@@ -1,6 +1,14 @@
-import { blue, cyan, green, magenta, red, yellow } from "$std/fmt/colors.ts";
-import { startSession } from "@session";
-import { MiddlewareHandlerContext } from "$fresh/server.ts";
+import { MiddlewareHandlerContext } from '$fresh/server.ts';
+import {
+  blue,
+  cyan,
+  green,
+  magenta,
+  red,
+  yellow,
+} from '$std/fmt/colors.ts';
+
+import { sessionMiddlewareHandler } from '@session';
 
 export async function logHandler(req: Request, ctx: MiddlewareHandlerContext) {
   // For Logging
@@ -42,9 +50,6 @@ export async function logHandler(req: Request, ctx: MiddlewareHandlerContext) {
   return resp;
 }
 
-export async function sessionHandler(req: Request, ctx: MiddlewareHandlerContext) {
-  startSession(req);
-  return await ctx.next();
-}
 
-export const handler = [logHandler,sessionHandler];
+
+export const handler = [logHandler, sessionMiddlewareHandler];
