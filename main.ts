@@ -4,12 +4,18 @@
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 
-import { Manifest, start } from "$fresh/server.ts";
-import manifest from "@/fresh.gen.ts";
+import twindPlugin from '$fresh/plugins/twind.ts';
+import {
+  Manifest,
+  start,
+} from '$fresh/server.ts';
+import {
+  BASE_HOST,
+  PORT,
+} from 'config';
 
-import twindPlugin from "$fresh/plugins/twind.ts";
-import twindConfig from "@/twind.config.ts";
-import session from "@session";
-import { PORT, BASE_URL, BASE_HOST } from "config";
+import manifest from '@/fresh.gen.ts';
+import twindConfig from '@/twind.config.ts';
+import session from '@session';
 
 await start(manifest as unknown as Manifest, { plugins: [twindPlugin(twindConfig), session()], port: PORT, hostname: BASE_HOST});
