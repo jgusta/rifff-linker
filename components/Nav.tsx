@@ -1,8 +1,11 @@
-import { apply, css, style, tw, StyleConfig } from "twind/style";
-import {SITE_NAME} from "config";
+import { SITE_NAME } from 'config';
+import {
+  css,
+  style,
+  tw,
+} from 'twind/style';
 
-
-export default function Nav({tClass}:{tClass:string}) {
+export default function Nav({ tClass }: { tClass: string }) {
   const logo = style({
     base: css({
       maxWidth: '40px',
@@ -20,7 +23,12 @@ export default function Nav({tClass}:{tClass:string}) {
       >
         <a href="/" class={tw`block`}><img src="/images/logo.svg" class={tw(logo())}></img></a><div class={tw`flex flex-col`}><a href='/' class={tw`block text-white font-bold`}>{SITE_NAME}</a></div>
       </div>
-      <ul class={tw`block py-1 px-4 text-sm text-right`}><li class={tw`inline-block text-right`}><a href="/" class={tw`text-gray-300 text-underline`}>Make new link</a></li></ul>
+      <ul class={tw`py-1 px-4 text-sm flex`}>
+        <li class={tw`block mr-4`}><a href="/" class={tw`text-gray-300 hover:text-underline`}>Make new link</a>
+        </li>
+        <li class={tw`block mr-4`}><a href="/login" class={tw`text-gray-300 hover:text-underline`}>Login</a></li>
+        
+        </ul>
     </nav>
   );
 }
