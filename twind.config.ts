@@ -1,10 +1,14 @@
-import { Options } from "$fresh/plugins/twind.ts";
-import { apply, css } from "twind/css";
+import { Options } from '$fresh/plugins/twind.ts';
+import {
+  apply,
+  css,
+} from 'twind/css';
+
 export default {
   selfURL: import.meta.url,
   preflight: {
     body: apply(css({
-      backgroundColor: "#262626"
+      backgroundColor: "rgb(31,41,55)"
     })),
     '@font-face': [
       {

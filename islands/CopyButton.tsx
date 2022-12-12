@@ -1,5 +1,6 @@
-import { useState } from "preact/hooks";
-import { tw } from "twind";
+import { useState } from 'preact/hooks';
+import { tw } from 'twind';
+
 export default function CopyButton(props: {content:string}) {
   const [isCopied, setIsCopied] = useState(false);
   return (
@@ -8,8 +9,7 @@ export default function CopyButton(props: {content:string}) {
       onClick={async (e) => {
         await navigator.clipboard.writeText(props.content);
         setIsCopied(true);
-      }}
-    >
+      }}>
       {isCopied ? "Copied!" : <>Click to Copy <img style="display:inline-block;" src="/images/copy.svg"/></>}
     </button>
   );
