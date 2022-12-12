@@ -1,7 +1,10 @@
-import { Head } from "$fresh/runtime.ts";
-import { ENVIRONMENT, GA_ID, TWITTER } from "config";
-import { makeMeta } from "meta";
-import { PageMeta } from "types";
+import { Head } from '$fresh/runtime.ts';
+import {
+  ENVIRONMENT,
+  GA_ID,
+} from 'config';
+import { makeMeta } from 'meta';
+import { PageMeta } from 'types';
 
 export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
   const {
@@ -12,7 +15,7 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
       <meta charSet="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      
+
       <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
       <meta property="og:site_name" content={site_name} />
       <meta property="og:type" content="website" />
@@ -63,12 +66,11 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
       <script src="/js/rifff/compressor.js"></script>
       <script src="/js/rifff/rifff-icon.js"></script>
       <script src="/js/rifff/unmute.js"></script>
-      <script dangerouslySetInnerHTML={{
-        __html: `
-         window.player = new window.RifffPlayer();
-         
-         `
+      <script src="/js/docReady.js"></script>
+      <script async dangerouslySetInnerHTML={{
+          __html: `docReady(()=>{window.player = new window.RifffPlayer();});`
       }}></script>
+
     </Head>
   );
 }
