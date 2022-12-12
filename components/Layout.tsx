@@ -1,9 +1,13 @@
-import { JSX } from "preact/jsx-runtime";
-import { tw, css } from "twind/css";
-import Nav from "@components/Nav.tsx";
-import Footer from "@components/Footer.tsx";
-import PageHeading from "@components/PageHeading.tsx";
-import { PageMeta } from "types";
+import { JSX } from 'preact/jsx-runtime';
+import {
+  css,
+  tw,
+} from 'twind/css';
+import { PageMeta } from 'types';
+
+import Footer from '@components/Footer.tsx';
+import Nav from '@components/Nav.tsx';
+import PageHeading from '@components/PageHeading.tsx';
 
 const Layout = ({ meta, children }: {
   meta: Partial<PageMeta>;
@@ -27,6 +31,11 @@ const Layout = ({ meta, children }: {
         </div>
         <Footer tClass="main-footer" />
       </div>
+      <script dangerouslySetInnerHTML={{
+        __html: `
+         window.player = new window.RifffPlayer();
+         `
+      }}></script>
     </body>
   );
 };
