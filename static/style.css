@@ -1,7 +1,7 @@
 @font-face {
   font-family: "aino bold";
-  src: url("./fonts/aino-bold-webfont.woff2") format("woff2"),
-    url("./fonts/aino-bold-webfont.woff") format("woff");
+  src: url("./fonts/aino-bold.woff2") format("woff2"),
+    url("./fonts/aino-bold.woff") format("woff");
   font-weight: 500 900;
   font-style: normal;
   font-display: block;
@@ -9,8 +9,8 @@
 
 @font-face {
   font-family: "aino headline";
-  src: url("./fonts/aino-headline-webfont.woff2") format("woff2"),
-    url("./fonts/aino-headline-webfont.woff") format("woff");
+  src: url("./fonts/aino-headline.woff2") format("woff2"),
+    url("./fonts/aino-headline.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -18,8 +18,8 @@
 
 @font-face {
   font-family: "aino";
-  src: url("./fonts/aino-regular-webfont.woff2") format("woff2"),
-    url("./fonts/aino-regular-webfont.woff") format("woff");
+  src: url("./fonts/aino-regular.woff2") format("woff2"),
+    url("./fonts/aino-regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
