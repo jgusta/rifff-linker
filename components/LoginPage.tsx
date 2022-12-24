@@ -12,10 +12,11 @@ import Card from '@components/layout/Card.tsx';
 import CenteredLayout from '@components/layout/CenteredLayout.tsx';
 import HeadingImage from '@components/layout/HeadingImage.tsx';
 import { getSession } from '@session';
+import LoginForm from "@islands/LoginForm.tsx";
 
 export default function LoginPage(): JSX.Element {
   const sess = getSession();
-  console.log('yes', sess);
+  console.log('session:', sess);
   return (<CenteredLayout>
     <HeadingImage src="/images/logo.svg" alt="Logo" />
     <Card>
@@ -31,16 +32,8 @@ export default function LoginPage(): JSX.Element {
         <li class={tw(liststyle)}>- Favorite rifffs on your behalf</li>
       </ul>
       <div class={tw(labelstyle)}>NOTICE! {SITE_NAME} is not affiliated with or endorsed by Endlesss Limited.</div>
-      <form action="/api/auth" method="post" class={tw`space-y-4 md:space-y-6`}>
-        <img class="w-24" src="/images/EndlesssLogo.svg" alt="logo" />
-        <div>
-          <input type="text" name="username" id="username" class={tw(cardInput)} placeholder="Username" required={true} />
-        </div>
-        <div>
-          <input type="password" name="password" id="password" placeholder="Password" class={tw(cardInput)} required={true} />
-        </div>
-        <button type="submit" class={tw(buttonInput)}>Sign in</button>
-      </form>
+      <LoginForm/>
     </Card>
   </CenteredLayout>);
 }
+

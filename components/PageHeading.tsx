@@ -66,7 +66,7 @@ export default function PageHeading({ meta }: { meta: Partial<PageMeta> }) {
       <script src="/js/rifff/compressor.js"></script>
       <script src="/js/rifff/rifff-icon.js"></script>
       <script src="/js/rifff/unmute.js"></script>
-      <script src="/js/docReady.js"></script>
+      <script src="/js/rifff/docReady.js"></script>
       <script async dangerouslySetInnerHTML={{
           __html: `docReady(()=>{window.player = new window.RifffPlayer();});`
       }}></script>

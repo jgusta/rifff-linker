@@ -11,8 +11,9 @@ import * as $4 from "./routes/rifff/[rifffId].tsx";
 import * as $$0 from "./islands/CopyButton.tsx";
 import * as $$1 from "./islands/LinkConvertor.tsx";
 import * as $$2 from "./islands/LinkHolder.tsx";
-import * as $$3 from "./islands/OpenButton.tsx";
-import * as $$4 from "./islands/RifffCard.tsx";
+import * as $$3 from "./islands/LoginForm.tsx";
+import * as $$4 from "./islands/OpenButton.tsx";
+import * as $$5 from "./islands/RifffCard.tsx";
 
 const manifest = {
   routes: {
@@ -26,8 +27,9 @@ const manifest = {
     "./islands/CopyButton.tsx": $$0,
     "./islands/LinkConvertor.tsx": $$1,
     "./islands/LinkHolder.tsx": $$2,
-    "./islands/OpenButton.tsx": $$3,
-    "./islands/RifffCard.tsx": $$4,
+    "./islands/LoginForm.tsx": $$3,
+    "./islands/OpenButton.tsx": $$4,
+    "./islands/RifffCard.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,
