@@ -237,3 +237,4 @@ dist
 
 .DS_Store
 *-sample.*
+.vscode/parallelFOlders.json
