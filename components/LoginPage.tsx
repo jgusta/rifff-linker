@@ -13,26 +13,25 @@ import CenteredLayout from '@components/layout/CenteredLayout.tsx';
 import HeadingImage from '@components/layout/HeadingImage.tsx';
 import { getSession } from '@session';
 import LoginForm from "@islands/LoginForm.tsx";
+import CardH1 from "@components/layout/CardH1.tsx";
+import CardH2 from "@components/layout/CardH2.tsx";
 
 export default function LoginPage(): JSX.Element {
   const sess = getSession();
   console.log('session:', sess);
+  const loggedIn = sess.isLoggedIn();
   return (<CenteredLayout>
     <HeadingImage src="/images/logo.svg" alt="Logo" />
     <Card>
-      <h1 class={tw`text-xl leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white`}>
-        Enter your Endlesss credentials
-      </h1>
-      <div class={tw`text-gray-900 md:text-sm dark:text-white`}>
-        This will allow {SITE_NAME} to:
-      </div>
+      <CardH1>Enter your Endlesss credentials</CardH1>
+      <CardH2>This will allow {SITE_NAME} to:</CardH2>
       <ul class={tw`mt-0 mb-0`}>
         <li class={tw(liststyle)}>- See your basic account info</li>
         <li class={tw(liststyle)}>- View your shared rifffs </li>
         <li class={tw(liststyle)}>- Favorite rifffs on your behalf</li>
       </ul>
       <div class={tw(labelstyle)}>NOTICE! {SITE_NAME} is not affiliated with or endorsed by Endlesss Limited.</div>
-      <LoginForm/>
+      <LoginForm loggedIn={loggedIn}/>
     </Card>
   </CenteredLayout>);
 }
