@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, StateUpdater } from 'preact/hooks'
 import Canvas from "@components/Canvas.tsx"
 import { tw } from "twind";
 import { css } from "twind/css";
+// deno-lint-ignore-file
+
 interface Props {
   children: JSX.Element
   rifff_id: string

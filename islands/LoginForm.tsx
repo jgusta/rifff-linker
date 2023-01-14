@@ -9,7 +9,7 @@ interface Props {
   loggedIn: boolean;
   user?: string;
 }
-export default function LoginPage(props: Props): JSX.Element {
+export default function LoginForm(props: Props): JSX.Element {
   const [loggedIn, setLoggedIn] = useState(props.loggedIn)
   const [user, setUser] = useState(props.user)
 
