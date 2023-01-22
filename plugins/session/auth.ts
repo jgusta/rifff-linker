@@ -20,16 +20,16 @@ export function setAuthCookies(data: AuthBucket, headers: Headers) {
 export function readAuthCookies(headers: Headers): Partial<AuthBucket> {
   const cookies = getCookies(headers)
   const out: Partial<AuthBucket> = {
-    token: cookies.token || undefined,
-    password: cookies.password || undefined,
-    user_id: cookies.user_id || undefined,
-    expires: cookies.expires ? Number(cookies.expires) : undefined,
+    token: cookies.t || undefined,
+    password: cookies.p || undefined,
+    user_id: cookies.i || undefined,
+    expires: cookies.e ? Number(cookies.e) : undefined,
   }
   return out;
 }
 
 export function logout(headers: Headers) {
-  for (const el of ['token', 'password', 'user_id', 'expires']) {
+  for (const el of ['t', 'p', 'i', 'e']) {
     deleteCookie(headers, el)
   }
   return true;
