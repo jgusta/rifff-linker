@@ -1,4 +1,5 @@
 import { SITE_NAME } from 'config';
+import { LOGIN_ENDPOINT } from 'config';
 import { JSX } from 'preact/jsx-runtime';
 import {
   buttonInput,
@@ -18,7 +19,6 @@ import CardH2 from "@components/layout/CardH2.tsx";
 
 export default function LoginPage(): JSX.Element {
   const sess = getSession();
-  console.log('session:', sess);
   const loggedIn = sess.isLoggedIn();
   return (<CenteredLayout>
     <HeadingImage src="/images/logo.svg" alt="Logo" />
@@ -31,7 +31,7 @@ export default function LoginPage(): JSX.Element {
         <li class={tw(liststyle)}>- Favorite rifffs on your behalf</li>
       </ul>
       <div class={tw(labelstyle)}>NOTICE! {SITE_NAME} is not affiliated with or endorsed by Endlesss Limited.</div>
-      <LoginForm loggedIn={loggedIn}/>
+      <LoginForm loggedIn={loggedIn} loginEndpoint='/api/auth'/>
     </Card>
   </CenteredLayout>);
 }
