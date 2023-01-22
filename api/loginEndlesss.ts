@@ -7,15 +7,12 @@ function isString(i: FormDataEntryValue | null): i is string {
   return (typeof i === 'string');
 }
 
-export const loginEndlesss = async (inUser: string, inPass: string) => {
-  const outgoingRemoteBody = new FormData()
-
-  if (isString(inPass) && isString(inUser)) {
-    outgoingRemoteBody.append('password', inPass)
-    outgoingRemoteBody.append('username', inUser)
-  } else {
+export const loginEndlesss = async (username: string, password: string) => {
+  if (!isString(password) || !isString(username)) {
     throw new Error('Bad login')
   }
+
+  const body = new URLSearchParams({ username, password });
 
   const incomingRemoteRes: LoginResponse = await fetch(LOGIN_ENDPOINT, {
     method: "POST",
@@ -23,10 +20,9 @@ export const loginEndlesss = async (inUser: string, inPass: string) => {
       "User-Agent": USER_AGENT,
       "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
     },
-    body: outgoingRemoteBody,
+    body,
   })
   const incomingRemoteJson = await incomingRemoteRes.json()
-  console.log(incomingRemoteJson)
 
   return incomingRemoteJson;
 }
