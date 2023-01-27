@@ -8,7 +8,7 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
   const [inputValue, setInputValue] = useState("");
   const [output, setOutput] = useState(<></>);
   const regex =
-    /(?:(?:https:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/
+    /(?:(?:https:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/i
   const BASE_URL = props.baseUrl;
 
   const checkInput = (val: string) => {
