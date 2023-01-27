@@ -7,7 +7,8 @@ import { JSX } from "preact";
 export default function LinkConvertor(props: { baseUrl: string, startValue: string }) {
   const [inputValue, setInputValue] = useState("");
   const [output, setOutput] = useState(<></>);
-  const regex =/(?:(?:https:\/\/)?endlesss(?:\.fm|:\/)\/(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/
+  const regex =
+    /(?:(?:https:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/
   const BASE_URL = props.baseUrl;
 
   const checkInput = (val: string) => {
