@@ -17,20 +17,19 @@ export async function encrypt(plaintext: string, cryptoKey:CryptoKey): Promise<s
 export async function decrypt(data: string, cryptoKey: CryptoKey) {
   const [cyphertext, ivtext] = data.split('|');
   const cypherarray = base64DecToArr(cyphertext, 8);
-  const iv = base64DecToArr(ivtext, 8);
+  const iv = base64DecToArr(ivtext, 6);
   const params = {
     name: "AES-GCM",
     iv
   }
   try {
-  const bufferText = await crypto.subtle.decrypt(params, cryptoKey, cypherarray);
+    const bufferText = await crypto.subtle.decrypt(params, cryptoKey, cypherarray);
     const plaintext = UTF8ArrToStr(new Uint8Array(bufferText));
     return plaintext;
   }
   catch(e) {
-    console.log(e)
-
-      throw e;
+    console.log(e);
+    return new Promise(_ => {throw new Error(e)});
   }
 
 }
