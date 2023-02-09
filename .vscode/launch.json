@@ -4,6 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
     {
       "env": {
         "DEPLOYMENT":"DEVELOPMENT",
@@ -21,6 +22,21 @@
         "--unstable",
         "--allow-read",
         "--allow-env"
+      ],
+      "attachSimplePort": 9229
+    },
+    {
+      "env": {
+        "DEPLOYMENT": "DEVELOPMENT",
+      },
+      "request": "launch",
+      "name": "Deno test crypt",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "/usr/local/bin/deno",
+      "runtimeArgs": [
+        "task",
+        "crypt-test
       ],
       "attachSimplePort": 9229
     }

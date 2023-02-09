@@ -20,6 +20,7 @@ import CardH2 from "@components/layout/CardH2.tsx";
 export default function LoginPage(): JSX.Element {
   const sess = getSession();
   const loggedIn = sess.isLoggedIn();
+  const user = sess.getName();
   return (<CenteredLayout>
     <HeadingImage src="/images/logo.svg" alt="Logo" />
     <Card>
@@ -31,7 +32,7 @@ export default function LoginPage(): JSX.Element {
         <li class={tw(liststyle)}>- Favorite rifffs on your behalf</li>
       </ul>
       <div class={tw(labelstyle)}>NOTICE! {SITE_NAME} is not affiliated with or endorsed by Endlesss Limited.</div>
-      <LoginForm loggedIn={loggedIn} loginEndpoint='/api/auth'/>
+      <LoginForm loggedIn={loggedIn} user={user} loginEndpoint='/api/auth'/>
     </Card>
   </CenteredLayout>);
 }
