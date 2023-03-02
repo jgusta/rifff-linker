@@ -38,7 +38,7 @@ const env = cleanEnv(raw_env, {
   PORT: port({ default: 8000, desc: "Port number." }),
   REFERER: str({ default: base_url, desc: "The url of the website that is requesting from the Endlesss API." }),
   SESSION_ENDPOINT: str({ desc: 'remote session endpoint' }),
-  SESSION_SECRET: str({desc: 'secret key for encrypting sessions. To create one run: `deno task plugins/session/bin.ts gen-key`'}),
+  SESSION_SECRET: str({ desc: 'secret key for encrypting sessions. To create one run: deno run --unstable --allow-write --allow-read --allow-env plugins/session/bin.ts gen-key'}),
   SITE_NAME: str({ default: 'Rifff Linker', desc: 'The title of the site used in the header.' }),
   TEST_INPUT_LINK: str({ default: '' }),
   TEST_RIFFF: str({ default: '', desc: 'For testing, specify a path to json rifff here. It should be relative to root dir.' }),
@@ -66,4 +66,12 @@ export const {
   USER_AGENT
 } = env;
 
+console.log(`%cStarting "%c${SITE_NAME}%c" in %c${ENVIRONMENT}`, "color:white", "color:green", "color:white","color:yellow");
+console.log();
+console.log(`  %cAPI Base            %c${API_BASE}`, "color:blue","color:white");
+console.log(`  %cSession Endpoint    %c${SESSION_ENDPOINT}`, "color:blue","color:white");
+console.log(`  %cLogin Endpoint      %c${LOGIN_ENDPOINT}`, "color:blue","color:white");
+console.log(`  %cUser Agent          %c${USER_AGENT}`, "color:blue","color:yellow");
+console.log(`  %cFrom                %c${FROM}`, "color:blue","color:green");
+console.log();
 export { env };

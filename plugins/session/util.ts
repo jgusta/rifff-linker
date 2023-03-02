@@ -3,18 +3,12 @@ const { subtle } = crypto;
 
 import type {
   AuthBucket,
-  GlobalSession,
 } from './types.ts';
 
 export const authKeys: (keyof AuthBucket)[] = ['token', 'password', 'user_id', 'expires'];
-export const defaultSession: GlobalSession = {
-  auth: {},
-  isLoggedIn: () => false,
-  getName: () => ''
-}
-const now = (new Date()).getTime()
+
 export function nowTime() {
-  return now;
+  return (new Date()).getTime();
 }
 
 export function generateSecretKey(): Promise<string> {
@@ -30,7 +24,7 @@ export function generateSecretKey(): Promise<string> {
   })
 }
 
-export function stringToKey(base64String:string): Promise<CryptoKey> {
+export function stringToKey(base64String: string): Promise<CryptoKey> {
   return new Promise((res) => {
     const arr = base64DecToArr(base64String, 8);
     subtle.importKey("raw",

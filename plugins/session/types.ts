@@ -9,12 +9,6 @@ export interface LoginResponse extends Response {
   }>
 }
 
-export interface GlobalSession {
-  auth: Partial<AuthBucket>
-  isLoggedIn: () => boolean
-  getName: () => string
-}
-
 export interface AuthBucket {
   token: string
   password: string
