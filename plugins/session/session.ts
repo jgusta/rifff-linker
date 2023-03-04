@@ -1,19 +1,38 @@
-import { AuthBucket, Maybe } from "./types.ts"
+import { setAuth } from '@session';
+import { AnyAuthBucket, AuthBucket, Maybe } from "./types.ts"
 import {
-  authKeys,
-  nowTime,
+  authKeys
 } from './util.ts';
 
+export function nowTime() {
+  return (new Date()).getTime();
+}
+
+type SessionState =
+  // session just started, not yet read or checked cookies
+  "initial"
+
+  // session info read and validated, but not checked against server yet
+  | "valid"
+
+  // session info not valid or user is logged out
+  | "unauthenticated"
+
+  // session info is confirmed by server and cookies are updated
+  | "authenticated"
+
+  // cookies exist, are valid, but expired
+  | "expired";
+
 export class Session {
-  auth: Maybe<Partial<AuthBucket>>
-  valid: boolean
-  hydrated: boolean
+  auth: AnyAuthBucket
+  state: SessionState
 
-  constructor(auth: Maybe<Partial<AuthBucket>>) {
-    this.auth = auth;
-    this.valid = false;
-    this.hydrated = false;
-
+  constructor() {
+    this.auth = {
+      expires: 0
+    }
+    this.state = "initial"
   }
 
   getName(): string {
@@ -21,47 +40,43 @@ export class Session {
   }
 
   isLoggedIn(): boolean {
-    this.throwIfNotHydrated();
+    if (this.state === 'authenticated' && this.auth.expires < nowTime()) {
+      this.resetAuth()
+      this.state = "expired"
+      return false;
+    }
+
+
     return this.isAuthValid(this.auth)
-       && this.auth.expires > nowTime()
+      && this.auth.expires > nowTime()
   }
-
-
 
   resetAuth() {
-    this.auth = null;
-    this.valid = false;
-    this.hydrated = false;
+    this.auth = { expires: 0 }
+    this.state = "initial";
   }
 
-  // Hydrated means startSession has been called
-  hydrateAuth(auth: Maybe<Partial<AuthBucket>>): void {
+  setAuth(auth: AnyAuthBucket) {
     if (!this.isAuthValid(auth)) {
-      this.auth = null;
-      this.valid = false;
+      this.resetAuth();
+      this.state = "unauthenticated";
     }
     else {
-      this.auth = auth as AuthBucket;
-      this.valid = true;
+      this.auth = auth;
+      this.state = "valid";
     }
-    this.hydrated = true;
   }
 
   // AuthBucket typegaurd.
   // Does NOT mean logged in.
-  isAuthValid(auth: Maybe<Partial<AuthBucket>>): auth is AuthBucket {
+  isAuthValid(auth: AnyAuthBucket): auth is AuthBucket {
     if (typeof auth === 'undefined' || null === auth) {
       return false;
     }
-    for (const el of authKeys)
-      if (el in auth && auth[el] === null)
+    for (const el in auth)
+      if (el in authKeys && auth[el as keyof AuthBucket] !== 'undefined')
         return false;
     return true;
   }
 
-  throwIfNotHydrated(): void {
-    if (!this.hydrated) {
-      throw new Error('Session not yet started');
-    }
-  }
 }

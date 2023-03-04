@@ -7,11 +7,10 @@ import {
 } from './auth.ts';
 import { sessionMiddlewareHandler } from './middleware.ts';
 import { getHeaders } from './responser.ts';
-import { SessionState } from './sessionState.ts';
+import { Session } from "./session.ts";
 import {
   AuthBucket,
   AuthChildren,
-  GlobalSession,
 } from './types.ts';
 
 function setAuth(auth: AuthBucket): void {
@@ -21,9 +20,11 @@ function setAuth(auth: AuthBucket): void {
   SessionState.hydrateAuth(auth);
 }
 
-// The only reason this is needed is because plugins don't seem 
-// to have access to the Request object.
+// create session, pull and validate cookies
 function startSession(req: Request): void {
+  const session = new Session();
+
+
   const auth = readAuthCookies(req.headers);
   SessionState.hydrateAuth(auth);
 }

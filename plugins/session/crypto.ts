@@ -1,14 +1,59 @@
+'use strict'
+// deno-lint-ignore-file no-explicit-any
 import { crypto } from "https://deno.land/std@0.177.0/crypto/crypto.ts";
 const { subtle } = crypto;
 
-import type {
-  AuthBucket,
-} from './types.ts';
+// ok to be global between sessions
+let cryptoKey: CryptoKey | null = null;
 
-export const authKeys: (keyof AuthBucket)[] = ['token', 'password', 'user_id', 'expires'];
+export async function getKey(inputSecret: string | null = null): Promise<CryptoKey> {
+  // if no input given, use stored key
+  if (inputSecret === null) {
+    // if key is stored, use it
+    if (cryptoKey != null) {
+      return Promise.resolve(cryptoKey)
+    }
+    // if key is not stored, get it and store it, then use it
+    else {
+      const key_1 = await stringToKey(Deno.env.get('SESSION_SECRET') as string)
+      cryptoKey = key_1;
+      return Promise.resolve(cryptoKey)
+    }
+  }
 
-export function nowTime() {
-  return (new Date()).getTime();
+  // if input is supplied, use it instead of stored key
+  return await stringToKey(inputSecret);
+}
+
+export async function encrypt(plaintext: string, cryptoKey: CryptoKey): Promise<string> {
+  const bufferText = strToUTF8Arr(plaintext);
+  // getRandomValues operates directly on the input Array.
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const params = {
+    name: "AES-GCM",
+    iv
+  }
+  const cypherarray = await crypto.subtle.encrypt(params, cryptoKey, bufferText)
+  return `${base64EncArr(new Uint8Array(cypherarray))}|${base64EncArr(iv)}`;
+}
+
+export async function decrypt(data: string, cryptoKey: CryptoKey): Promise<string> {
+  const [cyphertext, ivtext] = data.split('|');
+  const cypherarray = base64DecToArr(cyphertext, 8);
+  const iv = base64DecToArr(ivtext, 6);
+  const params = {
+    name: "AES-GCM",
+    iv
+  }
+  try {
+    const bufferText = await crypto.subtle.decrypt(params, cryptoKey, cypherarray);
+    const plaintext = UTF8ArrToStr(new Uint8Array(bufferText));
+    return plaintext;
+  }
+  catch (e) {
+    console.log(e);
+    return new Promise(_ => { throw new Error(e) });
+  }
 }
 
 export function generateSecretKey(): Promise<string> {
@@ -19,8 +64,9 @@ export function generateSecretKey(): Promise<string> {
     },
       true,
       ["encrypt", "decrypt"])
-      .then(key => subtle.exportKey('raw', key))
-      .then(buf => res(base64EncArr(new Uint8Array(buf))))
+      .then((key: any) => subtle.exportKey('raw', key))
+
+      .then((buf: any) => res(base64EncArr(new Uint8Array(buf))))
   })
 }
 
@@ -45,8 +91,6 @@ By Mozilla Contributors
 and is licensed under CC-BY-SA 2.5 
 https://creativecommons.org/licenses/by-sa/2.5/).
 */
-
-
 // Array of bytes to Base64 string decoding
 function b64ToUint6(nChr: number) {
   return nChr > 64 && nChr < 91
@@ -62,7 +106,7 @@ function b64ToUint6(nChr: number) {
             : 0;
 }
 
-export function base64DecToArr(sBase64: string, nBlocksSize: number): Uint8Array {
+function base64DecToArr(sBase64: string, nBlocksSize: number): Uint8Array {
   const sB64Enc = sBase64.replace(/[^A-Za-z0-9+/]/g, ""); // Remove any non-base64 characters, such as trailing "=", whitespace, and more.
   const nInLen = sB64Enc.length;
   const nOutLen = nBlocksSize
@@ -106,7 +150,7 @@ function uint6ToB64(nUint6: number) {
             : 65;
 }
 
-export function base64EncArr(aBytes: Uint8Array): string {
+function base64EncArr(aBytes: Uint8Array): string {
   let nMod3 = 2;
   let sB64Enc = "";
 
@@ -132,7 +176,7 @@ export function base64EncArr(aBytes: Uint8Array): string {
 }
 
 /* UTF-8 array to JS string and vice versa */
-export function UTF8ArrToStr(aBytes: Uint8Array): string {
+function UTF8ArrToStr(aBytes: Uint8Array): string {
   let sView = "";
   let nPart;
   const nLen = aBytes.length;
@@ -175,7 +219,7 @@ export function UTF8ArrToStr(aBytes: Uint8Array): string {
   return sView;
 }
 
-export function strToUTF8Arr(sDOMStr: string): Uint8Array {
+function strToUTF8Arr(sDOMStr: string): Uint8Array {
   let nChr: number | undefined;
   const nStrLen = sDOMStr.length;
   let nArrLen = 0;

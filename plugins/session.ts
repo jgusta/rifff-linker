@@ -3,7 +3,6 @@ import { Plugin } from '$fresh/server.ts';
 export type {
   AuthBucket,
   AuthChildren,
-  GlobalSession,
 } from './session/types.ts';
 
 export {

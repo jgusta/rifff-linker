@@ -1,6 +1,4 @@
-import { getKey } from "./cryptoKey.ts";
-import { generateSecretKey } from "./util.ts";
-import {  encrypt, decrypt } from "./symmetric.ts";
+import { encrypt, decrypt, generateSecretKey, getKey } from "./crypto.ts";
 
 if (Deno.args[0] === 'genkey' || Deno.args[0] === 'gen-key') {
   const key = await generateSecretKey();
