@@ -46,7 +46,6 @@ export class Session {
       return false;
     }
 
-
     return this.isAuthValid(this.auth)
       && this.auth.expires > nowTime()
   }
@@ -78,5 +77,5 @@ export class Session {
         return false;
     return true;
   }
-
+  
 }

@@ -34,3 +34,39 @@
 .main-footer {
   grid-area: footer;
 }
+
+  .footerClasses {
+    background-color: #4a5568;
+    font-size: 1.1rem;
+    margin-top: 3rem;
+    padding-top: 1rem;
+  }
+  .thankYou {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    text-align: center;
+    width: 100%;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .inner {
+    color: #cbd5e0;
+    text-align: center;
+    width: 100%;
+    padding-top: 0.25rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+  }
