@@ -30,4 +30,7 @@
   "deno.codeLens.references": false,
   "deno.codeLens.referencesAllFunctions": false,
   "deno.suggest.completeFunctionCalls": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
 }

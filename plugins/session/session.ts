@@ -1,5 +1,5 @@
 import { setAuth } from '@session';
-import { AnyAuthBucket, AuthBucket, Maybe } from "./types.ts"
+import { AnyAuthBucket, AuthBucket } from "./types.ts"
 import {
   authKeys
 } from './util.ts';

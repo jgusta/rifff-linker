@@ -240,4 +240,4 @@ dist
 .vscode/parallelFOlders.json
 
 # Python venv
-venv/
+.venv/
