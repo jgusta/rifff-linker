@@ -238,3 +238,6 @@ dist
 .DS_Store
 *-sample.*
 .vscode/parallelFOlders.json
+
+# Python venv
+venv/
