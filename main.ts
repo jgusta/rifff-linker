@@ -2,21 +2,24 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 /// <reference lib="dom.asynciterable" />
-/// <reference types="./endlesss.types" />
+/// <reference types="./endlesss.types.d.ts" />
 /// <reference lib="deno.ns" />
+import { emotionPlugin } from "fresh_emotion";
+import { Manifest, start } from "$fresh/server.ts";
+import { BASE_HOST, PORT } from "config";
 
-import twindPlugin from '$fresh/plugins/twind.ts';
-import {
-  Manifest,
-  start,
-} from '$fresh/server.ts';
-import {
-  BASE_HOST,
-  PORT,
-} from 'config';
+const cookies = {
+  token: "",
+  password: "",
+  user_id: "",
+  expires: 0,
+};
 
-import manifest from '@/fresh.gen.ts';
-import twindConfig from '@/twind.config.ts';
-import session from '@session';
+import manifest from "@/fresh.gen.ts";
+import sessionPlugin from "@session";
 
-await start(manifest as unknown as Manifest, { plugins: [twindPlugin(twindConfig), session()], port: PORT, hostname: BASE_HOST});
+await start(manifest as unknown as Manifest, {
+  plugins: [sessionPlugin(cookies), emotionPlugin()],
+  port: PORT,
+  hostname: BASE_HOST,
+});
