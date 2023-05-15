@@ -1,8 +1,8 @@
 import { JSX } from 'preact/jsx-runtime';
 import {
-  css,
   tw,
 } from 'twind/css';
+import {css,cx} from 'fresh_emotion';
 import { PageMeta } from 'types';
 
 import Footer from '@components/Footer.tsx';
@@ -24,7 +24,7 @@ const Layout = ({ meta, children }: {
   return (
     <body class={tw`font-sans`}>
       <PageHeading meta={meta} />
-      <div class={`${tw(wrapper)} wrapper`}>
+      <div class={cx(wrapper, 'wrapper')}>
         <Nav tClass="main-nav" />
         <div class="content">
           {children}
