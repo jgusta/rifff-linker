@@ -1,56 +1,24 @@
-import { Plugin } from '$fresh/server.ts';
+import { assert, Plugin } from "./deps.ts";
+import { logout as _logout } from "./auth.ts";
+import { createSessionMiddlewareHandler } from "./middleware.ts";
+import type { Cookies } from "./types.ts";
+export type {Cookies};
 
-import {
-  logout as _logout,
-  readAuthCookies,
-  setAuthCookies,
-} from './auth.ts';
-import { sessionMiddlewareHandler } from './middleware.ts';
-import { getHeaders } from './responser.ts';
-import { Session } from "./session.ts";
-import {
-  AuthBucket,
-  AuthChildren,
-} from './types.ts';
+let cookieShape: Cookies;
 
-function setAuth(auth: AuthBucket): void {
-  SessionState.resetAuth();
-  const headers = getHeaders();
-  setAuthCookies(auth, headers);
-  SessionState.hydrateAuth(auth);
+export default function sessionPlugin(cookies: Cookies, logger = null): Plugin {
+  assert(
+    cookieShape.expires === 0,
+    "Session cookie shape must have an expires property",
+  );
+  cookieShape = cookies;
+  return {
+    name: "session",
+    render: (ctx) => {
+      ctx.render();
+      return {};
+    },
+  };
 }
 
-// create session, pull and validate cookies
-function startSession(req: Request): void {
-  const session = new Session();
-
-
-  const auth = readAuthCookies(req.headers);
-  SessionState.hydrateAuth(auth);
-}
-
-function isLoggedIn(): boolean {
-  return SessionState.isLoggedIn();
-}
-
-function getSession(): GlobalSession {
-  return SessionState.getGlobalSession();
-}
-
-function logout(): void {
-  const headers = getHeaders();
-  _logout(headers);
-}
-
-export type { AuthBucket, AuthChildren, GlobalSession, Plugin };
-
-export { addHeader, getResponse, setBody } from './responser.ts';
-
-export {
-  getSession,
-  isLoggedIn,
-  logout,
-  sessionMiddlewareHandler,
-  setAuth,
-  startSession,
-};
+export {cookieShape, createSessionMiddlewareHandler };
