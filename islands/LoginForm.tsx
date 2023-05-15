@@ -1,11 +1,11 @@
-import { useState } from 'preact/hooks';
+import { useState } from "preact/hooks";
 import { JSX } from 'preact/jsx-runtime';
 import {
   buttonInput,
   cardInput,
+  sm,
+  css
 } from 'styles';
-
-import { tw } from 'twind/css';
 interface Props {
   loggedIn: boolean;
   user?: string;
@@ -40,15 +40,20 @@ export default function LoginForm(props: Props): JSX.Element {
     <>
       {loggedIn ?
         (<div>You are logged in as {user}</div>) :
-        (<form encType="multipart/form-data" onSubmit={handleSubmit} class={tw`space-y-4 md:space-y-6`}>
-          <img class="w-24" src="/images/EndlesssLogo.svg" alt="logo" />
+        (<form encType="multipart/form-data" onSubmit={handleSubmit} class={css`
+            margin-bottom: 1rem; 
+            ${sm} {
+                margin-bottom: 1.5rem;
+            }
+        `}>
+          <img class={css`width:6rem;`} src="/images/EndlesssLogo.svg" alt="logo" />
           <div>
-            <input type="text" name="username" id="username" class={tw(cardInput)} placeholder="Username" required={true} />
+            <input type="text" name="username" id="username" class={cardInput} placeholder="Username" required={true} />
           </div>
           <div>
-            <input type="password" name="password" id="password" placeholder="Password" class={tw(cardInput)} required={true} />
+            <input type="password" name="password" id="password" placeholder="Password" class={cardInput} required={true} />
           </div>
-          <button type="submit" class={tw(buttonInput)}>Sign in</button>
+          <button type="submit" class={buttonInput}>Sign in</button>
         </form>)
       }
     </>
