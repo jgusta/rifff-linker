@@ -1,81 +1,83 @@
-import { setAuth } from '@session';
-import { AnyAuthBucket, AuthBucket } from "./types.ts"
-import {
-  authKeys
-} from './util.ts';
-
-export function nowTime() {
-  return (new Date()).getTime();
-}
-
-type SessionState =
-  // session just started, not yet read or checked cookies
-  "initial"
-
-  // session info read and validated, but not checked against server yet
-  | "valid"
-
-  // session info not valid or user is logged out
-  | "unauthenticated"
-
-  // session info is confirmed by server and cookies are updated
-  | "authenticated"
-
-  // cookies exist, are valid, but expired
-  | "expired";
+import type { Cookies } from "./types.ts";
+import type {
+  CookieStatus,
+  ExtStatus,
+  SessionExtension,
+  SessionStatus,
+} from "./types.ts";
+import { DefaultExtension } from "./defaultSessionExtension.ts";
+import { readEncryptedCookies } from "./cookies.ts";
 
 export class Session {
-  auth: AnyAuthBucket
-  state: SessionState
-
-  constructor() {
-    this.auth = {
-      expires: 0
+  static #internalConstructor = Symbol();
+  #headers: Headers;
+  #data: Record<string, string | number> = {};
+  #now = new Date(0);
+  #cookieStatus: CookieStatus = "init";
+  #extStatus: ExtStatus = "";
+  #expires = new Date(0);
+  sessionExtension: SessionExtension;
+  constructor(req: Request, sessionExtension: SessionExtension) {
+    if (!Session.#internalConstructor) {
+      throw new TypeError("Session constructor is private");
     }
-    this.state = "initial"
-  }
-
-  getName(): string {
-    return this.auth?.user_id || ''
-  }
-
-  isLoggedIn(): boolean {
-    if (this.state === 'authenticated' && this.auth.expires < nowTime()) {
-      this.resetAuth()
-      this.state = "expired"
-      return false;
+    if (!sessionExtension) {
+      throw new TypeError("Session extension is required");
     }
-
-    return this.isAuthValid(this.auth)
-      && this.auth.expires > nowTime()
+    this.sessionExtension = sessionExtension;
+    this.#headers = req.headers;
   }
 
-  resetAuth() {
-    this.auth = { expires: 0 }
-    this.state = "initial";
-  }
-
-  setAuth(auth: AnyAuthBucket) {
-    if (!this.isAuthValid(auth)) {
-      this.resetAuth();
-      this.state = "unauthenticated";
+  get status(): SessionStatus {
+    if (this.#cookieStatus !== "valid") {
+      return this.#cookieStatus;
     }
-    else {
-      this.auth = auth;
-      this.state = "valid";
-    }
+    return this.#extStatus;
   }
 
-  // AuthBucket typegaurd.
-  // Does NOT mean logged in.
-  isAuthValid(auth: AnyAuthBucket): auth is AuthBucket {
-    if (typeof auth === 'undefined' || null === auth) {
-      return false;
-    }
-    for (const el in auth)
-      if (el in authKeys && auth[el as keyof AuthBucket] !== 'undefined')
-        return false;
-    return true;
+  set status(x: SessionStatus) {
+    this.#extStatus = x;
   }
-  
+
+  async extension(
+    data: Cookies,
+    session: Session,
+  ): Promise<SessionStatus> {
+    return await this.sessionExtension.beforeRender({
+      data,
+      status: this.#cookieStatus,
+      headers: this.#headers,
+      session,
+    });
+  }
+
+  // factory pattern allows "async" constructor.
+  static async create(req: Request, extension: SessionExtension | null = null) {
+    const input: SessionExtension = extension === null
+      ? new DefaultExtension()
+      : extension;
+
+    const session = new Session(req, input);
+    try {
+      const data = await readEncryptedCookies(req.headers);
+      session.#expires = new Date(data.expires);
+      if (session.#expires < session.#now) {
+        session.#cookieStatus = "expired";
+      } else {
+        for (const key in data) {
+          if (key != "expires") {
+            session.#data[key] = data[key];
+          }
+        }
+        session.#cookieStatus = "valid";
+        session.extension(data, session);
+      }
+    } catch (e) {
+      console.log(e);
+      session.#expires = new Date(0);
+      session.#data = { expires: 0 };
+      session.#cookieStatus = "expired";
+    }
+    return session;
+  }
 }
