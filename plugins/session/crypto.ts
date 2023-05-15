@@ -1,94 +1,111 @@
-'use strict'
+"use strict";
+import { crypto, memoizy } from "./deps.ts";
+
 // deno-lint-ignore-file no-explicit-any
-import { crypto } from "https://deno.land/std@0.177.0/crypto/crypto.ts";
 const { subtle } = crypto;
 
 // ok to be global between sessions
 let cryptoKey: CryptoKey | null = null;
 
-export async function getKey(inputSecret: string | null = null): Promise<CryptoKey> {
+const _getKey = async function (
+  inputSecret: string | null = null,
+): Promise<CryptoKey> {
   // if no input given, use stored key
   if (inputSecret === null) {
     // if key is stored, use it
     if (cryptoKey != null) {
-      return Promise.resolve(cryptoKey)
-    }
-    // if key is not stored, get it and store it, then use it
+      return Promise.resolve(cryptoKey);
+    } // if key is not stored, get it and store it, then use it
     else {
-      const key_1 = await stringToKey(Deno.env.get('SESSION_SECRET') as string)
+      const key_1 = await stringToKey(Deno.env.get("SESSION_SECRET") as string);
       cryptoKey = key_1;
-      return Promise.resolve(cryptoKey)
+      return Promise.resolve(cryptoKey);
     }
   }
 
   // if input is supplied, use it instead of stored key
   return await stringToKey(inputSecret);
-}
+};
 
-export async function encrypt(plaintext: string, cryptoKey: CryptoKey): Promise<string> {
+export const getKey = memoizy(_getKey);
+
+export async function encrypt(
+  plaintext: string,
+  cryptoKey: CryptoKey,
+): Promise<string> {
   const bufferText = strToUTF8Arr(plaintext);
   // getRandomValues operates directly on the input Array.
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const params = {
     name: "AES-GCM",
-    iv
-  }
-  const cypherarray = await crypto.subtle.encrypt(params, cryptoKey, bufferText)
+    iv,
+  };
+  const cypherarray = await crypto.subtle.encrypt(
+    params,
+    cryptoKey,
+    bufferText,
+  );
   return `${base64EncArr(new Uint8Array(cypherarray))}|${base64EncArr(iv)}`;
 }
 
-export async function decrypt(data: string, cryptoKey: CryptoKey): Promise<string> {
-  const [cyphertext, ivtext] = data.split('|');
+export async function decrypt(
+  data: string,
+  cryptoKey: CryptoKey,
+): Promise<string> {
+  const [cyphertext, ivtext] = data.split("|");
   const cypherarray = base64DecToArr(cyphertext, 8);
   const iv = base64DecToArr(ivtext, 6);
   const params = {
     name: "AES-GCM",
-    iv
-  }
+    iv,
+  };
   try {
-    const bufferText = await crypto.subtle.decrypt(params, cryptoKey, cypherarray);
+    const bufferText = await crypto.subtle.decrypt(
+      params,
+      cryptoKey,
+      cypherarray,
+    );
     const plaintext = UTF8ArrToStr(new Uint8Array(bufferText));
     return plaintext;
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e);
-    return new Promise(_ => { throw new Error(e) });
+    return new Promise((_) => {
+      throw new Error(e);
+    });
   }
 }
 
 export function generateSecretKey(): Promise<string> {
   return new Promise((res) => {
-    subtle.generateKey({
-      name: "AES-GCM",
-      length: 256,
-    },
+    subtle.generateKey(
+      {
+        name: "AES-GCM",
+        length: 256,
+      },
       true,
-      ["encrypt", "decrypt"])
-      .then((key: any) => subtle.exportKey('raw', key))
-
-      .then((buf: any) => res(base64EncArr(new Uint8Array(buf))))
-  })
+      ["encrypt", "decrypt"],
+    )
+      .then((key: any) => subtle.exportKey("raw", key))
+      .then((buf: any) => res(base64EncArr(new Uint8Array(buf))));
+  });
 }
 
 export function stringToKey(base64String: string): Promise<CryptoKey> {
   return new Promise((res) => {
     const arr = base64DecToArr(base64String, 8);
-    subtle.importKey("raw",
-      arr,
-      "AES-GCM",
-      true,
-      ["encrypt", "decrypt"]
-    ).then(res)
-  })
+    subtle.importKey("raw", arr, "AES-GCM", true, ["encrypt", "decrypt"]).then(
+      res,
+    );
+  });
 }
 
 /*********************************
-The section is adapted from: 
-"Base64 - MDN Web Docs Glossary: Definitions of Web-related terms" 
+The section is adapted from:
+"Base64 - MDN Web Docs Glossary: Definitions of Web-related terms"
 (https://developer.mozilla.org/en-US/docs/Glossary/Base64).
-By Mozilla Contributors 
+By Mozilla Contributors
 (https://developer.mozilla.org/en-US/docs/Glossary/Base64/contributors.txt),
-and is licensed under CC-BY-SA 2.5 
+and is licensed under CC-BY-SA 2.5
 https://creativecommons.org/licenses/by-sa/2.5/).
 */
 // Array of bytes to Base64 string decoding
@@ -96,14 +113,14 @@ function b64ToUint6(nChr: number) {
   return nChr > 64 && nChr < 91
     ? nChr - 65
     : nChr > 96 && nChr < 123
-      ? nChr - 71
-      : nChr > 47 && nChr < 58
-        ? nChr + 4
-        : nChr === 43
-          ? 62
-          : nChr === 47
-            ? 63
-            : 0;
+    ? nChr - 71
+    : nChr > 47 && nChr < 58
+    ? nChr + 4
+    : nChr === 43
+    ? 62
+    : nChr === 47
+    ? 63
+    : 0;
 }
 
 function base64DecToArr(sBase64: string, nBlocksSize: number): Uint8Array {
@@ -140,14 +157,14 @@ function uint6ToB64(nUint6: number) {
   return nUint6 < 26
     ? nUint6 + 65
     : nUint6 < 52
-      ? nUint6 + 71
-      : nUint6 < 62
-        ? nUint6 - 4
-        : nUint6 === 62
-          ? 43
-          : nUint6 === 63
-            ? 47
-            : 65;
+    ? nUint6 + 71
+    : nUint6 < 62
+    ? nUint6 - 4
+    : nUint6 === 62
+    ? 43
+    : nUint6 === 63
+    ? 47
+    : 65;
 }
 
 function base64EncArr(aBytes: Uint8Array): string {
@@ -164,7 +181,7 @@ function base64EncArr(aBytes: Uint8Array): string {
         uint6ToB64((nUint24 >>> 18) & 63),
         uint6ToB64((nUint24 >>> 12) & 63),
         uint6ToB64((nUint24 >>> 6) & 63),
-        uint6ToB64(nUint24 & 63)
+        uint6ToB64(nUint24 & 63),
       );
       nUint24 = 0;
     }
@@ -184,36 +201,37 @@ function UTF8ArrToStr(aBytes: Uint8Array): string {
     nPart = aBytes[nIdx];
     sView += String.fromCodePoint(
       nPart > 251 && nPart < 254 && nIdx + 5 < nLen /* six bytes */
-        ? /* (nPart - 252 << 30) may be not so safe in ECMAScript! So…: */
-        (nPart - 252) * 1073741824 +
-        ((aBytes[++nIdx] - 128) << 24) +
-        ((aBytes[++nIdx] - 128) << 18) +
-        ((aBytes[++nIdx] - 128) << 12) +
-        ((aBytes[++nIdx] - 128) << 6) +
-        aBytes[++nIdx] -
-        128
-        : nPart > 247 && nPart < 252 && nIdx + 4 < nLen /* five bytes */
-          ? ((nPart - 248) << 24) +
+        /* (nPart - 252 << 30) may be not so safe in ECMAScript! So…: */
+        ? (nPart - 252) * 1073741824 +
+          ((aBytes[++nIdx] - 128) << 24) +
           ((aBytes[++nIdx] - 128) << 18) +
           ((aBytes[++nIdx] - 128) << 12) +
           ((aBytes[++nIdx] - 128) << 6) +
           aBytes[++nIdx] -
           128
-          : nPart > 239 && nPart < 248 && nIdx + 3 < nLen /* four bytes */
-            ? ((nPart - 240) << 18) +
-            ((aBytes[++nIdx] - 128) << 12) +
-            ((aBytes[++nIdx] - 128) << 6) +
-            aBytes[++nIdx] -
-            128
-            : nPart > 223 && nPart < 240 && nIdx + 2 < nLen /* three bytes */
-              ? ((nPart - 224) << 12) +
-              ((aBytes[++nIdx] - 128) << 6) +
-              aBytes[++nIdx] -
-              128
-              : nPart > 191 && nPart < 224 && nIdx + 1 < nLen /* two bytes */
-                ? ((nPart - 192) << 6) + aBytes[++nIdx] - 128
-                : /* nPart < 127 ? */ /* one byte */
-                nPart
+        : nPart > 247 && nPart < 252 && nIdx + 4 < nLen /* five bytes */
+        ? ((nPart - 248) << 24) +
+          ((aBytes[++nIdx] - 128) << 18) +
+          ((aBytes[++nIdx] - 128) << 12) +
+          ((aBytes[++nIdx] - 128) << 6) +
+          aBytes[++nIdx] -
+          128
+        : nPart > 239 && nPart < 248 && nIdx + 3 < nLen /* four bytes */
+        ? ((nPart - 240) << 18) +
+          ((aBytes[++nIdx] - 128) << 12) +
+          ((aBytes[++nIdx] - 128) << 6) +
+          aBytes[++nIdx] -
+          128
+        : nPart > 223 && nPart < 240 && nIdx + 2 < nLen /* three bytes */
+        ? ((nPart - 224) << 12) +
+          ((aBytes[++nIdx] - 128) << 6) +
+          aBytes[++nIdx] -
+          128
+        : nPart > 191 && nPart < 224 && nIdx + 1 < nLen /* two bytes */
+        ? ((nPart - 192) << 6) + aBytes[++nIdx] - 128
+        /* nPart < 127 ? */
+        /* one byte */
+        : nPart,
     );
   }
   return sView;
@@ -226,24 +244,23 @@ function strToUTF8Arr(sDOMStr: string): Uint8Array {
 
   /* mapping… */
   for (let nMapIdx = 0; nMapIdx < nStrLen; nMapIdx++) {
-    nChr = (sDOMStr.codePointAt(nMapIdx) as number);
+    nChr = sDOMStr.codePointAt(nMapIdx) as number;
 
     if (nChr >= 0x10000) {
       nMapIdx++;
     }
 
-    nArrLen +=
-      nChr < 0x80
-        ? 1
-        : nChr < 0x800
-          ? 2
-          : nChr < 0x10000
-            ? 3
-            : nChr < 0x200000
-              ? 4
-              : nChr < 0x4000000
-                ? 5
-                : 6;
+    nArrLen += nChr < 0x80
+      ? 1
+      : nChr < 0x800
+      ? 2
+      : nChr < 0x10000
+      ? 3
+      : nChr < 0x200000
+      ? 4
+      : nChr < 0x4000000
+      ? 5
+      : 6;
   }
 
   const aBytes = new Uint8Array(nArrLen);
@@ -252,7 +269,7 @@ function strToUTF8Arr(sDOMStr: string): Uint8Array {
   let nIdx = 0;
   let nChrIdx = 0;
   while (nIdx < nArrLen) {
-    nChr = (sDOMStr.codePointAt(nChrIdx) as number);
+    nChr = sDOMStr.codePointAt(nChrIdx) as number;
     if (nChr < 128) {
       /* one byte */
       aBytes[nIdx++] = nChr;
