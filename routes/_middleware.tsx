@@ -8,7 +8,7 @@ import {
   yellow,
 } from '$std/fmt/colors.ts';
 
-import { sessionMiddlewareHandler } from '@session';
+import { createSessionMiddlewareHandler, DefaultExtension } from '@session';
 
 export async function logHandler(req: Request, ctx: MiddlewareHandlerContext) {
   // For Logging
@@ -42,14 +42,14 @@ export async function logHandler(req: Request, ctx: MiddlewareHandlerContext) {
   }
   if (!skip) {
     console.log(
-      `[${magenta(new Date(now).toISOString())}] ${blue(req.method)} ${
-        cyan(pathname)
+      `[${magenta(new Date(now).toISOString())}] ${blue(req.method)} ${cyan(pathname)
       } - ${blue(String(ms) + "ms")} - ${status()}`,
     );
   }
   return resp;
 }
 
+const eSession = new DefaultExtension();
+const sess = createSessionMiddlewareHandler(eSession);
 
-
-export const handler = [logHandler, sessionMiddlewareHandler];
+export const handler = [logHandler, sess];
