@@ -1,5 +1,4 @@
 import { useEffect, useState } from "preact/hooks";
-import { tw } from "twind";
 import LinkHolder from "@islands/LinkHolder.tsx"
 
 import { JSX } from "preact";
@@ -49,6 +48,13 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
   // }, []);
 
   //endlesss://sharedrifff/b0aff6b039b111edb6b0371b1bc0a57f
+
+  const divOne = css`
+    margin-bottom: 12
+    /* mb-12 */
+    
+  `
+
   return (
     <div class={tw`container mb-12 text-white`}>
       <div class={tw`py-4`}>
