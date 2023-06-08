@@ -1,7 +1,4 @@
 import { JSX } from 'preact/jsx-runtime';
-import {
-  tw,
-} from 'twind/css';
 import {css,cx} from 'fresh_emotion';
 import { PageMeta } from 'types';
 

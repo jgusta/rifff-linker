@@ -18,6 +18,7 @@ const outerDiv = css`
   padding-bottom: 1rem;
   overflow: hidden;
 `
+
 export default function Home() {
   const metaProps = {};
   if (TEST_INPUT_LINK && ENVIRONMENT === "development") {
