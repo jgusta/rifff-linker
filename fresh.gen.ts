@@ -14,6 +14,7 @@ import * as $$2 from "./islands/LinkHolder.tsx";
 import * as $$3 from "./islands/LoginForm.tsx";
 import * as $$4 from "./islands/OpenButton.tsx";
 import * as $$5 from "./islands/RifffCard.tsx";
+import * as $$6 from "./islands/RifffPlayer.tsx";
 
 const manifest = {
   routes: {
@@ -30,6 +31,7 @@ const manifest = {
     "./islands/LoginForm.tsx": $$3,
     "./islands/OpenButton.tsx": $$4,
     "./islands/RifffCard.tsx": $$5,
+    "./islands/RifffPlayer.tsx": $$6,
   },
   baseUrl: import.meta.url,
   config,
