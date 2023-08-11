@@ -1,9 +1,20 @@
-import { tw } from "twind";
-export default function OpenButton(props:{content:string}) {
+import { css } from 'fresh_emotion';
+const buttonCss = css`
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #111827;`;
+
+export default function OpenButton(props: { content: string }) {
   return (
     <button
-      class={tw`block my-4 mx-auto px-4 py-2 bg-gray-900`}
-      onClick={(e) => {
+      class={buttonCss} onClick={(e) => {
         window.open(
           props.content,
           '_blank'
