@@ -1,12 +1,14 @@
-import { tw } from 'twind';
+import StatListItem from "./layout/StatListItem.tsx";
+import StatList from "./layout/StatList.tsx";
 
-export default function StatBlock({ stats }: { stats: (string | number | Date)[][] }) {
-  const inner = stats.map(i => (<li class={tw`flex flex-row text-sm pt-0.5 pb-0.5 justify-between`}><span class={tw`text-blue-400 text-sm font-bold`}>{i[0]}:</span><span class={tw`text-gray-200`}>{i[1]}</span></li>))
+export default function StatBlock({ stats }: { stats: (string)[][] }) {
+  const inner = stats.map(i => (
+    <StatListItem stat={i[0]} value={i[1]} />
+  ));
 
   return (
-    <ul class={tw`list-none block mt-1 mb-1 pb-4`}>
+    <StatList>
       {inner}
-    </ul>
-  )
-
+    </StatList>
+  );
 }
