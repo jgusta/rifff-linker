@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import LinkHolder from "@islands/LinkHolder.tsx"
-
 import { JSX } from "preact";
+import {css} from 'fresh_emotion';
 
 export default function LinkConvertor(props: { baseUrl: string, startValue: string }) {
   const [inputValue, setInputValue] = useState("");
@@ -53,11 +53,25 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
     margin-bottom: 12
     /* mb-12 */
     
-  `
+  `;
+
+  const topPad=css`padding-top: 1rem; padding-bottom: 1rem;`;
+
+  const inputCss = css`display: block;
+  font-size: 0.875rem;
+  padding-top: 0.25rem;
+  padding-right: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.25rem;
+  color: #000;
+  width: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000;`;
 
   return (
-    <div class={tw`container mb-12 text-white`}>
-      <div class={tw`py-4`}>
+    <div class={css`display:flex;flex-wrap:wrap; margin-bottom:3rem;color:#fff;`}>
+      <div class={topPad}>
         <label htmlFor="url_paste">Paste Endlesss Rifff Link:</label>
       </div>
       <input
@@ -67,9 +81,9 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
         onInput={inputHandler}
         onKeyDown={keyHandler}
         placeholder="endlesss://sharedrifff/........."
-        class={tw`block text-sm px-1 py-1 text-black w-full border-solid block border-2 border-black`}
+        class={inputCss}
       />
-      <div class={tw`py-4`}>
+      <div class={topPad}>
         {output}
       </div>
     </div>
