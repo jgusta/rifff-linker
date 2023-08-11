@@ -60,7 +60,7 @@ export interface Rifff {
   };
   rifff: RifffSnapshot;
   loops: Loop[];
-  cdn_attachments: CdnAttachment
+  cdn_attachments: CdnAttachment;
   image_url: string;
   image: boolean;
   liked_by_current_user: boolean;
