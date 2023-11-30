@@ -125,13 +125,17 @@ export default function RifffCard(props) {
         height="300"
         background={props.background}
       />
-      <button ref={btnRef} 
-      onClick={(e) => { rifffPlayer.toggle() }} 
-      class={tw`absolute top-0 bottom-0 left-0 right-0`}
-      >
-        <img id="pbutton" 
-          class={tw`${playstyle} absolute w-full h-full`} 
-        src="/images/play.svg" />
+      <button
+        ref={btnRef}
+        onClick={(e) => {
+          rifffPlayer.toggle()
+        }}
+        class={tw`absolute top-0 bottom-0 left-0 right-0 w-[300px] h-[300px]`}>
+        <img
+          id="pbutton"
+          class={tw`${playstyle} absolute w-full h-full`}
+          src="/images/play.svg"
+        />
       </button>
     </div>
   )
