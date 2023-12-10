@@ -5,6 +5,10 @@ import {
 } from 'config';
 import { css } from 'fresh_emotion';
 import Layout from '@components/Layout.tsx';
+import {tw} from 'twind'
+import MediumButton from "@islands/MediumButton.tsx";
+
+
 import LinkConvertor from '@islands/LinkConvertor.tsx';
 const outerDiv = css`
   background-color: #4b5563;
@@ -34,11 +38,17 @@ export default function Home() {
     return (
       <>
         <Layout meta={metaProps}>
-          <div class={outerDiv}>
-            <LinkConvertor baseUrl={BASE_URL} startValue="" />
-          </div>
+          <>
+            <div
+              class={tw`bg-gray-600 my-10 px-8 py-4 mx-auto max-w-lg shadow-lg overflow-hidden`}>
+              <LinkConvertor baseUrl={BASE_URL} startValue="" />
+            </div>
+            <div class={tw`w-[200px] m-auto flex flex-col px-8 relative`}>
+              <MediumButton href={`/random`}>Random Rifff!</MediumButton>
+            </div>
+          </>
         </Layout>
       </>
-    );
+    )
   }
 }
