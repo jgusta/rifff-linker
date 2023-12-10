@@ -7,7 +7,8 @@ import { JSX } from "preact";
 export default function LinkConvertor(props: { baseUrl: string, startValue: string }) {
   const [inputValue, setInputValue] = useState("");
   const [output, setOutput] = useState(<></>);
-  const regex =/(?:(?:https?:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/i;
+  // const regex =/(?:(?:(?:https?:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/)?(?:(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?)?([a-f0-9]{32}))\/?/i;
+  const regex = /([a-f0-9]{32})/i;
   const BASE_URL = props.baseUrl;
 
   const checkInput = (val: string) => {
@@ -17,8 +18,7 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
     if (regMatch === null) {
       setOutput(
         <span class={tw`text-white`}>
-          Enter a <b>https://endlesss.fm/username/?rifffId=abcdef0123456789</b>
-          style link! Or, try a random one: <LinkHolder link={`${BASE_URL}/random`} />
+          Enter an Endlesss shared rifff link or id! Or, <a class={tw`text-underline`}  href={`${BASE_URL}/random`}>try a random one</a>
         </span>
       )
     } else {
