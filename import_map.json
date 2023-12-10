@@ -8,6 +8,7 @@
     "@routes/": "./routes/",
     "@util/": "./util/",
     "config": "./util/config.ts",
+	"types": "./util/types.ts",
     "meta": "./util/meta.ts",
     "styles": "./util/styles.ts",
     "types": "./util/types.ts",
