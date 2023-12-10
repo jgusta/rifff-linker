@@ -25,6 +25,9 @@
   font-display: block;
 }
 
+body {
+  background-color: "#262626";
+}
 .content {
   grid-area: content;
 }
@@ -33,4 +36,8 @@
 }
 .main-footer {
   grid-area: footer;
+}
+.shadow {
+  border-radius: 0.6em;
+  box-shadow: 2px 2px 10px 0px;
 }

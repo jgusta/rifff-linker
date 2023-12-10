@@ -29,7 +29,7 @@ export default function Nav({tClass}:{tClass:string}) {
       <ul class={tw`block py-1 px-4 text-sm text-right`}>
         <li class={tw`inline-block mx-2 text-right`}>
           <a href="/random" class={tw`text-gray-300 text-underline`}>
-            Random top rifff!
+            Random rifff!
           </a>
         </li>
         <li class={tw`inline-block mx-2 text-right`}>

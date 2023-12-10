@@ -7,11 +7,13 @@ import * as $0 from "./routes/_middleware.tsx";
 import * as $1 from "./routes/index.tsx";
 import * as $2 from "./routes/random.ts";
 import * as $3 from "./routes/rifff/[rifffId].tsx";
-import * as $$0 from "./islands/CopyButton.tsx";
-import * as $$1 from "./islands/LinkConvertor.tsx";
-import * as $$2 from "./islands/LinkHolder.tsx";
-import * as $$3 from "./islands/OpenButton.tsx";
-import * as $$4 from "./islands/RifffCard.tsx";
+import * as $$0 from "./islands/BigButton.tsx";
+import * as $$1 from "./islands/CopyButton.tsx";
+import * as $$2 from "./islands/LinkConvertor.tsx";
+import * as $$3 from "./islands/LinkHolder.tsx";
+import * as $$4 from "./islands/MediumButton.tsx";
+import * as $$5 from "./islands/OpenButton.tsx";
+import * as $$6 from "./islands/RifffCard.tsx";
 
 const manifest = {
   routes: {
@@ -21,11 +23,13 @@ const manifest = {
     "./routes/rifff/[rifffId].tsx": $3,
   },
   islands: {
-    "./islands/CopyButton.tsx": $$0,
-    "./islands/LinkConvertor.tsx": $$1,
-    "./islands/LinkHolder.tsx": $$2,
-    "./islands/OpenButton.tsx": $$3,
-    "./islands/RifffCard.tsx": $$4,
+    "./islands/BigButton.tsx": $$0,
+    "./islands/CopyButton.tsx": $$1,
+    "./islands/LinkConvertor.tsx": $$2,
+    "./islands/LinkHolder.tsx": $$3,
+    "./islands/MediumButton.tsx": $$4,
+    "./islands/OpenButton.tsx": $$5,
+    "./islands/RifffCard.tsx": $$6,
   },
   baseUrl: import.meta.url,
   config,
