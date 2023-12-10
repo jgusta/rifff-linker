@@ -25,6 +25,9 @@
   font-display: block;
 }
 
+body {
+  background-color: "#262626";
+}
 .content {
   grid-area: content;
 }
