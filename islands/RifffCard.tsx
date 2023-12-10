@@ -12,6 +12,7 @@ interface Props {
 type MaybeRifff = Rifff | Record<never, never>
 
 function isRifff(rifff: MaybeRifff): rifff is Rifff {
+  console.log('check')
   return Object.keys(rifff).length > 0
 }
 
@@ -60,7 +61,7 @@ const rifffPlayer = {
 
 export default function RifffCard(props) {
   const rifff = props.rifff;
-
+console.log(rifff)
   const ref = useRef();
   const btnRef = useRef();
   useEffect(() => {
