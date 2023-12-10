@@ -1,4 +1,4 @@
-export default [
+const rifffs = [
   "00025df0ff4a11eb9df073629d6927b3",
   "0003510018b411ec9100a2fb703d0f83",
   "00048ae075b911ec8ae00a12fad331f6",
@@ -14657,3 +14657,5 @@ export default [
   "fff489b0b33811ed89b085f3a3c2e899",
   "fff89140197d11ed914058fe402ee8e3"
 ]
+
+export default rifffs;
