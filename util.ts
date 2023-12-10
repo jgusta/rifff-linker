@@ -1,5 +1,5 @@
 const checkId = function checkId(input:string):Promise<boolean> {
-  console.log(`checkid run: ${input}`);
+  // console.log(`checkid run: ${input}`);
   return new Promise((res) => {
     const regex = /^[a-f0-9A-F]{32}$/;
     const check = input.match(regex);

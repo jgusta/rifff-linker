@@ -1,4 +1,4 @@
-[
+export default [
   "00025df0ff4a11eb9df073629d6927b3",
   "0003510018b411ec9100a2fb703d0f83",
   "00048ae075b911ec8ae00a12fad331f6",

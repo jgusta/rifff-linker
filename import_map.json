@@ -3,7 +3,6 @@
     "@/": "./",
     "@components/": "./components/",
     "@islands/": "./islands/",
-    "@static/": "./static/",
     "@api/": "./routes/api/",
     "@util/":"./util/",
     "config": "./util/config.ts",
