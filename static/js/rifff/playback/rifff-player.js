@@ -1,29 +1,19 @@
 window.RifffPlayer = class RifffPlayer {
-  constructor (audioCtx) {
-    this.rms = 0.0;
-    this.startTime = 0;
-    this.pausedAt  = 0;
-    this.isPlaying = false;
-    this.shouldPlay = false;
-
-    this.needsReload = false;
-    this.cancelTokens = []; 
-
-    this.loopers = [];
-
-    if (audioCtx) {
-      this.audioCtx = audioCtx;
-    } else {
-      this.audioCtx = new AudioContext();
-    }
-  
+  isPlaying = false;
+  shouldPlay = false;
+  needsReload = false;
+  rms = 0.0;
+startTime = 0;
+pausedAt  = 0;
+cancelTokens = [];        
+  loopers = [];
+  constructor (audioCtx) {  
+    this.audioCtx = audioCtx || new AudioContext();
     this.masterGainNode = this.audioCtx.createGain();
     this.masterGainNode.gain.setValueAtTime(decibelsToGain(-6), this.audioCtx.currentTime);
-
     this.analyser = this.audioCtx.createAnalyser();
     this.analyser.fftSize = 2048;
     this.analysisBuffer = new Float32Array(this.analyser.fftSize / 2);
-
     this.masterGainNode.connect(this.analyser);
     this.analyser.connect(this.audioCtx.destination);
   }
@@ -34,17 +24,11 @@ window.RifffPlayer = class RifffPlayer {
   }
 
   get rifff_id() {
-    if (!this.rifff) {
-      return undefined;
-    }
-    return this.rifff.data._id;
+    return this.rifff?.data?._id || undefined;
   }
 
   getCurrentTime() {
-    if (this.pausedAt >= 0) {
-      return this.pausedAt;
-    }
-    return this.audioCtx.currentTime - this.startTime;
+    return this.pausedAt >= 0 ? this.pausedAt : this.audioCtx.currentTime - this.startTime;
   }
 
   getCurrentBeat() {
@@ -65,32 +49,24 @@ window.RifffPlayer = class RifffPlayer {
 
   getRMS() {
     const buffer = this.analysisBuffer;
-
     this.analyser.getFloatTimeDomainData(buffer);
-
     let rms = 0;
     for (let i = 0; i < buffer.length; i++) {
       rms += buffer[i] * buffer[i];
     }
     rms /= buffer.length;
     rms = Math.sqrt(rms);
-
     return rms;
   }
 
   get rifffData () {
-    if (this.rifff) {
-      return this.rifff.data;
-    }
-    return null;
+    return this.rifff?.data || null;
   }
 
   async setRifff (rifff) {
     this.rifff = rifff;
     this.loops = rifff.getLoops();
-
     this.needsReload = true; 
-
     // TODO: Do we want to automatically start new rifff, if playing?
     if (this.isPlaying) {  
       try {
@@ -203,19 +179,12 @@ window.RifffPlayer = class RifffPlayer {
 
     for (const [i, slot] of this.rifff.getSlots().entries()) {
       const newLooper = loopers[i];
-
       if (newLooper) {
         newLooper.connect(this.masterGainNode);
         newLooper.setGain(this.getGainForLooper(newLooper));
         newLooper.setRate(this.getRateForLooper(newLooper));
       }
-      
-      const currentLooper = this.loopers[i];
-      
-      if (currentLooper) {
-        currentLooper.stopImmediately();  
-      }
-
+      this.loopers[i]?.currentLooper.stopImmediately();  
       this.loopers[i] = newLooper;
     }
   }
@@ -243,15 +212,11 @@ window.RifffPlayer = class RifffPlayer {
 
   async play () {
     this.shouldPlay = true;
-
     await this.audioCtx.resume();
-
     if (this.needsReload) {
       await this.reloadPlayer();
-
       this.needsReload = false;
     }
-    
     if (this.shouldPlay) {
       this.playSynced();
     }
@@ -259,33 +224,26 @@ window.RifffPlayer = class RifffPlayer {
 
   pause () {
     this.shouldPlay = false;
-
     this.pausedAt = this.getCurrentTime();
-
     for (const looper of this.loopers) {
       if (looper) {
         looper.pause();
       }
     }
-
     this.isPlaying = false;
   }
 
   stop () { 
     this.pause();
-
     this.rms = 0.35;
-
     if (this.isPlaying) {
       for (const looper of this.loopers) {
         if (looper) {
           looper.stopImmediately();
         }
       }
-      
       this.loopers = [];
     }
-
     this.pausedAt = 0;
     this.isPlaying = false;
   }
@@ -295,29 +253,19 @@ window.RifffPlayer = class RifffPlayer {
       this.startTime = this.audioCtx.currentTime - this.pausedAt;
       this.pausedAt = -1;
     }
-
+    const playerBeats = this.getCurrentBeat();
+    const beatLength = this.getBeatLength();
+    const baseTime = this.audioCtx.currentTime;
     this.loopers.forEach((looper, index) => {
       if (!looper || looper.isPlaying) {
         return;
       }
-
-      const playerBeats = this.getCurrentBeat();
       const looperBeats = looper.getLengthInBeats();
       const looperPhase = playerBeats % looperBeats;
-
-      let secondsUntilStart = 0;
-
-      if (looperPhase > 0) {
-        const beatsUntilStart = looperBeats - looperPhase;
-        secondsUntilStart = beatsUntilStart * this.getBeatLength();
-      }
-
-      const baseTime = this.audioCtx.currentTime;
+      const secondsUntilStart = looperPhase > 0 ? (looperBeats - looperPhase) * beatLength : 0;
       const offset = secondsUntilStart > 0 ? looper.getDuration() - secondsUntilStart : 0;
-
       looper.play(baseTime, offset);
     });
-
     this.isPlaying = true;
   }
 }
