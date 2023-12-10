@@ -8,7 +8,10 @@ export async function handler(req: Request, ctx: MiddlewareContext) {
   const dontLog = [
     "/_frsh",
     "/favicon.ico",
-    '/fonts'
+    '/fonts',
+    '.js',
+    '.css',
+    '.svg'
   ];
   const start = Date.now();
   const { pathname } = new URL(req.url);
@@ -35,8 +38,9 @@ export async function handler(req: Request, ctx: MiddlewareContext) {
     }
   }
   if (!skip) {
+    const date = new Date(now);
     console.log(
-      `[${magenta(new Date(now).toISOString())}] ${blue(req.method)} ${
+      `[${magenta(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':'+date.getMinutes() + ':' + date.getSeconds())}] ${blue(req.method)} ${
         cyan(pathname)
       } - ${blue(String(ms) + "ms")} - ${status()}`,
     );

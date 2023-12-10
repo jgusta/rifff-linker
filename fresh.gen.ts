@@ -5,7 +5,8 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_middleware.tsx";
 import * as $1 from "./routes/index.tsx";
-import * as $2 from "./routes/rifff/[rifffId].tsx";
+import * as $2 from "./routes/random.ts";
+import * as $3 from "./routes/rifff/[rifffId].tsx";
 import * as $$0 from "./islands/CopyButton.tsx";
 import * as $$1 from "./islands/LinkConvertor.tsx";
 import * as $$2 from "./islands/LinkHolder.tsx";
@@ -16,7 +17,8 @@ const manifest = {
   routes: {
     "./routes/_middleware.tsx": $0,
     "./routes/index.tsx": $1,
-    "./routes/rifff/[rifffId].tsx": $2,
+    "./routes/random.ts": $2,
+    "./routes/rifff/[rifffId].tsx": $3,
   },
   islands: {
     "./islands/CopyButton.tsx": $$0,

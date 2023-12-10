@@ -2,7 +2,6 @@ import { BASE_URL, SITE_NAME } from 'config';
 import { PageData, Rifff, PageMeta, RifffWad } from "types";
 
 export default function processRifffData(rifffWhole: Rifff): RifffWad {
-  console.log('processrifffdata')
   const rifff = rifffWhole;
   const display_image = rifff.image_url;
   const time = rifff.action_timestamp_iso;
