@@ -16,6 +16,7 @@ children: JSX.Element
 type MaybeRifff = Rifff | Record<never, never>
 
 function isRifff(rifff: MaybeRifff): rifff is Rifff {
+  console.log('check')
   return Object.keys(rifff).length > 0
 }
 
