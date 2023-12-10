@@ -42,8 +42,30 @@ export default function Nav({ tClass }: { tClass: string }) {
         </li>
         <li class={blockR4}>
           <a href="/login" class={linkText}>Login</a>
+    <nav class={`${navClasses} ${tClass}`}>
+      <div
+        class={tw`w-64 py-1 px-4 flex items-center flex-wrap max-w-screen-sm`}>
+        <a href="/" class={tw`block`}>
+          <img src="/images/logo.svg" class={tw(logo())}></img>
+        </a>
+        <div class={tw`flex flex-col`}>
+          <a href="/" class={tw`block text-white font-bold`}>
+            {SITE_NAME}
+          </a>
+        </div>
+      </div>
+      <ul class={tw`block py-1 px-4 text-sm text-right`}>
+        <li class={tw`inline-block mx-2 text-right`}>
+          <a href="/random" class={tw`text-gray-300 text-underline`}>
+            Random top rifff!
+          </a>
+        </li>
+        <li class={tw`inline-block mx-2 text-right`}>
+          <a href="/" class={tw`text-gray-300 text-underline`}>
+            Make new link
+          </a>
         </li>
       </ul>
     </nav>
-  );
+  )
 }
