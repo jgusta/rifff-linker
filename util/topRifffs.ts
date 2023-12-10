@@ -14658,4 +14658,4 @@ const rifffs = [
   "fff89140197d11ed914058fe402ee8e3"
 ]
 
-export default rifffs;
+export { rifffs};
