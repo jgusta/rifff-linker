@@ -7,7 +7,7 @@ import { JSX } from "preact";
 export default function LinkConvertor(props: { baseUrl: string, startValue: string }) {
   const [inputValue, setInputValue] = useState("");
   const [output, setOutput] = useState(<></>);
-  const regex =/(?:(?:https?:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/i;
+  const regex =/(?:(?:https?:\/\/)?(?:endlesss|127.0.0.1:\d*?)(?:\.fm|:\/)\/?(?:listen\?rifffId=|[^\/]*\/\?rifffId=|sharedrifff)?\/?([a-f0-9]{32}))|([a-f0-9]{32})\/?/i;
   const BASE_URL = props.baseUrl;
 
   const checkInput = (val: string) => {
@@ -17,10 +17,10 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
     if (regMatch === null) {
       setOutput(
         <span class={tw`text-white`}>
-          Enter an <b>endlesss://</b>
-          style link!
-        </span>,
-      );
+          Enter a <b>https://endlesss.fm/username/?rifffId=abcdef0123456789</b>
+          style link! Or, try a random one: <LinkHolder link={`${BASE_URL}/random`} />
+        </span>
+      )
     } else {
       rifff_id = regMatch[1];
       setOutput(<LinkHolder link={`${BASE_URL}/rifff/${rifff_id}`} />);
@@ -48,6 +48,7 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
     }
   }, []);
 
+
   //endlesss://sharedrifff/b0aff6b039b111edb6b0371b1bc0a57f
   return (
     <div class={tw`container mb-12 text-white`}>
@@ -60,12 +61,10 @@ export default function LinkConvertor(props: { baseUrl: string, startValue: stri
         value={inputValue}
         onInput={inputHandler}
         onKeyDown={keyHandler}
-        placeholder="endlesss://sharedrifff/........."
+        placeholder="https://endlesss.fm/username/?rifffId=.........."
         class={tw`block text-sm px-1 py-1 text-black w-full border-solid block border-2 border-black`}
       />
-      <div class={tw`py-4`}>
-        {output}
-      </div>
+      <div class={tw`py-4`}>{output}</div>
     </div>
-  );
+  )
 }
