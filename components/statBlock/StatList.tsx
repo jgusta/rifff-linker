@@ -1,4 +1,3 @@
-import { PropertySignature } from "https://deno.land/x/ts_morph@16.0.0/ts_morph.js";
 import { JSX } from 'preact';
 import { css } from 'styles';
 const ulCss = css`
@@ -10,7 +9,7 @@ const ulCss = css`
   `;
 
 type Props = {
-  children: JSX.Element
+  children: JSX.Element[];
 }
 
 export default function StatList(props: Props) {

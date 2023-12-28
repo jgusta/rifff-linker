@@ -1,14 +1,15 @@
-import StatListItem from "./layout/StatListItem.tsx";
-import StatList from "./layout/StatList.tsx";
+import StatList from "./statBlock/StatList.tsx";
+import StatListItem from "./statBlock/StatListItem.tsx";
 
-export default function StatBlock({ stats }: { stats: (string)[][] }) {
-  const inner = stats.map(i => (
-    <StatListItem stat={i[0]} value={i[1]} />
+interface Props {
+  stats: [string, string][];
+}
+export default function StatBlock( props : Props) {
+  const inner = props.stats.map(([stat, val ]) => (
+    <StatListItem stat={stat} val={val} />
   ));
 
   return (
-    <StatList>
-      {inner}
-    </StatList>
+    <StatList>{inner}</StatList>
   );
 }

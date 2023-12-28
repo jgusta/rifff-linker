@@ -3,20 +3,15 @@ import {
   getCookies,
   setCookie,
 } from '$std/http/cookie.ts';
-import { AnyAuthBucket } from './types.ts';
-import { encrypt, decrypt, getKey } from './crypto.ts';
-import type { AuthBucket, AuthKeys } from './types.ts';
-export const authKeys: AuthKeys = ['token', 'password', 'user_id', 'expires'];
-type AnyAuth = AnyAuthBucket & { valid: boolean }
-type ValidAuth = AnyAuth & AuthBucket & { valid: true }
-type InvalidAuth = AnyAuth & { valid: false }
-class Auth<T> implements AuthBucket {
+import { readEncryptedCookies } from "./cookies.ts";
+export const authKeys = ['token', 'password', 'user_id', 'expires'];
+class Auth {
   valid: true = true;
   token: string;
   password: string;
   user_id: string;
   expires: number;
-  constructor(bucket: AuthBucket) {
+  constructor(bucket) {
     this.token    = bucket.token;
     this.password = bucket.password;
     this.user_id  = bucket.user_id;
@@ -25,14 +20,14 @@ class Auth<T> implements AuthBucket {
 }
 
 export function getAuthFromCookies(headers: Headers) {
-  const cookies = readAuthCookies(headers);
+  const cookies = readEncryptedCookies(headers);
+  
 }
 
-function setAuthCookies(data: AuthBucket, headers: Headers) {
-  
+function setAuth(data: Auth, headers: Headers) {
+  const ex = new Date(data.expires);
   for (const key of authKeys) {
     if (key === 'expires') {
-      const ex = new Date(data.expires);
       setCookie(headers, { name: "e", path: "/", value: String(data.expires), expires: ex });
     }
     else {

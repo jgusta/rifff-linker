@@ -1,6 +1,6 @@
-import { ExtensionInput, SessionExtension } from "./types.ts";
+import { ExtensionInput, SessionExtension } from "./session.ts";
 
-export class DefaultExtension implements SessionExtension {
+export default class DefaultSessionExtension implements SessionExtension {
   beforeRender(
     _data: ExtensionInput,
   ): Promise<string> {

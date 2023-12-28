@@ -19,15 +19,15 @@ const valueCss = css`
   color: #e5e7eb;
 `;
 
-export default function StatListItem({ stat, value }: { stat: string, value: string}) {
+export default function StatListItem(props: { stat: string, val: string }) {
   return (
     <li class={liCss}>
       <span class={statCss}>
-        {stat}:
+        {props.stat}:
       </span>
       <span class={valueCss}>
-        {value}
+        {props.val}
       </span>
     </li>
-  );
+  )
 }
