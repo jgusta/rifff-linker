@@ -1,7 +1,5 @@
 import { USER_AGENT } from 'config';
 import { LOGIN_ENDPOINT } from 'config';
-import { LoginResponse } from "@/plugins/session/types.ts";
-
 
 function isString(i: FormDataEntryValue | null): i is string {
   return (typeof i === 'string');
@@ -14,7 +12,7 @@ export const loginEndlesss = async (username: string, password: string) => {
 
   const body = new URLSearchParams({ username, password });
 
-  const incomingRemoteRes: LoginResponse = await fetch(LOGIN_ENDPOINT, {
+  const incomingRemoteRes = await fetch(LOGIN_ENDPOINT, {
     method: "POST",
     headers: {
       "User-Agent": USER_AGENT,

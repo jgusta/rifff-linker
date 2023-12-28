@@ -1,19 +1,31 @@
-import type { Cookies } from "./types.ts";
-import type {
-  CookieStatus,
-  ExtStatus,
-  SessionExtension,
-  SessionStatus,
-} from "./types.ts";
-import { DefaultExtension } from "./defaultSessionExtension.ts";
+import type { CookieEnum, CookieStatus, Cookies } from "./cookies.ts";
+
+import DefaultSessionExtension  from "./defaultSessionExtension.ts";
 import { readEncryptedCookies } from "./cookies.ts";
 
-export class Session {
+export interface SessionExtension {
+  beforeRender(
+    extensionInput: ExtensionInput,
+  ): Promise<ExtStatus>;
+  inject(): Promise<string>;
+}
+
+
+export type ExtensionInput = {
+  data: Cookies;
+  status: CookieStatus;
+  headers: Headers;
+  session: Session;
+};
+
+
+class Session {
   static #internalConstructor = Symbol();
+  static COOKIE:CookieEnum = {INIT: "INIT", EXPIRED: "EXPIRED", VALID: "VALID"};
   #headers: Headers;
   #data: Record<string, string | number> = {};
   #now = new Date(0);
-  #cookieStatus: CookieStatus = "init";
+  #cookieStatus: CookieStatus = Session.COOKIE.INIT;
   #extStatus: ExtStatus = "";
   #expires = new Date(0);
   sessionExtension: SessionExtension;
@@ -28,6 +40,8 @@ export class Session {
     this.#headers = req.headers;
   }
 
+  // Unless the cookie status is invalid,
+  // extension provides its own status
   get status(): SessionStatus {
     if (this.#cookieStatus !== "valid") {
       return this.#cookieStatus;
@@ -54,7 +68,7 @@ export class Session {
   // factory pattern allows "async" constructor.
   static async create(req: Request, extension: SessionExtension | null = null) {
     const input: SessionExtension = extension === null
-      ? new DefaultExtension()
+      ? new DefaultSessionExtension()
       : extension;
 
     const session = new Session(req, input);
@@ -81,3 +95,5 @@ export class Session {
     return session;
   }
 }
+
+export default Session;

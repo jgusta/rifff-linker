@@ -6,15 +6,15 @@ import {
   labelstyle,
   liststyle,
 } from 'styles';
-import Card from '@components/layout/Card.tsx';
-import CenteredLayout from '@components/layout/CenteredLayout.tsx';
-import HeadingImage from '@components/layout/HeadingImage.tsx';
+import Card from './layout/Card.tsx';
+import CenteredLayout from './layout/CenteredLayout.tsx';
+import HeadingImage from './layout/HeadingImage.tsx';
 import { getSession } from '@session';
 import LoginForm from "@islands/LoginForm.tsx";
-import CardH1 from "@components/layout/CardH1.tsx";
-import CardH2 from "@components/layout/CardH2.tsx";
-import FeatureList from './layout/FeatureList.tsx';
-import FeatureListItem from './layout/FeatureListItem.tsx';
+import CardH1 from "./layout/card/CardH1.tsx";
+import CardH2 from "./layout/card/CardH2.tsx";
+import FeatureList from './FeatureList.tsx';
+import FeatureListItem from './FeatureListItem.tsx';
 
 export default function LoginPage(): JSX.Element {
   const sess = getSession();
