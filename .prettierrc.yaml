@@ -3,3 +3,6 @@ useTabs: false
 semi: false
 singleAttributePerLine: false
 bracketSameLine: true
+trailingComma: none
+maxLineLength: 120
+proseWrap: always
