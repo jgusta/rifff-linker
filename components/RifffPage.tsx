@@ -31,14 +31,18 @@ export default function RifffPage(props: RifffWad) {
         </h1>
         <div class={tw`max-w-md m-auto flex(& col) px-8 relative`}>
           <RifffCard rifff={rifff} background={rifffData.display_image} />
-          <BigButton
-            href={`https://endlesss.fm/sharedrifff/${rifffData.rifff_id}`}>
-            Open in Endlesss
-          </BigButton>
           <StatBlock stats={stats} />
         </div>
-        <div class={tw`w-[200px] m-auto flex flex-col px-8 relative`}>
+        <div
+          class={tw`max-w-[400px] sm:max-w-[600px] m-auto justify-between flex flex-col sm:flex-row px-8 relative`}>
           <MediumButton href={`/random`}>Random Rifff!</MediumButton>
+          <MediumButton href={`endlesss://sharedrifff/${rifffData.rifff_id}`}>
+            Open in Endlesss (app)
+          </MediumButton>
+          <MediumButton
+            href={`https://endlesss.fm/${rifffData.user}/?rifffId=${rifffData.rifff_id}`}>
+            Open in Endlesss (web)
+          </MediumButton>
         </div>
       </div>
     </Layout>

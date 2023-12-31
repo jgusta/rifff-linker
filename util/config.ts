@@ -1,13 +1,9 @@
-import { config } from 'dotenv';
-import {
-  cleanEnv,
-  email,
-  host,
-  port,
-  str,
-} from 'envalid';
+import { load } from "dotenv";
 
 const raw_env = Object.assign(Deno ? Deno.env.toObject() : {}, await config());
+import { cleanEnv, host, port, str, email } from "envalid";
+
+const raw_env = Object.assign(Deno ? Deno.env.toObject() : {}, await load({export: true}));
 
 // these are checked first so we can make a default BASE_URL
 const base_env = cleanEnv(raw_env, {
