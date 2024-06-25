@@ -1,5 +1,8 @@
-# rifff-liinker
+# rifff-linker
 Convert Endlesss Rifff shares into universal web link
+
+> NOTE: this project doesn't work anymore because Endlesss has shut down. There are loose, unenthusiastic plans to make it work "offline" from Endlesss but most likely not going to happen. That's not to say there won't be other projects related to this. Also, [LORE](https://github.com/Unbundlesss/OUROVEON) is still being actively maintained by its developer and it will play offline Endlesss data if you have it.
+
 
 ### Usage
 
