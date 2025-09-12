@@ -43,7 +43,8 @@ window.CdnRifff = class CdnRifff extends window.RifffBase {
 
     return new Promise((resolve, reject) => {
       const attachments = loop.cdn_attachments || {}
-      const path = attachments.flacAudio?.url || attachments.oggAudio?.url
+      const audioAttachment = attachments.flacAudio || attachments.oggAudio
+      const path = audioAttachment ? audioAttachment.url : null
 
       if (!path) {
         resolve(new ArrayBuffer())
