@@ -6,7 +6,9 @@ Supports playback of both OGG and FLAC loop audio. FLAC playback relies on
 the browser's native decoding support while OGG falls back to a small wasm
 decoder when needed.
 
-> NOTE: this project doesn't work anymore because Endlesss has shut down. There are loose, unenthusiastic plans to make it work "offline" from Endlesss but most likely not going to happen. That's not to say there won't be other projects related to this. Also, [LORE](https://github.com/Unbundlesss/OUROVEON) is still being actively maintained by its developer and it will play offline Endlesss data if you have it.
+With the rebirth of Endlesss by the anazing Imogen Heap, this app is working again!
+
+Site is live at [https://viewrifff.uk](https://viewrifff.uk)
 
 ### Usage
 
